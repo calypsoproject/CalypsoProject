@@ -22,14 +22,17 @@ burek {
     width:25vw;
 }
 .progress_bar{
+       width: 35px;
        background-image:url(cover.jpg);
        transform:rotate(180deg);
-       width:2.01vw;}
+       }
 .progress_container{
-	width:2vw; 
+	width: 35px;
 	transform:rotate(180deg); 
 	height:10vh; 
-	border:1px solid #3add36;}
+	border:1px solid #3add36;
+	border-radius: 3px;
+	}
 .progress_text{
 position:absolute;
 text-align: center;
@@ -51,5 +54,6 @@ kebab {
 	 display: table-cell;
     text-align: center;
     vertical-align: middle;
-    color: white
+    color: white;
 }
+

@@ -2,11 +2,71 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-
-<link rel="stylesheet" type="text/css" href="css.css" media="screen" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Untitled Document</title>
 <style>
+body {
+    margin:0;     /* This is used to reset any browser-default margins */
+	background-color: #141E2D;
+    margin: 0 auto 0 auto;
+	width: 100%;
+	height: 100%;
+}
+burek {
+	position:absolute;
+	
+	border:solid white;
+	border-width:1px;
+	border-radius: 10px;
+    width:25vw;
+}
+#middle_cont {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+	width: 100vw;
+	height: 100vh;
+}
+#sub-img {
+    width: 50%;
+    
+}
+.progress_bar{
+       width: 35px;
+       background-image:url(cover.jpg);
+       transform:rotate(180deg);
+       }
+.progress_container{
+	width: 35px;
+	transform:rotate(180deg); 
+	height:10vh; 
+	border:1px solid #3add36;
+	border-radius: 3px;
+	}
+.progress_text{
+position:absolute;
+text-align: center;
+	transform:rotate(180deg); 
+    vertical-align: middle;
+    color: white;
+	top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+kebab {
+	position:  absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    color: white;
+	 display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+}
+
 
 #para1 {
 	top:1vh;
@@ -54,61 +114,56 @@ height:8.5vh;
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%)">
-<img src="sub.png" style="position: absolute; 
-	width:50vw; 
-    height:auto;
-    top: 50vh;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%)">
+<div id="middle_cont">
+	<img src="sub.png" id="sub-img">
 
-<div id="container1" class="progress_container" style="position:absolute; left:28vw; top:32vh">
-  <div id="progress1" class="progress_bar" 
-  		style="height:50%">
-  </div>
-  <p class="progress_text">gsdf</p>
-</div>
-<div id="container2" class="progress_container" style="position:absolute; left:28vw; top:50vh">
-  <div id="progress2" class="progress_bar" 
-  		style="height:50%">
-  </div>
-  <p class="progress_text">gsdf</p>
-</div>
-<div id="container3" class="progress_container" style="position:absolute; left:28vw; top:68vh">
-  <div id="progress3" class="progress_bar" 
-  		style="height:50%">
-  </div>
-  <p class="progress_text">gsdf</p>
-</div>
-<div id="container4" class="progress_container" style="position:absolute; left:69.5vw; top:32vh">
-  <div id="progress4" class="progress_bar" 
-  		style="height:50%">
-  </div>
-  <p class="progress_text">gsdf</p>
-</div>
-<div id="container5" class="progress_container" style="position:absolute; left:69.5vw; top:50vh">
-  <div id="progress5" class="progress_bar" 
-  		style="height:50%">
-  </div>
-  <p class="progress_text">gsdf</p>
-</div>
-<div id="container6" class="progress_container" style="position:absolute; left:69.5vw; top:68vh">
-  
-  <div id="progress6" class="progress_bar" 
-  		style="height:100%">
-  </div>
-<p class="progress_text">gsdf</p>
+    <div id="container1" class="progress_container" style="position:absolute; left:28vw; top:32vh">
+      <div id="top_left" class="progress_bar"
+            style="height:50%">
+      </div>
+      <p class="progress_text">0%
+    </div>
+    <div id="container2" class="progress_container" style="position:absolute; left:28vw; top:50vh">
+      <div id="mid_left" class="progress_bar"
+            style="height:50%">
+      </div>
+      <p class="progress_text">0%
+    </div>
+    <div id="container3" class="progress_container" style="position:absolute; left:26.3vw; top:68vh">
+      <div id="bot_left" class="progress_bar"
+            style="height:50%">
+      </div>
+      <p class="progress_text">0%
+    </div>
+    <div id="container4" class="progress_container" style="position:absolute; left:69.5vw; top:32vh">
+      <div id="top_right" class="progress_bar"
+            style="height:50%">
+      </div>
+      <p class="progress_text">0%
+    </div>
+    <div id="container5" class="progress_container" style="position:absolute; left:69.5vw; top:50vh">
+      <div id="mid_right" class="progress_bar"
+            style="height:50%">
+      </div>
+      <p class="progress_text">0%
+    </div>
+    <div id="container6" class="progress_container" style="position:absolute; left:69.5vw; top:68vh">
+
+      <div id="bot_right" class="progress_bar"
+            style="height:100%">
+      </div>
+    <p class="progress_text">0%
+    </div>	
 </div>
 
-
-<burek id="para1"><kebab>sdfgsdfg</kebab></burek>
-<burek id="para2"><kebab>sdfgsdfg</kebab></burek>
-<burek id="para3"><kebab>sdfgsdfg</kebab></burek>
-<burek id="para4"><kebab>sdfgsdfg</kebab></burek>
-<burek id="para5"><kebab>sdfgsdfg</kebab></burek>
-<burek id="para6"><kebab>sdfgsdfg</kebab></burek>
-<burek id="para7"><kebab>sdfgsdfg</kebab></burek>
-<burek id="para8"><kebab>sdfgsdfg</kebab></burek>
+<burek id="para1"><kebab>sensor data</kebab></burek>
+<burek id="para2"><kebab>sensor data</kebab></burek>
+<burek id="para3"><kebab>sensor data</kebab></burek>
+<burek id="para4"><kebab>sensor data</kebab></burek>
+<burek id="para5"><kebab>sensor data</kebab></burek>
+<burek id="para6"><kebab>sensor data</kebab></burek>
+<burek id="para7"><kebab>sensor data</kebab></burek>
+<burek id="para8"><kebab>sensor data</kebab></burek>
 
 </body>
 </html>
