@@ -1,0 +1,55 @@
+body {
+    margin:0;     /* This is used to reset any browser-default margins */
+	background-color: #141E2D;
+    height:100vh; /* This is needed to overcome a Chrome bug. */
+    width:100vw;  /* As above. */
+}
+.subimg {
+    height: 10em;
+    position: relative }
+.subimg img {
+    position: absolute;
+    top: 50vh;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%) }
+burek {
+	position:absolute;
+	
+	border:solid white;
+	border-width:1px;
+	border-radius: 10px;
+    width:25vw;
+}
+.progress_bar{
+       background-image:url(cover.jpg);
+       transform:rotate(180deg);
+       width:2.01vw;}
+.progress_container{
+	width:2vw; 
+	transform:rotate(180deg); 
+	height:10vh; 
+	border:1px solid #3add36;}
+.progress_text{
+position:absolute;
+text-align: center;
+	transform:rotate(180deg); 
+    vertical-align: middle;
+    color: white;
+	top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+kebab {
+	position:  absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    color: white;
+	 display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    color: white
+}
