@@ -4,7 +4,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Untitled Document</title>
+
 <style>
+#sub_prog {
+	position: absolute;
+	width:600px;
+	height:300px;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);}
 body {
     margin:0;     /* This is used to reset any browser-default margins */
 	background-color: #141E2D;
@@ -12,23 +20,31 @@ body {
 	width: 100%;
 	height: 100%;
 }
-burek {
-	position:absolute;
-	
-	border:solid white;
-	border-width:1px;
-	border-radius: 10px;
-    width:25vw;
-}
+
 #middle_cont {
+	transform:resize(100%);
 	display: table-cell;
 	vertical-align: middle;
 	text-align: center;
-	width: 100vw;
-	height: 100vh;
+
+
+
+
+
+}
+#logo-img {
+	transform:resize(100%);
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+    position: absolute;
+	left:25%;
+	top:20px;
+	width:50%;
+	height:auto;"
 }
 #sub-img {
-    width: 50%;
+    width: 100%;
     
 }
 .progress_bar{
@@ -39,7 +55,7 @@ burek {
 .progress_container{
 	width: 35px;
 	transform:rotate(180deg); 
-	height:10vh; 
+	height:80px; 
 	border:1px solid #3add36;
 	border-radius: 3px;
 	}
@@ -54,6 +70,14 @@ text-align: center;
     bottom: 0;
     right: 0;
 }
+burek {
+	position:absolute;
+	
+	border:solid white;
+	border-width:1px;
+	border-radius: 10px;
+    width:25vw;
+}
 kebab {
 	position:  absolute;
     top: 0;
@@ -61,7 +85,7 @@ kebab {
     bottom: 0;
     right: 0;
     color: white;
-	 display: table-cell;
+	display: table-cell;
     text-align: center;
     vertical-align: middle;
     color: white;
@@ -109,50 +133,49 @@ height:8.5vh;
 </style>
 </head>
 <body>
-<img src="logo.png" style="position: absolute; width:40vw; height:auto;
-    top: 20vh;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%)">
+
+<img src="logo.png" id="logo-img">
 <div id="middle_cont">
+	<div id=sub_prog>
+	
 	<img src="sub.png" id="sub-img">
 
-    <div id="container1" class="progress_container" style="position:absolute; left:28vw; top:32vh">
+    <div id="container1" class="progress_container" style="position:absolute; left:2%; bottom:56%;">
       <div id="top_left" class="progress_bar"
             style="height:50%">
       </div>
       <p class="progress_text">0%
     </div>
-    <div id="container2" class="progress_container" style="position:absolute; left:28vw; top:50vh">
+    <div id="container2" class="progress_container" style="position:absolute; left:2%; bottom:20%;">
       <div id="mid_left" class="progress_bar"
             style="height:50%">
       </div>
       <p class="progress_text">0%
     </div>
-    <div id="container3" class="progress_container" style="position:absolute; left:26.3vw; top:68vh">
+    <div id="container3" class="progress_container" style="position:absolute; left:2%; bottom:-16%;">
       <div id="bot_left" class="progress_bar"
             style="height:50%">
       </div>
       <p class="progress_text">0%
     </div>
-    <div id="container4" class="progress_container" style="position:absolute; left:69.5vw; top:32vh">
+    <div id="container4" class="progress_container" style="position:absolute; right:2%; bottom:56%;">
       <div id="top_right" class="progress_bar"
             style="height:50%">
       </div>
       <p class="progress_text">0%
     </div>
-    <div id="container5" class="progress_container" style="position:absolute; left:69.5vw; top:50vh">
+    <div id="container5" class="progress_container" style="position:absolute; right:2%; bottom:20%;">
       <div id="mid_right" class="progress_bar"
             style="height:50%">
       </div>
       <p class="progress_text">0%
     </div>
-    <div id="container6" class="progress_container" style="position:absolute; left:69.5vw; top:68vh">
-
+    <div id="container6" class="progress_container" style="position:absolute; right:2%; bottom:-16%;">
       <div id="bot_right" class="progress_bar"
             style="height:100%">
       </div>
     <p class="progress_text">0%
+	</div>
     </div>	
 </div>
 
