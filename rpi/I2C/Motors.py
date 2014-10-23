@@ -5,6 +5,7 @@ import atexit
 __author__ = 'prog'
 
 class Motors:
+    system_is_enabled = False
     max_255_val = 65535
 
     enable_system_reg   = 0x01
@@ -32,14 +33,9 @@ class Motors:
         'main_right': None,
         'main_left': None
     }
-    side_right = 'side_right'
-    side_left = 'side_left'
-    mid_right = 'mid_right'
-    mid_left = 'mid_left'
-    main_right = 'main_right'
-    main_left = 'main_left'
 
-    def __init__(self, rpi_revision, acceleration=50, kp_idq=None, ki_idq=None):
+    def __init__(self, motor_address, rpi_revision=1, acceleration=50, kp_idq=None, ki_idq=None):
+        self.motor_address = motor_address
         self.acceleration = acceleration
         self.kp_idq = kp_idq
         self.ki_idq = ki_idq
@@ -49,20 +45,17 @@ class Motors:
     def at_exit(self):
         self.disable_system()
 
-    def init_motors(self):
-        for key in self.motor_addresses.keys():
-            if self.motor_addresses[key] is not None:
-                current_motor_address = self.motor_addresses[key]
-                self.i2c.write_byte_data(current_motor_address, self.accel_lo_reg, self.get_hi_lo_bytes(self.acceleration)[0])
-                self.i2c.write_byte_data(current_motor_address, self.accel_hi_reg, self.get_hi_lo_bytes(self.acceleration)[1])
-                if self.kp_idq:
-                    self.i2c.write_byte_data(current_motor_address, self.kp_idq_lo_reg, self.get_hi_lo_bytes(self.kp_idq)[0])
-                    self.i2c.write_byte_data(current_motor_address, self.kp_idq_hi_reg, self.get_hi_lo_bytes(self.kp_idq)[1])
-                if self.ki_idq:
-                    self.i2c.write_byte_data(current_motor_address, self.ki_idq_lo_reg, self.get_hi_lo_bytes(self.ki_idq)[0])
-                    self.i2c.write_byte_data(current_motor_address, self.ki_idq_hi_reg, self.get_hi_lo_bytes(self.ki_idq)[1])
+    def init_motor(self):
+        self.i2c.write_byte_data(self.motor_address, self.accel_lo_reg, self.get_hi_lo_bytes(self.acceleration)[0])
+        self.i2c.write_byte_data(self.motor_address, self.accel_hi_reg, self.get_hi_lo_bytes(self.acceleration)[1])
+        if self.kp_idq:
+            self.i2c.write_byte_data(self.motor_address, self.kp_idq_lo_reg, self.get_hi_lo_bytes(self.kp_idq)[0])
+            self.i2c.write_byte_data(self.motor_address, self.kp_idq_hi_reg, self.get_hi_lo_bytes(self.kp_idq)[1])
+        if self.ki_idq:
+            self.i2c.write_byte_data(self.motor_address, self.ki_idq_lo_reg, self.get_hi_lo_bytes(self.ki_idq)[0])
+            self.i2c.write_byte_data(self.motor_address, self.ki_idq_hi_reg, self.get_hi_lo_bytes(self.ki_idq)[1])
 
-    def get_motor_state(self, motor):
+    def get_motor_state(self):
         try:
             return self.i2c.read_byte_data(self.motor_addresses[motor], self.enable_system_reg)
         except IOError, e:
@@ -82,9 +75,11 @@ class Motors:
                     print 'already enabled'
                 self.i2c.write_byte_data(self.motor_addresses[key], self.enable_system_reg, 1)
                 time.sleep(8)
-        self.init_motors()
+        self.init_motor()
+        self.system_is_enabled = True
 
     def disable_system(self, motor=None):
+        self.system_is_enabled = False
         if motor:
             self.i2c.write_byte_data(self.motor_addresses[motor], self.enable_system(), 0)
             return
@@ -153,11 +148,11 @@ class Motors:
         return [low, high]
 
 if __name__ == '__main__':
-    m = Motors(rpi_revision=1,
+    m = Motors(motor_address=0x09,
+               rpi_revision=1,
                acceleration=40)
-    print 'enabling'
     m.enable_system()
     print 'enabled'
-    m.change_speed(m.side_right, 40)
+    m.change_speed(m.s, 40)
     raw_input()
     m.disable_system()
