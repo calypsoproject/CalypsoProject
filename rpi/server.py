@@ -13,6 +13,7 @@ class Server:
         while 1:
             try:
                 clientsocket, address = self.socket.accept()
+                clientsocket.setblocking(False)
                 self.recieved = clientsocket.makefile()
             except Exception, e:
                 print 'Server, communication thread, mainloop:', e
