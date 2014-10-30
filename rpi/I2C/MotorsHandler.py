@@ -1,0 +1,37 @@
+import time
+from Motor import Motor
+
+class MotorsHandler():
+    initialized_motors = []
+
+    def add_motor(self, motor_instance):
+        self.initialized_motors.append(motor_instance)
+
+    def new_motor(self, motor_address, motor_name='motor', rpi_revision=1, acceleration=2):
+        motor = Motor(motor_address, motor_name, rpi_revision, acceleration)
+        self.initialized_motors.append(motor)
+        return motor
+
+    def enable_all(self, block=False):
+        for motor in self.initialized_motors:
+            motor.enable_system()
+        if block:
+            time.sleep(Motor.enable_timeout)
+
+    def disable_all(self):
+        for motor in self.initialized_motors:
+            motor.disable_system()
+
+    def change_accel_all(self, acceleration):
+        for motor in self.initialized_motors:
+            motor.change_accel(acceleration)
+
+    def change_speed_all(self, speed):
+        for motor in self.initialized_motors:
+            motor.change_speed(speed)
+
+    def get_values_from_all_motors(self):
+        result = {}
+        for motor in self.initialized_motors:
+            result[str(motor)] = motor.get_values()
+        return result
