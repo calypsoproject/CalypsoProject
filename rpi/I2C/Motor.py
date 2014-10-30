@@ -5,7 +5,7 @@ import atexit
 
 __author__ = 'prog'
 
-class Motors:
+class Motor:
     ## values if motor starts from 0 rpm
     jump_speed = 20
     jump_accel = 5
@@ -36,13 +36,15 @@ class Motors:
     normal_kp_hi = 0x02
     normal_kp_lo = 0x84
     minimal_speed = 10
+    enable_timeout = 8
 
-    def __init__(self, motor_address, rpi_revision=1, acceleration=2):
+    def __init__(self, motor_address, motor_name='motor', rpi_revision=1, acceleration=2):
         self.motor_address = motor_address
         self.acceleration = acceleration
         self.i2c = smbus.SMBus(rpi_revision)
         atexit.register(self.at_exit)
         self.system_is_enabled = self.get_motor_state()
+        self.motor_name = motor_name
 
     def at_exit(self):
         print 'exiting'
@@ -74,10 +76,10 @@ class Motors:
         self.i2c.write_byte_data(self.motor_address, self.enable_system_reg, 1)
         threading.Thread(target=self.system_enable_wait_thread).start()
         if block:
-            time.sleep(8.5)
+            time.sleep(self.enable_timeout)
 
     def system_enable_wait_thread(self):
-        time.sleep(8)
+        time.sleep(self.enable_timeout - 0.1)
         self.system_is_enabled = True
         self.init_motor()
 
@@ -88,6 +90,8 @@ class Motors:
         self.i2c.write_byte_data(self.motor_address, self.enable_system_reg, 0)
 
     def change_accel(self, accel, from_jump_start=False):
+        """ accel ... 0 - 100 (float / int)
+        """
         if not self.system_is_enabled:
             return False
 
@@ -100,6 +104,8 @@ class Motors:
             print e
 
     def change_speed(self, speed):
+        """ speed ... 0 - 100 (float / int)
+        """
         if not self.system_is_enabled or speed < 0 or speed > 100:
             return False
         if speed < 10:
@@ -132,6 +138,8 @@ class Motors:
         self.i2c.write_byte_data(self.motor_address, self.speed_reg, final_speed)
 
     def change_direction(self, direction):
+        """ direction ... 1 / 0 (int)
+        """
         if not self.system_is_enabled:
             return False
 
@@ -145,6 +153,8 @@ class Motors:
 
 
     def get_speed(self):
+        """ returns value in rpm
+        """
         if not self.system_is_enabled:
             return False
 
@@ -184,6 +194,38 @@ class Motors:
         except IOError, e:
             print e
 
+    def get_accel(self):
+        if not self.system_is_enabled:
+            return False
+
+        try:
+            hi = self.i2c.read_byte_data(self.motor_address, self.accel_hi_reg)
+            lo = self.i2c.read_byte_data(self.motor_address, self.accel_lo_reg)
+            return hi * 255 + lo
+        except IOError, e:
+            print e
+
+    def get_kp(self):
+        if not self.system_is_enabled:
+            return False
+
+        try:
+            hi = self.i2c.read_byte_data(self.motor_address, self.kp_idq_hi_reg)
+            lo = self.i2c.read_byte_data(self.motor_address, self.kp_idq_lo_reg)
+            return hi * 255 + lo
+        except IOError, e:
+            print e
+
+    def get_ki(self):
+        if not self.system_is_enabled:
+            return False
+
+        try:
+            hi = self.i2c.read_byte_data(self.motor_address, self.ki_idq_hi_reg)
+            lo = self.i2c.read_byte_data(self.motor_address, self.ki_idq_lo_reg)
+            return hi * 255 + lo
+        except IOError, e:
+            print e
 
     def get_hi_lo_bytes(self, val):
         acc = int(val * (self.max_255_val / 100))
@@ -191,14 +233,23 @@ class Motors:
         high = (acc - low) / 255
         return [low, high]
 
-    def print_reg_values(self, delay=1):
-        while 1:
-            print self.get_torque(), self.get_speed(), self.get_bus_voltage(), self.get_motor_state()
-            time.sleep(delay)
+    def get_values(self):
+        return {'speed': self.get_speed(),
+                'torque': self.get_torque(),
+                'accel': self.get_accel(),
+                'kp': self.get_kp(),
+                'ki': self.get_ki(),
+                'enabled': self.system_is_enabled,
+                'voltage': self.get_bus_voltage(),
+                'direction': self.get_direction()}
+
+    def __str__(self):
+        return self.motor_name
 
 if __name__ == '__main__':
-    m = Motors(motor_address=0x07,
-               rpi_revision=1)
+    m = Motor(motor_address=0x07,
+              motor_name='test_motor',
+              rpi_revision=1)
     m.enable_system(block=True)
     m.change_speed(15)
     raw_input('asdf')
