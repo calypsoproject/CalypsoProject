@@ -6,11 +6,11 @@ __author__ = 'prog'
 
 class Calypso:
     def __init__(self):
-        self.server = Server(listen_port=8888)
+        self.server = Server(self.command_from_server,
+                             listen_port=8888)
 
-        # # motors initialization
+        ## motors initialization
         self.motor_handler = MotorsHandler()
-
         self.forward_left_motor = self.motor_handler.new_motor(motor_address=0x01,
                                                                motor_name='forward left')
         self.forward_right_motor = self.motor_handler.new_motor(motor_address=0x02,
@@ -24,4 +24,15 @@ class Calypso:
         self.middle_left_motor = self.motor_handler.new_motor(motor_address=0x06,
                                                               motor_name='middle left')
 
-        self.motor_handler.enable_all()
+    def command_from_server(self, command, clientsocket):
+        """ executes command, recieved from server and returns result
+        """
+        try:
+            result = None
+            exec command
+            return result
+        except Exception, e:
+            return e
+
+if __name__ == '__main__':
+    Calypso()
