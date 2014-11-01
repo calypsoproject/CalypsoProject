@@ -37,21 +37,16 @@ body {
 
 
 #sub_img {
-	position: absolute;
-	width: 100%; 
-	height: auto; 
-	left:25%;
-	margin: 0 0 0 -25%;
+	position:absolute;
+	left:0.25%;
+	top:0px;
+	width:100%;
+	height:auto;
 }
 #sub_div {
-display:inline-block;
-	height:567px;
-	position: absolute;
-	width: 100%; 
-	height: auto; 
-	left:25%;
-	margin: 0 0 0 -25%;
-
+	position:relative;
+	padding-top:56.7%; 
+	height:0;
 }
 	
 #sub_prog {
@@ -63,18 +58,26 @@ display:inline-block;
 	margin: 0 0 0 -25%;
 }
 
+#bar_div{
+	position:absolute;
+	left:10px;
+	top:10px;
+	right:10px;
+	bottom:10px;
+}
+
 .progress_bar{
-    width: 100%;
-	max-width:35px;
+    width: 101%;
+	
 	background-image:url(cover.jpg);
     transform:rotate(180deg);
 }
 
 .progress_container {
-	width:10%;
+	
+	width:8%;
 	height:30%;
-	max-width:35px;
-	max-height:80px; 
+
 	transform:rotate(180deg); 
 	border:1px solid #3add36;
 	border-radius: 3px;
@@ -157,44 +160,47 @@ height:8.5vh;
 <img src="logo.png" id="logo-img">
 <div id="middle_cont">
 	<div id="sub_prog">
-	<div id="sub_div"></div>
-	<img src="sub.png" id="sub_img">
-    <div id="container1" class="progress_container" style="position:absolute; left:2%; bottom:70%;">
-      <div id="top_left" class="progress_bar"
-            style="height:50%">
-      </div>
-      <p class="progress_text">0%
-    </div>
-    <div id="container2" class="progress_container" style="position:absolute; left:2%; bottom:42.5%;">
-      <div id="mid_left" class="progress_bar"
-            style="height:50%">
-      </div>
-      <p class="progress_text">0%
-    </div>
-    <div id="container3" class="progress_container" style="position:absolute; left:2%; bottom:15%;">
-      <div id="bot_left" class="progress_bar"
-            style="height:50%">
-      </div>
-      <p class="progress_text">0%
-    </div>
-    <div id="container4" class="progress_container" style="position:absolute; right:2%; bottom:15%;">
-      <div id="top_right" class="progress_bar"
-            style="height:50%">
-      </div>
-      <p class="progress_text">0%
-    </div>
-    <div id="container5" class="progress_container" style="position:absolute; right:2%; bottom:42.5%;">
-      <div id="mid_right" class="progress_bar"
-            style="height:50%">
-      </div>
-      <p class="progress_text">0%
-    </div>
-    <div id="container6" class="progress_container" style="position:absolute; right:2%; bottom:70%;">
-      <div id="bot_right" class="progress_bar"
-            style="height:100%">
-      </div>
-		<p class="progress_text">0%
-	</div>
+		<div id="sub_div">
+			<img src="sub.png" id="sub_img">
+            <div id="bar_div">
+              <div id="container1" class="progress_container" style="position:absolute; left:0%; bottom:-10%">
+                  <div id="top_left" class="progress_bar"
+                  style="height:50%">
+                  </div>
+              <p class="progress_text">0%</p>
+              </div>
+              <div id="container2" class="progress_container" style="position:absolute; left:0%; bottom:23.5%;">
+                  <div id="mid_left" class="progress_bar"
+                  style="height:50%">
+                  </div>
+                  <p class="progress_text">0%</p>
+              </div>
+              <div id="container3" class="progress_container" style="position:absolute; left:0%; bottom:57%;">
+                  <div id="bot_left" class="progress_bar"
+                  style="height:50%">
+                  </div>
+                  <p class="progress_text">0%</p>
+              </div>
+              <div id="container4" class="progress_container" style="position:absolute; right:0%; bottom:-10%;">
+                  <div id="top_right" class="progress_bar"
+                  style="height:50%">
+                  </div>
+                  <p class="progress_text">0%</p>
+              </div>
+              <div id="container5" class="progress_container" style="position:absolute; right:0%; bottom:23.5%;">
+                  <div id="mid_right" class="progress_bar"
+                  style="height:50%">
+                  </div>
+                  <p class="progress_text">0%</p>
+              </div>
+              <div id="container6" class="progress_container" style="position:absolute; right:0%; bottom:57%;">
+                  <div id="bot_right" class="progress_bar"
+                  style="height:100%">
+                  </div>
+                  <p class="progress_text">0%</p>
+              </div>
+        	</div>
+   		</div>
 	</div>
 </div>	
 
