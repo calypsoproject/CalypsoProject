@@ -38,10 +38,13 @@ class Motor:
     minimal_speed = 10
     enable_timeout = 8
 
-    def __init__(self, motor_address, motor_name='motor', rpi_revision=1, acceleration=2):
+    def __init__(self, motor_address, motor_name='motor', rpi_revision=1, acceleration=2, i2c_common=None):
         self.motor_address = motor_address
         self.acceleration = acceleration
-        self.i2c = smbus.SMBus(rpi_revision)
+        if i2c_common:
+            self.i2c = i2c_common
+        else:
+            self.i2c = smbus.SMBus(rpi_revision)
         atexit.register(self.at_exit)
         self.system_is_enabled = self.get_motor_state()
         self.motor_name = motor_name
@@ -61,8 +64,8 @@ class Motor:
     def get_motor_state(self):
         try:
             return self.i2c.read_byte_data(self.motor_address, self.enable_system_reg)
-        except IOError, e:
-            print e
+        except IOError:
+            return 'IOError'
 
 
     def enable_system(self, block=False):
