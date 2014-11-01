@@ -31,7 +31,10 @@ class MotorsHandler():
         self.initialized_motors.append(motor_instance)
 
     def new_motor(self, motor_address, motor_name='motor', rpi_revision=1, acceleration=2):
-        motor = Motor(motor_address, motor_name, rpi_revision, acceleration, self.i2c_common)
+        try:
+            motor = Motor(motor_address, self.i2c_common, motor_name, rpi_revision, acceleration)
+        except Exception, e:
+            return e
         self.initialized_motors.append(motor)
         return motor
 
@@ -67,8 +70,14 @@ class I2CCommon():
 
     def write_byte_data(self, address, register, data):
         with self.lock:
-            self.i2c.write_byte_data(address, register, data)
+            try:
+                self.i2c.write_byte_data(address, register, data)
+            except Exception, e:
+                return e
 
     def read_byte_data(self, address, register):
         with self.lock:
-            return self.read_byte_data(address, register)
+            try:
+                return self.read_byte_data(address, register)
+            except Exception, e:
+                return e

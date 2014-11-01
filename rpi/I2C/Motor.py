@@ -38,15 +38,14 @@ class Motor:
     minimal_speed = 10
     enable_timeout = 8
 
-    def __init__(self, motor_address, motor_name='motor', rpi_revision=1, acceleration=2, i2c_common=None):
+    def __init__(self, motor_address, i2c_common, motor_name='motor', rpi_revision=1, acceleration=2):
         self.motor_address = motor_address
         self.acceleration = acceleration
-        if i2c_common:
-            self.i2c = i2c_common
-        else:
-            self.i2c = smbus.SMBus(rpi_revision)
+        self.i2c = i2c_common
         atexit.register(self.at_exit)
         self.system_is_enabled = self.get_motor_state()
+        if type(self.system_is_enabled) != int:
+            raise Exception('MotorNotConnectedError')
         self.motor_name = motor_name
 
     def at_exit(self):
@@ -62,10 +61,7 @@ class Motor:
         self.i2c.write_byte_data(self.motor_address, self.kp_idq_hi_reg, self.normal_kp_hi)
 
     def get_motor_state(self):
-        try:
-            return self.i2c.read_byte_data(self.motor_address, self.enable_system_reg)
-        except IOError:
-            return 'IOError'
+        return self.i2c.read_byte_data(self.motor_address, self.enable_system_reg)
 
 
     def enable_system(self, block=False):
@@ -98,13 +94,10 @@ class Motor:
         if not self.system_is_enabled:
             return False
 
-        try:
-            self.i2c.write_byte_data(self.motor_address, self.accel_lo_reg, self.get_hi_lo_bytes(accel)[0])
-            self.i2c.write_byte_data(self.motor_address, self.accel_hi_reg, self.get_hi_lo_bytes(accel)[1])
-            if not from_jump_start:
-                self.acceleration = accel
-        except IOError, e:
-            print e
+        self.i2c.write_byte_data(self.motor_address, self.accel_lo_reg, self.get_hi_lo_bytes(accel)[0])
+        self.i2c.write_byte_data(self.motor_address, self.accel_hi_reg, self.get_hi_lo_bytes(accel)[1])
+        if not from_jump_start:
+            self.acceleration = accel
 
     def change_speed(self, speed):
         """ speed ... 0 - 100 (float / int)
@@ -113,14 +106,11 @@ class Motor:
             return False
         if speed < 10:
             speed = 0
-        try:
-            current_speed = self.get_speed()
-            if current_speed < 10 < speed:
-                threading.Thread(target=self.jump_start, args=[speed]).start()
-            else:
-                self.i2c.write_byte_data(self.motor_address, self.speed_reg, speed)
-        except IOError, e:
-            print e
+        current_speed = self.get_speed()
+        if current_speed < 10 < speed:
+            threading.Thread(target=self.jump_start, args=[speed]).start()
+        else:
+            self.i2c.write_byte_data(self.motor_address, self.speed_reg, speed)
 
     def jump_start(self, final_speed):
         print 'jump_start'
@@ -146,13 +136,10 @@ class Motor:
         if not self.system_is_enabled:
             return False
 
-        try:
-            self.change_speed(0)
-            while self.get_speed() > 10:
-                time.sleep(0.1)
-            self.i2c.write_byte_data(self.motor_address, self.direction_reg, direction)
-        except IOError, e:
-            print e
+        self.change_speed(0)
+        while self.get_speed() > 10:
+            time.sleep(0.1)
+        self.i2c.write_byte_data(self.motor_address, self.direction_reg, direction)
 
 
     def get_speed(self):
@@ -161,74 +148,53 @@ class Motor:
         if not self.system_is_enabled:
             return False
 
-        try:
-            hi = self.i2c.read_byte_data(self.motor_address, self.speed_est_hi_r_reg)
-            lo = self.i2c.read_byte_data(self.motor_address, self.speed_est_lo_r_reg)
-            return hi * 255 + lo
-        except IOError, e:
-            print e
+        hi = self.i2c.read_byte_data(self.motor_address, self.speed_est_hi_r_reg)
+        lo = self.i2c.read_byte_data(self.motor_address, self.speed_est_lo_r_reg)
+        return hi * 255 + lo
 
     def get_torque(self):
         if not self.system_is_enabled:
             return False
 
-        try:
-            hi = self.i2c.read_byte_data(self.motor_address, self.torque_hi_r_reg)
-            lo = self.i2c.read_byte_data(self.motor_address, self.torque_lo_r_reg)
-            return hi * 255 + lo
-        except IOError, e:
-            print e
+        hi = self.i2c.read_byte_data(self.motor_address, self.torque_hi_r_reg)
+        lo = self.i2c.read_byte_data(self.motor_address, self.torque_lo_r_reg)
+        return hi * 255 + lo
 
     def get_bus_voltage(self):
         if not self.system_is_enabled:
             return False
 
-        try:
-            return self.i2c.read_byte_data(self.motor_address, self.bus_voltage_r_reg)
-        except IOError, e:
-            print e
+        return self.i2c.read_byte_data(self.motor_address, self.bus_voltage_r_reg)
 
     def get_direction(self):
         if not self.system_is_enabled:
             return False
 
-        try:
-            return self.i2c.read_byte_data(self.motor_address, self.direction_reg)
-        except IOError, e:
-            print e
+        return self.i2c.read_byte_data(self.motor_address, self.direction_reg)
 
     def get_accel(self):
         if not self.system_is_enabled:
             return False
 
-        try:
-            hi = self.i2c.read_byte_data(self.motor_address, self.accel_hi_reg)
-            lo = self.i2c.read_byte_data(self.motor_address, self.accel_lo_reg)
-            return hi * 255 + lo
-        except IOError, e:
-            print e
+        hi = self.i2c.read_byte_data(self.motor_address, self.accel_hi_reg)
+        lo = self.i2c.read_byte_data(self.motor_address, self.accel_lo_reg)
+        return hi * 255 + lo
 
     def get_kp(self):
         if not self.system_is_enabled:
             return False
 
-        try:
-            hi = self.i2c.read_byte_data(self.motor_address, self.kp_idq_hi_reg)
-            lo = self.i2c.read_byte_data(self.motor_address, self.kp_idq_lo_reg)
-            return hi * 255 + lo
-        except IOError, e:
-            print e
+        hi = self.i2c.read_byte_data(self.motor_address, self.kp_idq_hi_reg)
+        lo = self.i2c.read_byte_data(self.motor_address, self.kp_idq_lo_reg)
+        return hi * 255 + lo
 
     def get_ki(self):
         if not self.system_is_enabled:
             return False
 
-        try:
-            hi = self.i2c.read_byte_data(self.motor_address, self.ki_idq_hi_reg)
-            lo = self.i2c.read_byte_data(self.motor_address, self.ki_idq_lo_reg)
-            return hi * 255 + lo
-        except IOError, e:
-            print e
+        hi = self.i2c.read_byte_data(self.motor_address, self.ki_idq_hi_reg)
+        lo = self.i2c.read_byte_data(self.motor_address, self.ki_idq_lo_reg)
+        return hi * 255 + lo
 
     def get_hi_lo_bytes(self, val):
         acc = int(val * (self.max_255_val / 100))
@@ -248,12 +214,3 @@ class Motor:
 
     def __str__(self):
         return self.motor_name
-
-if __name__ == '__main__':
-    m = Motor(motor_address=0x07,
-              motor_name='test_motor',
-              rpi_revision=1)
-    m.enable_system(block=True)
-    m.change_speed(15)
-    raw_input('asdf')
-    m.disable_system()
