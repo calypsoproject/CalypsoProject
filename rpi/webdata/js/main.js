@@ -11,6 +11,16 @@ function visually_enable_motor(id) {
 	$(id).css({'border-color': '#3ADD36'});
 }
 
+function rikvrc(id) {
+	$(id + ' > div').css({'background-color': '#F08F00'});
+	$(id).css({'border-color': '#F08F00'});
+}
+
+function naprej(id) {
+	$(id + ' > div').css({'background-color': '#3ADD36'});	
+	$(id).css({'border-color': '#3ADD36'});
+}
+
 function change_progress_bar(id, height) {
 	$(id + ' > div').clearQueue().animate({'height': height}, 600);
 	update_text(id, height, 0);
