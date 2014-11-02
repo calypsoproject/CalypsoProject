@@ -1,14 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-<head>
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 	<script language="javascript" type="text/javascript" src="js/jquery.js"></script>
 	<script src="js/main.js"></script>
     <link href='http://fonts.googleapis.com/css?family=Arvo' rel='stylesheet' type='text/css'>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>Calypso Control</title>
-
 <style>
 html {
 	height: 100%;
@@ -78,25 +75,8 @@ body {
 }
 
 .progress_container {
-	
 	width:8%;
 	height:30%;
-
-	transform:rotate(180deg); 
-	border:1px solid #3add36;
-	border-radius: 3px;
-}
-
-.progress_text {
-	position: absolute;
-	text-align:center;
-	transform:rotate(180deg); 
-    vertical-align: middle;
-    color: white;
-	top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
 }
 
 burek {
@@ -161,45 +141,44 @@ height:8.5vh;
 </style>
 </head>
 <body>
-<img src="logo.png" id="logo-img">
+<img src="img/logo.png" id="logo-img">
 <div id="middle_cont">
-	<div id="podmornica-pbars-container">
-		<div class="side-pbars">
-			<div class="pbars-margin-hack">
-				<div class="pbars" id="left-top-pbar">
+	<div id="sub_prog">
+		<div id="sub_div">
+			<img src="img/podmornica.png" id="podmornica-img">
+            <div id="bar_div">
+              <div id="container1" class="progress_container" style="position:absolute; left:0%; bottom:-10%">
+                  <div class="pbars" id="left-bot-pbar">
 				  <div class="percentage"><t>0%</t></div>
 				</div>
-			</div>
-			<div class="pbars-margin-hack">
-				<div class="pbars" id="left-mid-pbar">
+              </div>
+              <div id="container2" class="progress_container" style="position:absolute; left:0%; bottom:23.5%;">
+                  <div class="pbars" id="left-mid-pbar">
 				  <div class="percentage"><t>0%</t></div>
 				</div>
-			</div>
-			<div class="pbars-margin-hack">
-				<div class="pbars" id="left-bot-pbar">
+              </div>
+              <div id="container3" class="progress_container" style="position:absolute; left:0%; bottom:57%;">
+                  <div class="pbars" id="left-top-pbar">
 				  <div class="percentage"><t>0%</t></div>
 				</div>
-			</div>
-		</div>
-		<img id="podmornica-img" src="img/podmornica.png">
-		<div class="side-pbars">
-			<div class="pbars-margin-hack">
-				<div class="pbars" id="right-top-pbar">
+              </div>
+              <div id="container4" class="progress_container" style="position:absolute; right:0%; bottom:-10%;">
+                  <div class="pbars" id="right-bot-pbar">
 				  <div class="percentage"><t>0%</t></div>
 				</div>
-			</div>
-			<div class="pbars-margin-hack">
-				<div class="pbars" id="right-mid-pbar">
+              </div>
+              <div id="container5" class="progress_container" style="position:absolute; right:0%; bottom:23.5%;">
+                  <div class="pbars" id="right-mid-pbar">
 				  <div class="percentage"><t>0%</t></div>
 				</div>
-			</div>
-			<div class="pbars-margin-hack">
-				<div class="pbars" id="right-bot-pbar">
+              </div>
+              <div id="container6" class="progress_container" style="position:absolute; right:0%; bottom:57%;">
+                  <div class="pbars" id="right-top-pbar">
 				  <div class="percentage"><t>0%</t></div>
 				</div>
-			</div>
-    	</div>
-		</div>
+              </div>
+        	</div>
+   		</div>
 	</div>
 </div>	
 
