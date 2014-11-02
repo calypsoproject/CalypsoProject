@@ -2,8 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Untitled Document</title>
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<script language="javascript" type="text/javascript" src="js/jquery.js"></script>
+	<script src="js/main.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Arvo' rel='stylesheet' type='text/css'>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Calypso Control</title>
 
 <style>
 html {
@@ -159,48 +163,43 @@ height:8.5vh;
 <body>
 <img src="logo.png" id="logo-img">
 <div id="middle_cont">
-	<div id="sub_prog">
-		<div id="sub_div">
-			<img src="sub.png" id="sub_img">
-            <div id="bar_div">
-              <div id="container1" class="progress_container" style="position:absolute; left:0%; bottom:-10%">
-                  <div id="top_left" class="progress_bar"
-                  style="height:50%">
-                  </div>
-              <p class="progress_text">0%</p>
-              </div>
-              <div id="container2" class="progress_container" style="position:absolute; left:0%; bottom:23.5%;">
-                  <div id="mid_left" class="progress_bar"
-                  style="height:50%">
-                  </div>
-                  <p class="progress_text">0%</p>
-              </div>
-              <div id="container3" class="progress_container" style="position:absolute; left:0%; bottom:57%;">
-                  <div id="bot_left" class="progress_bar"
-                  style="height:50%">
-                  </div>
-                  <p class="progress_text">0%</p>
-              </div>
-              <div id="container4" class="progress_container" style="position:absolute; right:0%; bottom:-10%;">
-                  <div id="top_right" class="progress_bar"
-                  style="height:50%">
-                  </div>
-                  <p class="progress_text">0%</p>
-              </div>
-              <div id="container5" class="progress_container" style="position:absolute; right:0%; bottom:23.5%;">
-                  <div id="mid_right" class="progress_bar"
-                  style="height:50%">
-                  </div>
-                  <p class="progress_text">0%</p>
-              </div>
-              <div id="container6" class="progress_container" style="position:absolute; right:0%; bottom:57%;">
-                  <div id="bot_right" class="progress_bar"
-                  style="height:100%">
-                  </div>
-                  <p class="progress_text">0%</p>
-              </div>
-        	</div>
-   		</div>
+	<div id="podmornica-pbars-container">
+		<div class="side-pbars">
+			<div class="pbars-margin-hack">
+				<div class="pbars" id="left-top-pbar">
+				  <div class="percentage"><t>0%</t></div>
+				</div>
+			</div>
+			<div class="pbars-margin-hack">
+				<div class="pbars" id="left-mid-pbar">
+				  <div class="percentage"><t>0%</t></div>
+				</div>
+			</div>
+			<div class="pbars-margin-hack">
+				<div class="pbars" id="left-bot-pbar">
+				  <div class="percentage"><t>0%</t></div>
+				</div>
+			</div>
+		</div>
+		<img id="podmornica-img" src="img/podmornica.png">
+		<div class="side-pbars">
+			<div class="pbars-margin-hack">
+				<div class="pbars" id="right-top-pbar">
+				  <div class="percentage"><t>0%</t></div>
+				</div>
+			</div>
+			<div class="pbars-margin-hack">
+				<div class="pbars" id="right-mid-pbar">
+				  <div class="percentage"><t>0%</t></div>
+				</div>
+			</div>
+			<div class="pbars-margin-hack">
+				<div class="pbars" id="right-bot-pbar">
+				  <div class="percentage"><t>0%</t></div>
+				</div>
+			</div>
+    	</div>
+		</div>
 	</div>
 </div>	
 
