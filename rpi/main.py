@@ -1,8 +1,6 @@
+from GUI import app
 from server import Server
 from I2C.MotorsHandler import MotorsHandler
-
-__author__ = 'prog'
-
 
 class Calypso:
     def __init__(self):
@@ -35,4 +33,6 @@ class Calypso:
             return e
 
 if __name__ == '__main__':
-    Calypso()
+    calypso = Calypso()
+    app.config['calypso'] = calypso
+    app.run(calypso.server.hostname, 80)

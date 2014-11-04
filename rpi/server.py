@@ -11,10 +11,12 @@ class Server:
         """
         self.command_handler = command_handler
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        hostname = ([(s.connect(('8.8.8.8', 80)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1])  # socket.gethostname() returns wrong value
-        self.socket.bind((hostname, listen_port))
+        self.hostname = ([(s.connect(('8.8.8.8', 80)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1])  # socket.gethostname() returns wrong value
+        self.socket.bind((self.hostname, listen_port))
         self.socket.listen(1)
-        threading.Thread(target=self.communication_thread).start()
+        t = threading.Thread(target=self.communication_thread)
+        t.daemon = True
+        t.start()
 
     def communication_thread(self):
         """ waits for connection with client and spawns
