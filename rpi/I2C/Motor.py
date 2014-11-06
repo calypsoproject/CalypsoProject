@@ -147,11 +147,14 @@ class Motor:
         self.i2c.write_byte_data(self.motor_address, self.direction_reg, direction)
 
 
-    def get_speed(self):
-        """ returns value in rpm
+    def get_speed(self, percent=False):
+        """ returns value in rpm or in percent
         """
         if not self.get_motor_state():
             return False
+
+        if percent:
+            return self.i2c.read_byte_data(self.motor_address, self.speed_reg)
 
         hi = self.i2c.read_byte_data(self.motor_address, self.speed_est_hi_r_reg)
         lo = self.i2c.read_byte_data(self.motor_address, self.speed_est_lo_r_reg)
