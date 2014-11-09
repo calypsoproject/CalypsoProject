@@ -83,7 +83,7 @@ class hmc5883l:
     def degrees(self, headingDeg):
         degrees = math.floor(headingDeg)
         minutes = round((headingDeg - degrees) * 60)
-        return (degrees, minutes)
+        return [degrees, minutes]
 
     def __str__(self):
         return 'compass'

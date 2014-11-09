@@ -77,7 +77,7 @@ class SensorITG3200(object):
         gx = int_sw_swap(self.bus.read_word_data(self.addr, 0x1d))
         gy = int_sw_swap(self.bus.read_word_data(self.addr, 0x1f))
         gz = int_sw_swap(self.bus.read_word_data(self.addr, 0x21))
-        return (gx, gy, gz)
+        return {'x': gx, 'y': gy, 'z': gz}
 
     def __str__(self):
         return 'gyroscope'
