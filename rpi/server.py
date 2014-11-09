@@ -1,15 +1,15 @@
-import pickle
+import json
 import socket
 import threading
 
 __author__ = 'prog'
 
 class Server:
-    def __init__(self, command_handler, listen_port):
+    def __init__(self, calypso_instance, listen_port):
         """ command_handler ... is called with recieved command and client socket as parameters
             timeout ... how long it will wait for message before closing clientsocket
         """
-        self.command_handler = command_handler
+        self.calypso_instance = calypso_instance
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.hostname = ([(s.connect(('8.8.8.8', 80)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1])  # socket.gethostname() returns wrong value
         self.socket.bind((self.hostname, listen_port))
@@ -35,8 +35,16 @@ class Server:
         """
         while 1:
             try:
-                result = self.command_handler(clientsocket.recv(8192), clientsocket)
-                clientsocket.sendall(pickle.dumps(result))
+                result = self.exec_command(clientsocket.recv(8192))
+                clientsocket.sendall(result)
             except:
                 clientsocket.close()
                 break
+
+    def exec_command(self, command):
+        try:
+            result = None
+            exec 'result = self.calypso_instance.' + command
+            return json.dumps(result)
+        except Exception, e:
+            return str(e)

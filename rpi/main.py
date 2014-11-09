@@ -6,7 +6,7 @@ from I2C.MotorsHandler import MotorsHandler
 
 class Calypso:
     def __init__(self):
-        self.server = Server(self.command_from_server,
+        self.server = Server(calypso_instance=self,
                              listen_port=8888)
 
         i2c_common = I2CCommon(rpi_revision=1)
@@ -27,16 +27,6 @@ class Calypso:
                                                               motor_name='middle left')
 
         self.sensors = Sensors(i2c_common)
-
-    def command_from_server(self, command, clientsocket):
-        """ executes command, recieved from server and returns result
-        """
-        try:
-            result = None
-            exec command
-            return result
-        except Exception, e:
-            return e
 
 if __name__ == '__main__':
     calypso = Calypso()
