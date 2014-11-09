@@ -1,6 +1,5 @@
 import threading
 import time
-import smbus
 from Motor import Motor
 import RPi.GPIO as GPIO
 
@@ -10,8 +9,8 @@ class MotorsHandler():
     reset_delay = 1  # sec
     resetting = False
 
-    def __init__(self, rpi_revision=1):
-        self.i2c_common = I2CCommon(rpi_revision)
+    def __init__(self, i2c_common):
+        self.i2c_common = i2c_common
 
     def reset_boards(self, from_thread=False):
         """ sends 3.3V to controllers
@@ -58,17 +57,3 @@ class MotorsHandler():
         for motor in self.initialized_motors:
             result[str(motor)] = motor.get_values()
         return result
-
-
-class I2CCommon():
-    def __init__(self, rpi_revision):
-        self.lock = threading.RLock()
-        self.i2c = smbus.SMBus(rpi_revision)
-
-    def write_byte_data(self, address, register, data):
-        with self.lock:
-            self.i2c.write_byte_data(address, register, data)
-
-    def read_byte_data(self, address, register):
-        with self.lock:
-            return self.read_byte_data(address, register)

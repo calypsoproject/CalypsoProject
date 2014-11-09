@@ -1,5 +1,7 @@
 from GUI import app
+from I2C.I2C_common import I2CCommon
 from server import Server
+from I2C.Sensors import Sensors
 from I2C.MotorsHandler import MotorsHandler
 
 class Calypso:
@@ -7,8 +9,10 @@ class Calypso:
         self.server = Server(self.command_from_server,
                              listen_port=8888)
 
+        i2c_common = I2CCommon(rpi_revision=1)
+
         ## motors initialization
-        self.motor_handler = MotorsHandler()
+        self.motor_handler = MotorsHandler(i2c_common)
         self.forward_left_motor = self.motor_handler.new_motor(motor_address=0x01,
                                                                motor_name='forward left')
         self.forward_right_motor = self.motor_handler.new_motor(motor_address=0x02,
@@ -21,6 +25,8 @@ class Calypso:
                                                                motor_name='middle right')
         self.middle_left_motor = self.motor_handler.new_motor(motor_address=0x06,
                                                               motor_name='middle left')
+
+        self.sensors = Sensors(i2c_common)
 
     def command_from_server(self, command, clientsocket):
         """ executes command, recieved from server and returns result
