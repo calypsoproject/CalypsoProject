@@ -1,8 +1,4 @@
 $(document).ready(function() {
-    $.get( "api/forward_right_motor.get_accel()", function( data ) {
-		$( "#accel" ).val(data);
-		$( "#accel_val" ).val(data);
-	});
 });
 
 function change_speed(speed, motor) {

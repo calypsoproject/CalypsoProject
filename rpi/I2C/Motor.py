@@ -9,8 +9,8 @@ class Motor:
     jump_speed = 20
     jump_accel = 5
     jump_start_duration = 0.6
-    start_kp_hi = 0x18
-    start_kp_lo = 0x87
+    start_kp_hi = 0x23
+    start_kp_lo = 0x4B
 
     ## I2C write registers
     enable_system_reg   = 0x01
@@ -33,12 +33,12 @@ class Motor:
     ## other constants
     max_255_val = 65535
     normal_kp_hi = 0x02
-    normal_kp_lo = 0x84
+    normal_kp_lo = 0x63
     minimal_speed = 10
     enable_timeout = 8
     lock_all_operations = False
 
-    def __init__(self, motor_address, i2c_common, motor_name='motor', acceleration=2):
+    def __init__(self, motor_address, i2c_common, motor_name='motor', rpi_revision=1, acceleration=2):
         self.motor_address = motor_address
         self.acceleration = acceleration
         self.i2c = i2c_common
