@@ -34,23 +34,28 @@ class MotorsHandler():
         self.initialized_motors.append(motor)
         return motor
 
-    def enable_all(self, block=False):
+    def enable(self, block=False):
         for motor in self.initialized_motors:
             motor.enable_system()
         if block:
             time.sleep(Motor.enable_timeout)
 
-    def disable_all(self):
+    def disable(self):
         for motor in self.initialized_motors:
             motor.disable_system()
 
-    def change_accel_all(self, acceleration):
+    def set_accel(self, acceleration):
         for motor in self.initialized_motors:
-            motor.change_accel(acceleration)
+            motor.set_accel(acceleration)
 
-    def change_speed_all(self, speed):
+    def set_speed(self, speed):
         for motor in self.initialized_motors:
-            motor.change_speed(speed)
+            motor.set_speed(speed)
+
+    def set_kp(self, kp):
+        for motor in self.initialized_motors:
+            motor.set_kp(kp)
+        print 'kp:', kp
 
     def get_status(self):
         result = {}

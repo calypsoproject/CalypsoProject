@@ -5,9 +5,18 @@ from compass import hmc5883l
 
 class Sensors:
     def __init__(self, i2c_common, accelerometer_addr=0x00, gyroscope_addr=0x00, compass_addr=0x00):
-        self.accelerometer = ADXL345(i2c_common, address=accelerometer_addr)
-        self.gyroscope = SensorITG3200(i2c_common, address=gyroscope_addr)
-        self.compass = hmc5883l(i2c_common, address=compass_addr)
+        self.i2c_common = i2c_common
+        self.accelerometer_addr = accelerometer_addr
+        self.gyroscope_addr = gyroscope_addr
+        self.compass_addr = compass_addr
+
+    def init_sensors(self):
+        try: self.accelerometer = ADXL345(self.i2c_common, address=self.accelerometer_addr)
+        except: self.accelerometer = None
+        try: self.gyroscope = SensorITG3200(self.i2c_common, address=self.gyroscope_addr)
+        except: self.gyroscope = None
+        try: self.compass = hmc5883l(self.i2c_common, address=self.compass_addr)
+        except: self.compass = None
 
         self.initialized_sensors = [self.accelerometer, self.compass, self.gyroscope]
 

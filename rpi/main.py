@@ -13,17 +13,17 @@ class Calypso:
 
         ## motors initialization
         self.motor_handler = MotorsHandler(i2c_common)
-        self.forward_left_motor = self.motor_handler.new_motor(motor_address=0x01,
+        self.forward_left_motor = self.motor_handler.new_motor(motor_address=0x05,
                                                                motor_name='forward left')
-        self.forward_right_motor = self.motor_handler.new_motor(motor_address=0x02,
+        self.forward_right_motor = self.motor_handler.new_motor(motor_address=0x06,
                                                                 motor_name='forward right')
-        self.side_right_motor = self.motor_handler.new_motor(motor_address=0x03,
+        self.side_right_motor = self.motor_handler.new_motor(motor_address=0x07,
                                                              motor_name='side right')
-        self.side_left_motor = self.motor_handler.new_motor(motor_address=0x04,
+        self.side_left_motor = self.motor_handler.new_motor(motor_address=0x08,
                                                             motor_name='side left')
-        self.middle_right_motor = self.motor_handler.new_motor(motor_address=0x05,
+        self.middle_right_motor = self.motor_handler.new_motor(motor_address=0x09,
                                                                motor_name='middle right')
-        self.middle_left_motor = self.motor_handler.new_motor(motor_address=0x06,
+        self.middle_left_motor = self.motor_handler.new_motor(motor_address=0x10,
                                                               motor_name='middle left')
 
         self.sensors = Sensors(i2c_common)

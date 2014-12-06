@@ -20,6 +20,7 @@ def api(req):
 
 @app.route('/api/raw/<path:req>')
 def raw_api(req):
+    self = app.config["calypso"]
     result = None
     try:
         exec req

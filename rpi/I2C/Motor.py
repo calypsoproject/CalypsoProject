@@ -38,7 +38,7 @@ class Motor:
     enable_timeout = 8
     lock_all_operations = False
 
-    def __init__(self, motor_address, i2c_common, motor_name='motor', rpi_revision=1, acceleration=2):
+    def __init__(self, motor_address, i2c_common, motor_name='motor', acceleration=2):
         self.motor_address = motor_address
         self.acceleration = acceleration
         self.i2c = i2c_common
@@ -58,11 +58,13 @@ class Motor:
         self.i2c.write_byte_data(self.motor_address, self.kp_idq_hi_reg, self.normal_kp_hi)
 
     def get_motor_state(self):
-        if not self.lock_all_operations:
+        if self.lock_all_operations:
+            print 'here'
             return None
         try:
             return self.i2c.read_byte_data(self.motor_address, self.enable_system_reg)
-        except:
+        except Exception, e:
+            print e
             return None
 
 
@@ -92,7 +94,7 @@ class Motor:
             return False
         self.i2c.write_byte_data(self.motor_address, self.enable_system_reg, 0)
 
-    def change_accel(self, accel, from_jump_start=False):
+    def set_accel(self, accel, from_jump_start=False):
         """ accel ... 0 - 100 (float / int)
         """
         if not self.get_motor_state():
@@ -103,7 +105,7 @@ class Motor:
         if not from_jump_start:
             self.acceleration = accel
 
-    def change_speed(self, speed):
+    def set_speed(self, speed):
         """ speed ... 0 - 100 (float / int)
         """
         if not self.get_motor_state() or speed < 0 or speed > 100:
@@ -118,7 +120,7 @@ class Motor:
 
     def jump_start(self, final_speed):
         print 'jump_start'
-        self.change_accel(self.jump_accel, from_jump_start=True)
+        self.set_accel(self.jump_accel, from_jump_start=True)
 
         self.lock_all_operations = True
         self.i2c.write_byte_data(self.motor_address, self.speed_reg, self.jump_speed)
@@ -131,22 +133,22 @@ class Motor:
         self.i2c.write_byte_data(self.motor_address, self.kp_idq_lo_reg, self.normal_kp_lo)
         self.i2c.write_byte_data(self.motor_address, self.kp_idq_hi_reg, self.normal_kp_hi)
 
-        self.change_accel(self.acceleration)
+        self.set_accel(self.acceleration)
         self.i2c.write_byte_data(self.motor_address, self.speed_reg, final_speed)
         self.lock_all_operations = False
 
-    def change_direction(self, direction):
+    def set_direction(self, direction):
         """ direction ... 1 / 0 (int)
         """
         if not self.get_motor_state():
             return False
 
-        self.change_speed(0)
+        self.set_speed(0)
         while self.get_speed() > 10:
             time.sleep(0.1)
         self.i2c.write_byte_data(self.motor_address, self.direction_reg, direction)
 
-
+    
     def get_speed(self, percent=False):
         """ returns value in rpm or in percent
         """
@@ -195,6 +197,15 @@ class Motor:
         hi = self.i2c.read_byte_data(self.motor_address, self.kp_idq_hi_reg)
         lo = self.i2c.read_byte_data(self.motor_address, self.kp_idq_lo_reg)
         return hi * 255 + lo
+    
+    def set_kp(self, kp):
+        """ accel ... 0 - 100 (float / int)
+        """
+        if not self.get_motor_state():
+            return False
+
+        self.i2c.write_byte_data(self.motor_address, self.kp_idq_lo_reg, self.get_hi_lo_bytes(kp)[0])
+        self.i2c.write_byte_data(self.motor_address, self.kp_idq_hi_reg, self.get_hi_lo_bytes(kp)[1])
 
     def get_ki(self):
         if not self.get_motor_state():
