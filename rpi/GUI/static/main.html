@@ -21,27 +21,26 @@
 		<button onclick="$.get('api/motor_handler.disable()'); disable_system();">disable system</button>
 		<br>
 		
-		Motor1: <input class="sliders" id="motor1" type="range" value="0" min="9" max="30" onchange="change_speed($('#motor1').val(), 'forward_left_motor'); $('#motor_text_1').val($('#motor1').val());">
+		Motor1: <input class="sliders" id="motor1" type="range" value="0" min="0" max="20" onchange="change_speed($('#motor1').val(), 'forward_left_motor'); $('#motor_text_1').val($('#motor1').val());">
 		<input class="text_val" id="motor_text_1" type="text" onchange="change_speed($('#motor_text_1').val(), 'forward_left_motor'); $('#motor1').val($('#motor_text_1').val());">
 		 Reverse: <input id="checkbox1" type="checkbox" onchange="$.get('api/forward_left_motor.set_direction('+~~!$('#checkbox1').is(':checked')+')');"><br>
 		
-		Motor2: <input class="sliders" id="motor2" type="range" value="0" min="9" max="30" onchange="change_speed($('#motor2').val(), 'forward_right_motor'); $('#motor_text_2').val($('#motor2').val());">
-		<input class="text_val" id="motor_text_2" type="text" onchange="change_speed($('#motor_text_2').val(), 'forward_right_motor'); $('#motor2').val($('#motor_text_2').val());">
+		Motor2: <input class="sliders" id="motor2" type="range" value="0" min="0" max="20" onchange="change_speed($('#motor2').val(), 'forward_right_motor'); $('#motor_text_2').val($('#motor2').val());"> <input class="text_val" id="motor_text_2" type="text" onchange="change_speed($('#motor_text_2').val(), 'forward_right_motor'); $('#motor2').val($('#motor_text_2').val());">
 		Reverse: <input id="checkbox2" type="checkbox" onchange="$.get('api/forward_right_motor.set_direction('+~~!$('#checkbox2').is(':checked')+')');"><br>
 		
-		Motor3: <input class="sliders" id="motor3" type="range" value="0" min="9" max="30" onchange="change_speed($('#motor3').val(), 'side_right_motor'); $('#motor_text_3').val($('#motor3').val());">
+		Motor3: <input class="sliders" id="motor3" type="range" value="0" min="0" max="20" onchange="change_speed($('#motor3').val(), 'side_right_motor'); $('#motor_text_3').val($('#motor3').val());">
 		<input class="text_val" id="motor_text_3" type="text" onchange="change_speed($('#motor_text_3').val(), 'side_right_motor'); $('#motor3').val($('#motor_text_3').val());">
 		Reverse: <input id="checkbox3" type="checkbox" onchange="$.get('api/side_right_motor.set_direction('+~~!$('#checkbox3').is(':checked')+')');"><br>
 		
-		Motor4: <input class="sliders" id="motor4" type="range" value="0" min="9" max="30" onchange="change_speed($('#motor4').val(), 'side_left_motor'); $('#motor_text_4').val($('#motor4').val());">
+		Motor4: <input class="sliders" id="motor4" type="range" value="0" min="0" max="20" onchange="change_speed($('#motor4').val(), 'side_left_motor'); $('#motor_text_4').val($('#motor4').val());">
 		<input class="text_val" id="motor_text_4" type="text" onchange="change_speed($('#motor_text_4').val(), 'side_left_motor'); $('#motor4').val($('#motor_text_4').val());">
 		Reverse: <input id="checkbox4" type="checkbox" onchange="$.get('api/side_left_motor.set_direction('+~~!$('#checkbox4').is(':checked')+')');"><br>
 		
-		Motor5: <input class="sliders" id="motor5" type="range" value="0" min="9" max="30" onchange="change_speed($('#motor5').val(), 'middle_right_motor'); $('#motor_text_5').val($('#motor5').val());">
+		Motor5: <input class="sliders" id="motor5" type="range" value="0" min="0" max="20" onchange="change_speed($('#motor5').val(), 'middle_right_motor'); $('#motor_text_5').val($('#motor5').val());">
 		<input class="text_val" id="motor_text_5" type="text" onchange="change_speed($('#motor_text_5').val(), 'middle_right_motor'); $('#motor5').val($('#motor_text_5').val());">
 		Reverse: <input id="checkbox5" type="checkbox" onchange="$.get('api/middle_right_motor.set_direction('+~~!$('#checkbox5').is(':checked')+')');"><br>
 		
-		Motor6: <input class="sliders" id="motor6" type="range" value="0" min="9" max="30" onchange="change_speed($('#motor6').val(), 'middle_left_motor'); $('#motor_text_6').val($('#motor6').val());">
+		Motor6: <input class="sliders" id="motor6" type="range" value="0" min="0" max="20" onchange="change_speed($('#motor6').val(), 'middle_left_motor'); $('#motor_text_6').val($('#motor6').val());">
 		<input class="text_val" id="motor_text_6" type="text" onchange="change_speed($('#motor_text_6').val(), 'middle_left_motor'); $('#motor6').val($('#motor_text_6').val());">
 		Reverse: <input id="checkbox6" type="checkbox" onchange="$.get('api/middle_left_motor.set_direction('+~~!$('#checkbox6').is(':checked')+')');"><br>
 		<br>
@@ -52,13 +51,6 @@
 			$('#accel').val($('#accel_val').val());
 			set_accel($('#accel_val').val());
 		"><br>
-		kp: <input class="sliders" id="kp" type="range" value="0" min="0" max="100" onchange="
-			$('#kp_val').val($('#kp').val());
-			set_kp($('#kp').val());
-		"><input class="text_val" id="kp_val" type="text" onchange="
-			$('#kp').val($('#kp_val').val());
-			set_kp($('#kp_val').val());
-		">
 		<br><br><br>
 		STATE: <p style="display: inline" id="state">0</p><br>
 		last response: <p style="display: inline" id="last_response"></p>

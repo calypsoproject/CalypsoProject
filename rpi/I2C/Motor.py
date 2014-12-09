@@ -8,8 +8,8 @@ class Motor:
     ## values if motor starts from 0 rpm
     jump_speed = 20
     jump_accel = 5
-    jump_start_duration = 0.6
-    start_kp_hi = 0x23
+    jump_start_duration = 0.5
+    start_kp_hi = 0x20
     start_kp_lo = 0x4B
 
     ## I2C write registers
@@ -113,6 +113,7 @@ class Motor:
         if speed < 10:
             speed = 0
         current_speed = self.get_speed()
+        print current_speed
         if current_speed < 10 < speed:
             threading.Thread(target=self.jump_start, args=[speed]).start()
         else:
