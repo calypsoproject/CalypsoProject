@@ -11,12 +11,14 @@
 <body>
 
 	<div class="calypso-outline-container">
-		<button onclick="setTimeout(function(){$('#state').text('1');}, 8000);
+		<button onclick="setTimeout(function(){
+		                    $('#state').text('1');
+		                    $.get( 'api/forward_right_motor.get_accel()', function( data ) {
+							    $( '#accel' ).val(data);
+							    $( '#accel_val' ).val(data);
+                            });
+		                }, 8000);
 						$.get('api/motor_handler.enable()');
-						$.get( 'api/forward_right_motor.get_accel()', function( data ) {
-							$( '#accel' ).val(data);
-							$( '#accel_val' ).val(data);
-						});
 						">enable system</button>
 		<button onclick="$.get('api/motor_handler.disable()'); disable_system();">disable system</button>
 		<br>
