@@ -5,6 +5,7 @@ import RPi.GPIO as GPIO
 
 
 class MotorsHandler():
+    motor = {}
     initialized_motors = []
     reset_delay = 1  # sec
     resetting = False
@@ -29,10 +30,11 @@ class MotorsHandler():
     def add_motor(self, motor_instance):
         self.initialized_motors.append(motor_instance)
 
-    def new_motor(self, motor_address, motor_name='motor', rpi_revision=1, acceleration=2):
-        motor = Motor(motor_address, self.i2c_common, motor_name, rpi_revision, acceleration)
-        self.initialized_motors.append(motor)
-        return motor
+    def new_motor(self, motor_address, motor_name, rpi_revision=1, kp_hi=None, kp_lo=None):
+        new_motor = Motor(motor_address, self.i2c_common, motor_name, rpi_revision, kp_hi, kp_lo)
+        self.motor[motor_name] = new_motor
+        self.initialized_motors.append(new_motor)
+        return new_motor
 
     def enable(self, block=False):
         for motor in self.initialized_motors:
