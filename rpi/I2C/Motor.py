@@ -39,6 +39,7 @@ class Motor:
     lock_all_operations = False
 
     def __init__(self, motor_address, i2c_common, motor_name, acceleration, kp_hi=None, kp_lo=None, jump_start_enabled=False):
+        self.jump_start_enabled = jump_start_enabled
         if kp_hi and kp_lo:
             self.normal_kp_hi = kp_hi
             self.normal_kp_lo = kp_lo
@@ -116,7 +117,7 @@ class Motor:
         if speed < self.minimal_speed:
             speed = 0
         current_speed = self.get_speed()
-        if current_speed < self.minimal_speed and speed:
+        if current_speed < self.minimal_speed and speed and self.jump_start_enabled:
             threading.Thread(target=self.jump_start, args=[speed]).start()
         else:
             self.i2c.write_byte_data(self.motor_address, self.speed_reg, speed)
@@ -191,7 +192,7 @@ class Motor:
 
         hi = self.i2c.read_byte_data(self.motor_address, self.accel_hi_reg)
         lo = self.i2c.read_byte_data(self.motor_address, self.accel_lo_reg)
-        return hi * 255 + lo
+        return self.get_percent_from_bytes(hi, lo)
 
     def get_kp(self):
         if not self.get_motor_state():
@@ -219,10 +220,14 @@ class Motor:
         return hi * 255 + lo
 
     def get_hi_lo_bytes(self, val):
-        acc = int(val * (self.max_255_val / 100))
+        acc = int(val * (self.max_255_val / 100.0))
         low = acc % 255
         high = (acc - low) / 255
         return [low, high]
+
+    def get_percent_from_bytes(self, high, low, n_digits=5):
+        val = high * 255 + low
+        return round(val / (self.max_255_val / 100.0), n_digits)
 
     def get_values(self):
         return {'speed': self.get_speed(),
