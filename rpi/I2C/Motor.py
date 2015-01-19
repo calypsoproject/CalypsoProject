@@ -6,11 +6,11 @@ __author__ = 'prog'
 
 class Motor:
     ## values if motor starts from 0 rpm
-    jump_speed = 20
-    jump_accel = 5
+    jump_speed = 10
+    jump_accel = 10
     jump_start_duration = 0.6
-    start_kp_hi = 0x23
-    start_kp_lo = 0x4B
+    start_kp_hi = 0x0B
+    start_kp_lo = 0xC3
 
     ## I2C write registers
     enable_system_reg   = 0x01
@@ -33,12 +33,14 @@ class Motor:
     ## other constants
     max_255_val = 65535
     normal_kp_hi = 0x02
-    normal_kp_lo = 0x63
+    normal_kp_lo = 0xB4
+    normal_ki_hi = 0x0E
+    normal_ki_lo = 0x64
     minimal_speed = 10
     enable_timeout = 8
     lock_all_operations = False
 
-    def __init__(self, motor_address, i2c_common, motor_name, acceleration, kp_hi=None, kp_lo=None, jump_start_enabled=False):
+    def __init__(self, motor_address, i2c_common, motor_name, acceleration, kp_hi=None, kp_lo=None, jump_start_enabled=True):
         self.jump_start_enabled = jump_start_enabled
         if kp_hi and kp_lo:
             self.normal_kp_hi = kp_hi
@@ -60,6 +62,8 @@ class Motor:
         self.i2c.write_byte_data(self.motor_address, self.accel_hi_reg, self.get_hi_lo_bytes(self.acceleration)[1])
         self.i2c.write_byte_data(self.motor_address, self.kp_idq_lo_reg, self.normal_kp_lo)
         self.i2c.write_byte_data(self.motor_address, self.kp_idq_hi_reg, self.normal_kp_hi)
+        self.i2c.write_byte_data(self.motor_address, self.ki_idq_lo_reg, self.normal_ki_lo)
+        self.i2c.write_byte_data(self.motor_address, self.ki_idq_hi_reg, self.normal_ki_hi)
 
     def get_motor_state(self):
         if self.lock_all_operations:
