@@ -30,8 +30,8 @@ class MotorsHandler():
     def add_motor(self, motor_instance):
         self.initialized_motors.append(motor_instance)
 
-    def new_motor(self, motor_address, motor_name, rpi_revision=1, kp_hi=None, kp_lo=None):
-        new_motor = Motor(motor_address, self.i2c_common, motor_name, rpi_revision, kp_hi, kp_lo)
+    def new_motor(self, motor_address, motor_name, acceleration=2, kp_hi=None, kp_lo=None):
+        new_motor = Motor(motor_address, self.i2c_common, motor_name, acceleration, kp_hi, kp_lo)
         self.motor[motor_name] = new_motor
         self.initialized_motors.append(new_motor)
         return new_motor
