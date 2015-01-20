@@ -14,3 +14,11 @@ class I2CCommon():
     def read_byte_data(self, address, register):
         with self.lock:
             return self.i2c.read_byte_data(address, register)
+
+    def read_word_data(self, address, register):
+        with self.lock:
+            return self.i2c.read_word_data(address, register)
+
+    def read_i2c_block_data(self, *args, **kwargs):
+        with self.lock:
+            return self.i2c.read_i2c_block_data(*args, **kwargs)

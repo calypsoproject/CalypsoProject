@@ -4,7 +4,7 @@ from compass import hmc5883l
 
 
 class Sensors:
-    def __init__(self, i2c_common, accelerometer_addr=0x00, gyroscope_addr=0x00, compass_addr=0x00):
+    def __init__(self, i2c_common, accelerometer_addr=0x53, gyroscope_addr=0x68, compass_addr=0x1E):
         self.i2c_common = i2c_common
         self.accelerometer_addr = accelerometer_addr
         self.gyroscope_addr = gyroscope_addr
@@ -21,4 +21,4 @@ class Sensors:
         self.initialized_sensors = [self.accelerometer, self.compass, self.gyroscope]
 
     def get_values(self):
-        return {str(sensor): sensor.read() for sensor in self.initialized_sensors}
+        return {str(sensor): sensor.read() for sensor in self.initialized_sensors if sensor}
