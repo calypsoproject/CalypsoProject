@@ -19,24 +19,25 @@ from objloader import *
 class ModelViewerThread(object):
     rx, ry, rz = (0, 0, 0)
     exit = False
-    zoom = -8
+    zoom = 0
     resizing = False
     def __init__(self, viewport=(800, 600)):
         self.viewport = viewport
         pygame.init()
         self.srf = pygame.display.set_mode(viewport, OPENGLBLIT | DOUBLEBUF | RESIZABLE)
 
-        glLightfv(GL_LIGHT0, GL_POSITION,  (-40, 200, 100, 0.0))
-        glLightfv(GL_LIGHT0, GL_AMBIENT, (0.2, 0.2, 0.2, 1.0))
-        glLightfv(GL_LIGHT0, GL_DIFFUSE, (0.5, 0.5, 0.5, 1.0))
-        glEnable(GL_LIGHT0)
+        glLightfv(GL_LIGHT0, GL_POSITION,  (0.7, 0.5, -1.5, 1.5))
+        glLightfv(GL_LIGHT0, GL_AMBIENT, (2.0, 1.8, 1.8, 0.0))
+        glLightfv(GL_LIGHT0, GL_DIFFUSE, (1.0, 0.9, 0.7, 1.0))
+        glLightfv(GL_LIGHT0, GL_SPECULAR, (1.0, 0.8, 0.3, 1.0))
+        glMaterialfv(GL_FRONT, GL_SPECULAR, [0.5, 0.5, 0.5, 0.50])
+        glMaterialfv(GL_FRONT, GL_SHININESS, [50.0])
         glEnable(GL_LIGHTING)
-        glEnable(GL_COLOR_MATERIAL)
+        glEnable(GL_LIGHT0)
         glEnable(GL_DEPTH_TEST)
-        glShadeModel(GL_SMOOTH)           # most obj files expect to be smooth-shaded
 
         # LOAD OBJECT AFTER PYGAME INIT
-        self.obj = OBJ('My_YellowSubmarine.obj', swapyz=True)
+        self.obj = OBJ('go5-b-005.obj', swapyz=True)
 
         self.clock = pygame.time.Clock()
 
@@ -44,8 +45,8 @@ class ModelViewerThread(object):
         glLoadIdentity()
         width, height = viewport
         gluPerspective(90.0, width/float(height), 1, 100.0)
-        glEnable(GL_DEPTH_TEST)
         glMatrixMode(GL_MODELVIEW)
+        glClearColor(0.01, 0.03, 0.1, 1.0)
 
     def update(self, parent=None):
         for e in pygame.event.get():
@@ -81,7 +82,6 @@ class ModelViewerThread(object):
 
 class ModelViewer(object):
     smooth = 20
-    threshold = 5
     roll, pitch, yaw = 0, 0, 0
     rx = 0
     ry = 0
@@ -90,10 +90,10 @@ class ModelViewer(object):
     ry_offset = 0
     rz_offset = 0
     rx_static_offset = 0
-    ry_static_offset = 290
+    ry_static_offset = 30
     rz_static_offset = 90
 
-    zoom = -8
+    zoom = -2
     exit = False
     
     roll_history = [0 for i in range(smooth)]
@@ -177,10 +177,16 @@ class ModelViewer(object):
             self.pitch_history.append(self.pitch)
             self.yaw_history.pop(0)
             self.yaw_history.append(self.yaw)
-            self.rx = sum(self.roll_history) / len(self.roll_history)
-            self.ry = sum(self.pitch_history) / len(self.pitch_history)
-            #self.rz = sum(self.yaw_history) / len(self.yaw_history)
-            # print self.rx, self.ry, self.rz
+
+            # if self.rx == 360:
+            #     self.rx = 0
+            # else:
+            #     self.rx += 1
+
+            self.ry = - sum(self.roll_history) / len(self.roll_history)
+            self.rz = sum(self.pitch_history) / len(self.pitch_history)
+            # self.rz = sum(self.yaw_history) / len(self.yaw_history)
+            print self.rz, self.ry
             time.sleep(1/30.0)
 
     def at_exit(self):
@@ -189,4 +195,4 @@ class ModelViewer(object):
 
 if __name__ == '__main__':
     mv = ModelViewer()
-    mv.start_retrieving_data('192.168.1.107')
+    mv.start_retrieving_data('10.42.0.100')
