@@ -26,14 +26,14 @@ class ModelViewerThread(object):
         pygame.init()
         self.srf = pygame.display.set_mode(viewport, OPENGLBLIT | DOUBLEBUF | RESIZABLE)
 
-        glLightfv(GL_LIGHT0, GL_POSITION,  (0.7, 0.5, -1.5, 1.5))
-        glLightfv(GL_LIGHT0, GL_AMBIENT, (2.0, 1.8, 1.8, 0.0))
-        glLightfv(GL_LIGHT0, GL_DIFFUSE, (1.0, 0.9, 0.7, 1.0))
-        glLightfv(GL_LIGHT0, GL_SPECULAR, (1.0, 0.8, 0.3, 1.0))
+        glLightfv(GL_LIGHT1, GL_POSITION,  (1.7, 0.5, -1.5, 1.5))
+        glLightfv(GL_LIGHT1, GL_AMBIENT, (2.0, 1.8, 1.8, 0.0))
+        glLightfv(GL_LIGHT1, GL_DIFFUSE, (1.0, 0.9, 0.7, 1.0))
+        glLightfv(GL_LIGHT1, GL_SPECULAR, (1.0, 0.8, 0.3, 1.0))
         glMaterialfv(GL_FRONT, GL_SPECULAR, [0.5, 0.5, 0.5, 0.50])
         glMaterialfv(GL_FRONT, GL_SHININESS, [50.0])
         glEnable(GL_LIGHTING)
-        glEnable(GL_LIGHT0)
+        glEnable(GL_LIGHT1)
         glEnable(GL_DEPTH_TEST)
 
         # LOAD OBJECT AFTER PYGAME INIT
@@ -195,4 +195,4 @@ class ModelViewer(object):
 
 if __name__ == '__main__':
     mv = ModelViewer()
-    mv.start_retrieving_data('10.42.0.100')
+    mv.start_retrieving_data('192.168.0.104')
