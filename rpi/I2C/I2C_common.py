@@ -1,5 +1,6 @@
 import threading
 import smbus
+import time
 
 
 class I2CCommon():
@@ -9,16 +10,31 @@ class I2CCommon():
 
     def write_byte_data(self, address, register, data):
         with self.lock:
-            self.i2c.write_byte_data(address, register, data)
+            try:
+                self.i2c.write_byte_data(address, register, data)
+            except:
+                print 'i2c error'
 
     def read_byte_data(self, address, register):
         with self.lock:
-            return self.i2c.read_byte_data(address, register)
+            try:
+                val = self.i2c.read_byte_data(address, register)
+                return val
+            except:
+                print 'i2c error'
 
     def read_word_data(self, address, register):
         with self.lock:
-            return self.i2c.read_word_data(address, register)
+            try:
+                val = self.i2c.read_word_data(address, register)
+                return val
+            except:
+                print 'i2c error'
 
     def read_i2c_block_data(self, *args, **kwargs):
         with self.lock:
-            return self.i2c.read_i2c_block_data(*args, **kwargs)
+            try:
+                val = self.i2c.read_i2c_block_data(*args, **kwargs)
+                return val
+            except:
+                print 'i2c error'

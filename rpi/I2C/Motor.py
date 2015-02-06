@@ -1,6 +1,7 @@
 import threading
 import time
 import atexit
+import sys
 
 __author__ = 'prog'
 
@@ -40,6 +41,7 @@ class Motor:
     enable_timeout = 8
     lock_all_operations = False
     speed = 0
+    current_direction = 0
 
     def __init__(self, motor_address, i2c_common, motor_name, acceleration, kp_hi=None, kp_lo=None, jump_start_enabled=True):
         self.jump_start_enabled = jump_start_enabled
@@ -53,8 +55,9 @@ class Motor:
         self.motor_name = motor_name
 
     def at_exit(self):
-        print 'exiting:', self.motor_name
+        print 'exiting:', self.motor_name,
         self.disable_system()
+        sys.stdout.flush()
 
     def init_motor(self):
         if not self.get_motor_state():
@@ -72,6 +75,9 @@ class Motor:
             return None
         try:
             return self.i2c.read_byte_data(self.motor_address, self.enable_system_reg)
+        except IOError:
+            print 'motor %s is disconnected' % self.motor_name
+            return False
         except Exception, e:
             print e
             return None
@@ -119,6 +125,17 @@ class Motor:
         """
         if not self.get_motor_state() or speed < 0 or speed > 100:
             return False
+
+        if speed < 0 and self.current_direction == 0:
+            self.current_direction = 1
+            self.set_direction(1, end_speed=speed)
+            return
+
+        elif speed > 0 and self.current_direction == 1:
+            self.current_direction = 0
+            self.set_direction(0, end_speed=speed)
+            return
+
         if speed < self.minimal_speed:
             speed = 0
         current_speed = self.get_speed()
@@ -142,8 +159,9 @@ class Motor:
         while time.time() - start < self.jump_start_duration and speed == 0:
             hi = self.i2c.read_byte_data(self.motor_address, self.speed_est_hi_r_reg)
             lo = self.i2c.read_byte_data(self.motor_address, self.speed_est_lo_r_reg)
-            speed = hi * 255 + lo
-            time.sleep(0.05)
+            try: speed = hi * 255 + lo
+            except: speed = 0
+            time.sleep(0.1)
 
         self.i2c.write_byte_data(self.motor_address, self.kp_idq_lo_reg, self.normal_kp_lo)
         self.i2c.write_byte_data(self.motor_address, self.kp_idq_hi_reg, self.normal_kp_hi)
@@ -154,11 +172,14 @@ class Motor:
         self.set_accel(self.acceleration)
 
         if speed == 0 and repeat:
-            time.sleep(0.5)
+            time.sleep(1)
             print 'jump_start failed. repeating...'
             self.jump_start(speed, repeat=False)
 
-    def set_direction(self, direction):
+        elif speed == 0:
+            print 'jump start failed'
+
+    def set_direction(self, direction, end_speed=None):
         """ direction ... 1 / 0 (int)
         """
         if not self.get_motor_state():
@@ -171,6 +192,8 @@ class Motor:
         time.sleep(0.1)
         print current_speed, self.get_speed(percent=True), self.get_speed(percent_estimated=True)
         self.i2c.write_byte_data(self.motor_address, self.direction_reg, direction)
+        if end_speed is not None:
+            current_speed = end_speed
         self.set_speed(current_speed)
 
 

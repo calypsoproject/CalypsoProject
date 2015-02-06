@@ -16,19 +16,23 @@ class Calypso:
         ## motors initialization
         self.motor_handler = MotorsHandler(i2c_common)
         self.forward_left_motor = self.motor_handler.new_motor(motor_address=0x05,
-                                                               motor_name='mr')
+                                                               motor_name='ml')
         self.forward_right_motor = self.motor_handler.new_motor(motor_address=0x06,
-                                                                motor_name='tr')
+                                                                motor_name='fr')
         self.side_right_motor = self.motor_handler.new_motor(motor_address=0x07,
                                                              motor_name='fl')
         self.side_left_motor = self.motor_handler.new_motor(motor_address=0x08,
-                                                            motor_name='br')
+                                                            motor_name='bl')
         self.middle_right_motor = self.motor_handler.new_motor(motor_address=0x09,
-                                                               motor_name='bl')
+                                                               motor_name='br')
         self.middle_left_motor = self.motor_handler.new_motor(motor_address=0x10,
                                                               motor_name='mr')
 
         self.sensors = Sensors(i2c_common)
+
+    def a(self):
+        while 1:
+            print self.forward_left_motor.get_motor_state()
 
 if __name__ == '__main__':
     calypso = Calypso()
