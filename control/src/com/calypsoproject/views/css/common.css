@@ -1,0 +1,32 @@
+.toggle-buttons {
+	-fx-background-color: #444444;
+	-fx-font-weight: bold;
+	-fx-background-radius: 0;
+}
+
+.toggle-buttons:selected {
+	-fx-background-color: #2B2B2B;
+	-fx-background-radius: 0;
+}
+
+.window-buttons:hover {
+	-fx-background-color: #999;
+}
+
+.window-button-close:hover {
+	-fx-background-color: #EE7B75;
+}
+
+.text-field {
+	-fx-background-color: rgba(0,0,0,0);
+	-fx-border-color: #fff;
+	-fx-border-width: 2px;
+	-fx-border-radius: 20px;
+	-fx-text-fill: #fff;
+}
+
+.no-outline:focused {
+	-fx-background-color: #000, #000, #000;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 0;
+}
