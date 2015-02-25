@@ -112,4 +112,3 @@ if __name__ == '__main__':
                     s.connect((host, port))
                 except:
                     pass
-        time.sleep(1)
