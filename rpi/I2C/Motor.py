@@ -10,8 +10,8 @@ class Motor:
     jump_speed = 10
     jump_accel = 10
     jump_start_duration = 1
-    start_kp_hi = 0x0B
-    start_kp_lo = 0xC3
+    start_kp_hi = 0x0A
+    start_kp_lo = 0xD7
 
     ## I2C write registers
     enable_system_reg   = 0x01
@@ -35,8 +35,8 @@ class Motor:
     max_255_val = 65535
     normal_kp_hi = 0x02
     normal_kp_lo = 0xB4
-    normal_ki_hi = 0x0E
-    normal_ki_lo = 0x64
+    normal_ki_hi = 0x09
+    normal_ki_lo = 0x41
     minimal_speed = 10
     enable_timeout = 8
     lock_all_operations = False
@@ -123,7 +123,7 @@ class Motor:
     def set_speed(self, speed):
         """ speed ... 0 - 100 (float / int)
         """
-        if not self.get_motor_state() or speed < 0 or speed > 100:
+        if not self.get_motor_state() or speed < -100 or speed > 100:
             return False
 
         if speed < 0 and self.current_direction == 0:
@@ -136,7 +136,7 @@ class Motor:
             self.set_direction(0, end_speed=speed)
             return
 
-        if speed < self.minimal_speed:
+        if abs(speed) < self.minimal_speed:
             speed = 0
         current_speed = self.get_speed()
         if current_speed < self.minimal_speed and speed and self.jump_start_enabled:
@@ -161,7 +161,6 @@ class Motor:
             lo = self.i2c.read_byte_data(self.motor_address, self.speed_est_lo_r_reg)
             try: speed = hi * 255 + lo
             except: speed = 0
-            time.sleep(0.1)
 
         self.i2c.write_byte_data(self.motor_address, self.kp_idq_lo_reg, self.normal_kp_lo)
         self.i2c.write_byte_data(self.motor_address, self.kp_idq_hi_reg, self.normal_kp_hi)
@@ -187,10 +186,7 @@ class Motor:
 
         current_speed = self.get_speed(percent=True)
         self.set_speed(0)
-        while self.get_speed():
-            time.sleep(0.1)
-        time.sleep(0.1)
-        print current_speed, self.get_speed(percent=True), self.get_speed(percent_estimated=True)
+        while self.get_speed(): pass
         self.i2c.write_byte_data(self.motor_address, self.direction_reg, direction)
         if end_speed is not None:
             current_speed = end_speed
@@ -293,3 +289,4 @@ class Motor:
 
     def __str__(self):
         return self.motor_name
+

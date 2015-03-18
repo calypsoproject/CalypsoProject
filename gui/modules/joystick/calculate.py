@@ -91,7 +91,7 @@ class Calculate:
             time.sleep(0.5)
 
 if __name__ == '__main__':
-    host = '192.168.0.105'
+    host = '192.168.0.110'
     port = 8888
     c = Calculate()
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -99,11 +99,12 @@ if __name__ == '__main__':
     s.settimeout(1)
     while 1:
         speeds = c.calculate()
+        print speeds
         for motor in speeds:
             speed = speeds[motor]
             try:
-                s.sendall('motor_handler.motor[\'%s\'].set_speed(%f)' % (motor, float(speed)))
-                print s.recv(1024)
+                s.sendall('motor_handler.motor[\'%s\'].set_speed(%i)' % (motor, float(speed)))
+                s.recv(1024)
             except Exception, e:
                 print e
                 try:

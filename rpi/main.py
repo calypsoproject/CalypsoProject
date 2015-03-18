@@ -37,4 +37,4 @@ class Calypso:
 if __name__ == '__main__':
     calypso = Calypso()
     app.config['calypso'] = calypso
-    app.run(calypso.server.hostname, 80)
+    app.run(calypso.server.hostname, 8000)

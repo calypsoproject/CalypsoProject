@@ -1,7 +1,6 @@
 import threading
 import time
 from Motor import Motor
-import RPi.GPIO as GPIO
 
 
 class MotorsHandler():

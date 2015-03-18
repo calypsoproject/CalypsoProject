@@ -11,7 +11,7 @@ class I2CCommon():
     def write_byte_data(self, address, register, data):
         with self.lock:
             try:
-                self.i2c.write_byte_data(address, register, data)
+                self.i2c.write_byte_data(address, register, abs(int(data)))
             except:
                 print 'i2c error'
 
