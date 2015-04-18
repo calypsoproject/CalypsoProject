@@ -7,9 +7,9 @@ __author__ = 'prog'
 
 class Motor:
     ## values if motor starts from 0 rpm
-    jump_speed = 10
+    jump_speed = 20
     jump_accel = 10
-    jump_start_duration = 1
+    jump_start_duration = 0.1
     start_kp_hi = 0x0A
     start_kp_lo = 0xD7
 
@@ -71,7 +71,6 @@ class Motor:
 
     def get_motor_state(self):
         if self.lock_all_operations:
-            print 'all operations are locked!'
             return None
         try:
             return self.i2c.read_byte_data(self.motor_address, self.enable_system_reg)
@@ -143,9 +142,9 @@ class Motor:
             threading.Thread(target=self.jump_start, args=[speed]).start()
         else:
             self.i2c.write_byte_data(self.motor_address, self.speed_reg, speed)
+            print self.motor_name, 'reached', speed
 
-    def jump_start(self, final_speed, repeat=True):
-        print 'jump_start'
+    def jump_start(self, final_speed, repeat=0):
         self.set_accel(self.jump_accel, from_jump_start=True)
 
         self.lock_all_operations = True
@@ -154,13 +153,7 @@ class Motor:
         self.i2c.write_byte_data(self.motor_address, self.kp_idq_lo_reg, self.start_kp_lo)
         self.i2c.write_byte_data(self.motor_address, self.kp_idq_hi_reg, self.start_kp_hi)
 
-        start = time.time()
-        speed = 0
-        while time.time() - start < self.jump_start_duration and speed == 0:
-            hi = self.i2c.read_byte_data(self.motor_address, self.speed_est_hi_r_reg)
-            lo = self.i2c.read_byte_data(self.motor_address, self.speed_est_lo_r_reg)
-            try: speed = hi * 255 + lo
-            except: speed = 0
+        time.sleep(self.jump_start_duration)
 
         self.i2c.write_byte_data(self.motor_address, self.kp_idq_lo_reg, self.normal_kp_lo)
         self.i2c.write_byte_data(self.motor_address, self.kp_idq_hi_reg, self.normal_kp_hi)
@@ -170,13 +163,19 @@ class Motor:
 
         self.set_accel(self.acceleration)
 
-        if speed == 0 and repeat:
-            time.sleep(1)
-            print 'jump_start failed. repeating...'
-            self.jump_start(speed, repeat=False)
-
+        time.sleep(0.1)
+        hi = self.i2c.read_byte_data(self.motor_address, self.speed_est_hi_r_reg)
+        lo = self.i2c.read_byte_data(self.motor_address, self.speed_est_lo_r_reg)
+        try: speed = hi * 255 + lo
+        except: speed = 0
+        if speed == 0 and repeat < 5:
+            repeat += 1
+            self.jump_start(final_speed, repeat)
+            return
         elif speed == 0:
-            print 'jump start failed'
+            print self.motor_name, 'failed to start'
+        else:
+            print self.motor_name, 'reached', final_speed
 
     def set_direction(self, direction, end_speed=None):
         """ direction ... 1 / 0 (int)
