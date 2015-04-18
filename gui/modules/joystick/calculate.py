@@ -12,7 +12,7 @@ def get_prefix(val):
 
 class Calculate:
     initialized = False
-    def __init__(self, max_speed=20, min_speed=10):
+    def __init__(self, max_speed=50, min_speed=10):
         self.min_speed = min_speed
         self.max_speed = max_speed
         self.joystick = ReadJoystick()
@@ -121,6 +121,7 @@ if __name__ == '__main__':
                     while s.recv(1024) == 'false':
                         time.sleep(0.1)
                         s.sendall('motor_handler.motor[\'%s\'].set_speed(%i)' % (motor, float(speed)))
+                        print 'repeating', speed
                 except Exception, e:
                     print e
                     try:
