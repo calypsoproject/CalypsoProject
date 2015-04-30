@@ -1,6 +1,6 @@
 import pygame
 import threading
-
+import time
 
 class ReadJoystick:
     selected_joystick = 0
@@ -9,12 +9,22 @@ class ReadJoystick:
     axes = None
     buttons = None
     hats = None
+    right_left = 1
+    in_out = 1
+    throttle = 1
+    elevation = 1
     def __init__(self, button_pressed_callback=None):
         self.button_pressed_callback = button_pressed_callback
         pygame.init()
         self.clock = pygame.time.Clock()
         pygame.joystick.init()
         threading.Thread(target=self.main_loop).start()
+
+    def initialize(self):
+        while min(map(abs, self.axes[2:])) == 0: time.sleep(0.1)
+        while round(max([abs(self.throttle), abs(self.elevation), abs(self.right_left), abs(self.in_out)]), 2) != 0: time.sleep(0.1)
+        print self.throttle, self.elevation, self.right_left, self.in_out
+        print 'joystick is initialized'
 
     def main_loop(self):
         while 1:
@@ -56,4 +66,8 @@ class ReadJoystick:
             for i in range(num_hats):
                 hats.append(joystick.get_hat(i))
             self.hats = hats
+            self.right_left = self.axes[0]
+            self.in_out = self.axes[1]
+            self.throttle = -(self.axes[2] - 1) / 2.0
+            self.elevation = self.axes[4]
             self.clock.tick(20)

@@ -40,6 +40,10 @@ class Position(object):
 
     def update_data(self, accel, gyro, compass):
         ax, ay, az = accel['x'], accel['y'], accel['z']
+        az = sum(self.yaw_history) / len(self.yaw_history)+self.ry_offset+self.ry_static_offset
+        ax = -sum(self.roll_history) / len(self.roll_history)+self.rx_offset+self.rx_static_offset,
+        ay = sum(self.pitch_history) / len(self.pitch_history)+self.ry_offset+self.ry_static_offset
+
         self.pitch = math.atan(ax/math.sqrt(ay**2 + az**2)) * 180/math.pi
         self.roll = math.atan(ay/math.sqrt(ax**2 + az**2)) * 180/math.pi
         self.roll_history.pop(0)
@@ -80,6 +84,3 @@ class Position(object):
         self.socket.close()
 
 
-if __name__ == '__main__':
-    mv = ModelViewer()
-    mv.start_retrieving_data('192.168.0.107')

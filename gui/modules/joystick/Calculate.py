@@ -1,8 +1,8 @@
-import json
 import socket
 import threading
 import time
-from read import ReadJoystick
+from Read import ReadJoystick
+
 
 def get_prefix(val):
     if val > 0:
@@ -33,10 +33,10 @@ class Calculate:
             'ml': 0,
             'mr': 0
             }
-        right_left = self.joystick.axes[0]
-        in_out = self.joystick.axes[1]
-        throttle = -(self.joystick.axes[2] - 1) / 2.0
-        elevation = self.joystick.axes[4]
+        right_left = self.joystick.right_left
+        in_out = self.joystick.in_out
+        throttle = self.joystick.throttle
+        elevation = self.joystick.elevation
 
         if mode == 0:
             fl_value = -right_left - in_out + elevation
