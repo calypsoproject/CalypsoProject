@@ -68,6 +68,7 @@ class Motor:
         self.i2c.write_byte_data(self.motor_address, self.kp_idq_hi_reg, self.normal_kp_hi)
         self.i2c.write_byte_data(self.motor_address, self.ki_idq_lo_reg, self.normal_ki_lo)
         self.i2c.write_byte_data(self.motor_address, self.ki_idq_hi_reg, self.normal_ki_hi)
+        self.set_direction(self.current_direction)
 
     def get_motor_state(self):
         if self.lock_all_operations:

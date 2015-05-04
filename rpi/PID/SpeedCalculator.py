@@ -13,7 +13,9 @@ class SpeedCalculator(object):
                  joystick_roll=False, kp=1, ki=0, kd=0.3, mode=0, max_speed=20, min_speed=10, floating_speed=30):
         self.floating_speed = floating_speed
         self.max_speed = max_speed
+        self.abs_max_speed = self.max_speed + self.floating_speed
         self.min_speed = min_speed
+        self.max_speed_change = min([self.abs_max_speed-self.floating_speed, self.floating_speed-self.min_speed])
         self.mode = mode
         self.joystick_incline = joystick_incline
         self.joystick_roll = joystick_roll
@@ -96,12 +98,35 @@ class SpeedCalculator(object):
                 bl *= k
                 br *= k
 
-            elevation = self.joystick.elevation
-            self.floating_speed = min([self.max_speed-elevation, elevation-self.min_speed])
-            speeds['fl'] = self.floating_speed + fl
-            speeds['fr'] = self.floating_speed + fr
-            speeds['br'] = self.floating_speed + br
-            speeds['bl'] = -(self.floating_speed + bl)
+
+            floating_speed = self.floating_speed + self.max_speed_change * self.joystick.elevation
+
+            fl += floating_speed
+            fr += floating_speed
+            bl += floating_speed
+            br += floating_speed
+
+            min_val = min([fl, fr, br, bl])
+            add = self.min_speed - min_val
+            if min_val < self.min_speed:
+                fl += add
+                fr += add
+                bl += add
+                br += add
+
+
+            max_val = max([abs(fl), abs(fr), abs(br), abs(bl)])
+            if max_val > self.abs_max_speed:
+                k = float(self.abs_max_speed) / max_val
+                fl *= k
+                fr *= k
+                bl *= k
+                br *= k
+
+            speeds['fl'] = fl
+            speeds['fr'] = fr
+            speeds['br'] = br
+            speeds['bl'] = -bl
             speeds['ml'] = self.joystick.right_left
             speeds['mr'] = -self.joystick.right_left
 
