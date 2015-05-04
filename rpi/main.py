@@ -29,12 +29,13 @@ class Calypso:
         self.middle_left_motor = self.motor_handler.new_motor(motor_address=0x10,
                                                               motor_name='mr')
 
-        position = Position()
-        joystick_updater = JoystickUpdater()
+        self.position = Position()
+        self.joystick = JoystickUpdater()
         self.sensors = Sensors(i2c_common)
         self.sensors.init_sensors()
-        self.sensors.update_position(position)
-        self.speed_calculator = SpeedCalculator(position, joystick_updater, self.motor_handler)
+        self.sensors.update_position(self.position)
+        self.speed_calculator = SpeedCalculator(self.position, self.joystick, self.motor_handler)
+        self.pid = self.speed_calculator.pid
 
     def a(self):
         while 1:

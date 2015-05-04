@@ -34,7 +34,7 @@ class SpeedCalculator(object):
         self.roll_time = time.time()
 
         self.incline_factor = 1.0 / self.max_incline
-        self.roll_facto = 1.0 / self.max_roll
+        self.roll_factor = 1.0 / self.max_roll
         atexit.register(self.at_exit)
         t = threading.Thread(target=self.calculate_corrections)
         t.daemon = True

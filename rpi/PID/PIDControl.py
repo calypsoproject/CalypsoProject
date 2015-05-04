@@ -38,6 +38,11 @@ class PID_Controller(object):
         self.Eprev = 0
         self.Stdt = 0
         self.t = 0
+
+    def update(self, Kp, Ki, Kd):
+        self.Kd = Kd
+        self.Ki = Ki
+        self.Kp = Kp
         
     def getCorrection(self, target, actual, dt=1):
         '''
