@@ -8,13 +8,8 @@ class SpeedCalculator(object):
     # affects speed calculation
     responsiveness = 10
 
-    # pid
-    kp = 1
-    ki = 0
-    kd = 0
-
     # max angles
-    def __init__(self, ip, max_incline=45, max_roll=90, joystick_incline=True, joystick_roll=False, kp=1, ki=0, kd=0, mode=0):
+    def __init__(self, ip, max_incline=45, max_roll=90, joystick_incline=True, joystick_roll=False, kp=1.5, ki=0, kd=0.3, mode=0):
         self.mode = mode
         self.joystick_incline = joystick_incline
         self.joystick_roll = joystick_roll
@@ -42,7 +37,7 @@ class SpeedCalculator(object):
             target = self.joystick.in_out * self.max_incline
         else:
             target = 0
-        current = self.position.pitch
+        current = self.position.pitch_smooth
         correction = self.pid.getCorrection(target, current, time.time() - self.incline_time)
         scaled_correction = self.incline_factor * correction
         scaled_correction = scaled_correction if 0 >= scaled_correction or scaled_correction <= 1 else 1
@@ -55,10 +50,10 @@ class SpeedCalculator(object):
             target = self.joystick.in_out * self.max_roll
         else:
             target = 0
-        current = self.position.roll
+        current = self.position.roll_smooth
         correction = self.pid.getCorrection(target, current, time.time() - self.roll_time)
         scaled_correction = self.roll_factor * correction
-        scaled_correction = scaled_correction if 0 <= scaled_correction <= 1 else 1
-        scaled_correction = scaled_correction if 0 >= scaled_correction >= -1 else -1
+        scaled_correction = scaled_correction if 0 >= scaled_correction or scaled_correction <= 1 else 1
+        scaled_correction = scaled_correction if 0 <= scaled_correction or scaled_correction >= -1 else -1
         self.roll_time = time.time()
         return scaled_correction

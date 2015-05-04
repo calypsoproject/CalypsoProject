@@ -1,10 +1,11 @@
-import threading
-import time
 from GUI import app
 from I2C.I2C_common import I2CCommon
 from server import Server
 from I2C.Sensors import Sensors
 from I2C.MotorsHandler import MotorsHandler
+from PID.Position import Position
+from PID.SpeedCalculator import SpeedCalculator
+from PID.JoystickUpdater import JoystickUpdater
 
 class Calypso:
     def __init__(self):
@@ -28,7 +29,12 @@ class Calypso:
         self.middle_left_motor = self.motor_handler.new_motor(motor_address=0x10,
                                                               motor_name='mr')
 
+        position = Position()
+        joystick_updater = JoystickUpdater()
         self.sensors = Sensors(i2c_common)
+        self.sensors.init_sensors()
+        self.sensors.update_position(position)
+        self.speed_calculator = SpeedCalculator(position, joystick_updater, self.motor_handler)
 
     def a(self):
         while 1:

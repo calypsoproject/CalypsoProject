@@ -19,8 +19,8 @@ class Position(object):
     rx_offset = 0
     ry_offset = 0
     rz_offset = 0
-    rx_static_offset = 90
-    ry_static_offset = 30
+    rx_static_offset = 0
+    ry_static_offset = -19
     rz_static_offset = 0
 
     zoom = -2
@@ -29,6 +29,9 @@ class Position(object):
     roll_history = [0 for i in range(smooth)]
     pitch_history = [0 for i in range(smooth)]
     yaw_history = [0 for i in range(smooth)]
+    yaw_smooth = 0
+    roll_smooth = 0
+    pitch_smooth = 0
 
     def __init__(self):
         atexit.register(self.at_exit)
@@ -40,10 +43,6 @@ class Position(object):
 
     def update_data(self, accel, gyro, compass):
         ax, ay, az = accel['x'], accel['y'], accel['z']
-        az = sum(self.yaw_history) / len(self.yaw_history)+self.ry_offset+self.ry_static_offset
-        ax = -sum(self.roll_history) / len(self.roll_history)+self.rx_offset+self.rx_static_offset,
-        ay = sum(self.pitch_history) / len(self.pitch_history)+self.ry_offset+self.ry_static_offset
-
         self.pitch = math.atan(ax/math.sqrt(ay**2 + az**2)) * 180/math.pi
         self.roll = math.atan(ay/math.sqrt(ax**2 + az**2)) * 180/math.pi
         self.roll_history.pop(0)
@@ -53,6 +52,9 @@ class Position(object):
         self.yaw_history.pop(0)
         self.yaw_history.append(self.yaw)
         self.yaw = compass[0] + 60 / (compass[1] + 1)
+        self.yaw_smooth = sum(self.yaw_history) / len(self.yaw_history)+self.ry_offset+self.ry_static_offset
+        self.pitch_smooth = -sum(self.roll_history) / len(self.roll_history)+self.rx_offset+self.rx_static_offset
+        self.roll_smooth = sum(self.pitch_history) / len(self.pitch_history)+self.ry_offset+self.ry_static_offset
 
     def start_retrieving_data(self, host, port=8888, interval=1/35.0, thread=False):
         if not thread:

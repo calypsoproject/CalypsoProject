@@ -23,7 +23,6 @@ class ReadJoystick:
     def initialize(self):
         while min(map(abs, self.axes[2:])) == 0: time.sleep(0.1)
         while round(max([abs(self.throttle), abs(self.elevation), abs(self.right_left), abs(self.in_out)]), 2) != 0: time.sleep(0.1)
-        print self.throttle, self.elevation, self.right_left, self.in_out
         print 'joystick is initialized'
 
     def main_loop(self):
@@ -66,8 +65,8 @@ class ReadJoystick:
             for i in range(num_hats):
                 hats.append(joystick.get_hat(i))
             self.hats = hats
-            self.right_left = self.axes[0]
-            self.in_out = self.axes[1]
-            self.throttle = -(self.axes[2] - 1) / 2.0
-            self.elevation = self.axes[4]
+            self.right_left = round(self.axes[0], 2)
+            self.in_out = round(self.axes[1], 2)
+            self.throttle = round(-(self.axes[2] - 1) / 2.0, 2)
+            self.elevation = round(self.axes[4], 2)
             self.clock.tick(20)

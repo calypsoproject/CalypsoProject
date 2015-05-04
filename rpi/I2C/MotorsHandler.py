@@ -1,4 +1,4 @@
-import threading
+import Adafruit_BBIO.GPIO as GPIO
 import time
 from Motor import Motor
 
@@ -11,20 +11,16 @@ class MotorsHandler():
 
     def __init__(self, i2c_common):
         self.i2c_common = i2c_common
+        self.reset_boards()
 
-    def reset_boards(self, from_thread=False):
+    def reset_boards(self):
         """ sends 3.3V to controllers
         """
-        if not from_thread:
-            if not self.resetting:
-                self.resetting = True
-                threading.Thread(target=self.reset_boards, args=[True])
-            return
-        GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(11, GPIO.OUT)
-        GPIO.output(11, True)
-        time.sleep(self.reset_delay)
-        GPIO.output(11, False)
+        GPIO.setup("P8_8", GPIO.OUT)
+        GPIO.output("P8_8", GPIO.HIGH)
+        time.sleep(0.5)
+        GPIO.output("P8_8", GPIO.LOW)
+
 
     def add_motor(self, motor_instance):
         self.initialized_motors.append(motor_instance)

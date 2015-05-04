@@ -1,3 +1,4 @@
+import atexit
 import json
 import socket
 import threading
@@ -14,9 +15,13 @@ class Server:
         self.hostname = ([(s.connect(('8.8.8.8', 80)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1])  # socket.gethostname() returns wrong value
         self.socket.bind((self.hostname, listen_port))
         self.socket.listen(1)
+        atexit.register(self.at_exit)
         t = threading.Thread(target=self.communication_thread)
         t.daemon = True
         t.start()
+
+    def at_exit(self):
+        self.socket.close()
 
     def communication_thread(self):
         """ waits for connection with client and spawns

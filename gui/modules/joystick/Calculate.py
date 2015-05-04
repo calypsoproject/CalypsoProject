@@ -61,7 +61,7 @@ class Calculate:
         values = {
             'fl': fl_value,
             'fr': fr_value,
-            'bl': bl_value,
+            'bl': -bl_value,
             'br': br_value,
             'ml': ml_value,
             'mr': mr_value
@@ -82,6 +82,8 @@ class Calculate:
             values['mr'] = throttle + values['mr'] / kf_forward if values['mr'] < values['ml'] else throttle
             values['ml'] = throttle + values['ml'] / kf_forward if values['mr'] > values['ml'] else throttle
 
+        values['ml'] = -values['ml']
+        values['mr'] = values['mr']
         kf = (self.max_speed - self.min_speed)
         values = {k: round(values[k] * kf) for k in values.keys()}
         for k in values.keys():

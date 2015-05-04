@@ -9,7 +9,7 @@ class Motor:
     ## values if motor starts from 0 rpm
     jump_speed = 20
     jump_accel = 10
-    jump_start_duration = 0.1
+    jump_start_duration = 0.2
     start_kp_hi = 0x0A
     start_kp_lo = 0xD7
 

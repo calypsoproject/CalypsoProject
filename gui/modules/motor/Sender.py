@@ -1,4 +1,5 @@
 import socket
+import threading
 import time
 
 __author__ = 'prog'
@@ -12,19 +13,21 @@ class SpeedSender(object):
         'ml': 0,
         'mr': 0
     }
-    prev_speeds = speeds
+    prev_speeds = dict(speeds)
 
-    def __init__(self, ip, port=8888, sender_check_interval=0.5):
+    def __init__(self, ip, port=8888, sender_check_interval=0.1):
         self.sender_check_interval = sender_check_interval
         self.ip = ip
         self.port = port
-    
+        threading.Thread(target=self.sender_thread).start()
+
     def connect(self):
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect((self.ip, self.port))
-        s.settimeout(1)
+        self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.s.connect((self.ip, self.port))
+        self.s.settimeout(1)
 
     def sender_thread(self):
+        self.connect()
         while 1:
             if self.speeds != self.prev_speeds:
                 print self.speeds
@@ -32,18 +35,16 @@ class SpeedSender(object):
                 speed = self.speeds[motor]
                 if int(speed) != int(self.prev_speeds[motor]):
                     try:
-                        s.sendall('motor_handler.motor[\'%s\'].set_speed(%i)' % (motor, float(speed)))
-                        while s.recv(1024) == 'false':
+                        self.s.sendall('motor_handler.motor[\'%s\'].set_speed(%i)' % (motor, float(speed)))
+                        while self.s.recv(1024) == 'false':
                             time.sleep(0.1)
-                            s.sendall('motor_handler.motor[\'%s\'].set_speed(%i)' % (motor, float(speed)))
+                            self.s.sendall('motor_handler.motor[\'%s\'].set_speed(%i)' % (motor, float(speed)))
                             print 'repeating', speed
                     except Exception, e:
                         print e
                         try:
-                            s.close()
-                            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                            s.connect((self.ip, self.port))
+                            self.connect()
                         except:
                             pass
-                self.prev_speeds = self.speeds
+            self.prev_speeds = dict(self.speeds)
             time.sleep(self.sender_check_interval)

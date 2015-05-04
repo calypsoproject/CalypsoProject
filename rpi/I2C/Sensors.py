@@ -1,3 +1,6 @@
+import atexit
+import threading
+import time
 from accelerometer import ADXL345
 from gyroscope import SensorITG3200
 from compass import hmc5883l
@@ -22,3 +25,15 @@ class Sensors:
 
     def get_values(self):
         return {str(sensor): sensor.read() for sensor in self.initialized_sensors if sensor}
+
+    def update_position(self, position, interval=1.0/30, thread=False):
+        if not thread:
+            thread = threading.Thread(target=self.update_position, args=[position, interval, True])
+            thread.daemon = True
+            thread.start()
+            return
+
+        while 1:
+            time.sleep(interval)
+            readings = self.get_values()
+            position.update_data(readings['accelerometer'], readings['gyroscope'], readings['compass'])

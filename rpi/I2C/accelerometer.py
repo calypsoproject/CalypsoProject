@@ -45,6 +45,7 @@ class ADXL345:
         self.setRange(RANGE_2G)
         self.enableMeasurement()
 
+
     def enableMeasurement(self):
         self.bus.write_byte_data(self.address, POWER_CTL, MEASURE)
 
