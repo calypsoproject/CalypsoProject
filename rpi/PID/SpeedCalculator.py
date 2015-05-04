@@ -8,10 +8,9 @@ class SpeedCalculator(object):
     # affects speed calculation
     responsiveness = 10
 
-    exit = False
-
     # max angles
-    def __init__(self, position, joystick_updater, motor_handler, max_incline=45, max_roll=90, joystick_incline=True, joystick_roll=False, kp=1, ki=0, kd=0.3, mode=0, max_speed=20, min_speed=10, floating_speed=30):
+    def __init__(self, position, joystick_updater, motor_handler, max_incline=45, max_roll=90, joystick_incline=True,
+                 joystick_roll=False, kp=1, ki=0, kd=0.3, mode=0, max_speed=20, min_speed=10, floating_speed=30):
         self.floating_speed = floating_speed
         self.max_speed = max_speed
         self.min_speed = min_speed
@@ -68,7 +67,7 @@ class SpeedCalculator(object):
         scaled_correction = scaled_correction if 0 <= scaled_correction or scaled_correction >= -1 else -1
         self.roll_time = time.time()
         return scaled_correction
-    
+
     def calculate_corrections(self):
         speeds = {
             'fl': 0,
@@ -78,10 +77,11 @@ class SpeedCalculator(object):
             'ml': 0,
             'mr': 0
         }
-        while not self.exit:
+        speed_diff = self.max_speed - self.min_speed
+        while 1:
             time.sleep(0.2)
-            incline_correction = -self.calculate_incline()*self.max_speed
-            roll_correction = self.calculate_roll()*self.max_speed
+            incline_correction = -self.calculate_incline() * self.max_speed
+            roll_correction = self.calculate_roll() * self.max_speed
 
             fl = incline_correction + roll_correction
             fr = incline_correction + roll_correction
@@ -89,29 +89,32 @@ class SpeedCalculator(object):
             bl = -incline_correction - roll_correction
 
             max_val = max([abs(fl), abs(fr), abs(br), abs(bl)])
-            k = float(self.max_speed) / max_val
             if max_val > self.max_speed:
+                k = float(self.max_speed) / max_val
                 fl *= k
                 fr *= k
                 bl *= k
                 br *= k
 
-            speeds['fl'] = self.floating_speed+fl
-            speeds['fr'] = self.floating_speed+fr
-            speeds['br'] = self.floating_speed+br
-            speeds['bl'] = -(self.floating_speed+bl)
+            elevation = self.joystick.elevation
+            self.floating_speed = min([self.max_speed-elevation, elevation-self.min_speed])
+            speeds['fl'] = self.floating_speed + fl
+            speeds['fr'] = self.floating_speed + fr
+            speeds['br'] = self.floating_speed + br
+            speeds['bl'] = -(self.floating_speed + bl)
             speeds['ml'] = self.joystick.right_left
             speeds['mr'] = -self.joystick.right_left
 
             if self.joystick.throttle != 0:
-                kf_forward = 1/self.joystick.throttle
+                kf_forward = 1 / self.joystick.throttle
             else:
                 kf_forward = 1
-            speed_diff = self.max_speed - self.min_speed
 
             if self.joystick.throttle != 0:
-                speeds['mr'] = (self.joystick.throttle + speeds['mr'] / kf_forward if speeds['mr'] < speeds['ml'] else self.joystick.throttle)*speed_diff
-                speeds['ml'] = (self.joystick.throttle + speeds['ml'] / kf_forward if speeds['mr'] > speeds['ml'] else self.joystick.throttle)*speed_diff
+                speeds['mr'] = (self.joystick.throttle + speeds['mr'] / kf_forward if speeds['mr'] < speeds[
+                    'ml'] else self.joystick.throttle) * speed_diff
+                speeds['ml'] = (self.joystick.throttle + speeds['ml'] / kf_forward if speeds['mr'] > speeds[
+                    'ml'] else self.joystick.throttle) * speed_diff
             else:
                 speeds['mr'] *= self.max_speed
                 speeds['ml'] *= self.max_speed
@@ -126,5 +129,5 @@ class SpeedCalculator(object):
                         speeds[i] -= self.min_speed
             speeds['ml'] = -speeds['ml']
             # for motor in speeds:
-            #     self.motor_handler.motor[motor].set_speed(speeds[motor])
+            # self.motor_handler.motor[motor].set_speed(speeds[motor])
             print speeds

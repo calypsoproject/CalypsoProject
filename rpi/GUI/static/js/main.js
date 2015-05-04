@@ -1,4 +1,7 @@
 $(document).ready(function() {
+    $.get( "api/pid.Kp("+speed+")", function( data ) {
+		$( "#last_response" ).text(data);
+	});
 });
 
 function change_speed(speed, motor) {
@@ -25,4 +28,10 @@ function disable_system() {
 		$('#motor'+i).val(0);
 		$('#state').text('0');
 	}
+}
+
+function updatePid(Kp, Ki, Kd){
+    $.get( "api/pid.update("+Kp+", "+Ki+", "+Kd+")", function( data ) {
+
+    });
 }

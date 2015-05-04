@@ -53,8 +53,17 @@
 			$('#accel').val($('#accel_val').val());
 			set_accel($('#accel_val').val());
 		"><br>
+
+        PID:<br>
+        Kp: <input id="Kp" type="text"><br>
+        Ki: <input id="Ki" type="text"><br>
+        Kd: <input id="Kd" type="text"><br>
+        <button onclick="updatePid($('#Kp').val(), $('#Ki').val(), $('#Kd').val());">update</button><br>
+        <br>
+
+
 		<br><br><br>
 		STATE: <p style="display: inline" id="state">0</p><br>
 		last response: <p style="display: inline" id="last_response"></p>
-
+    </div>
 </body>
