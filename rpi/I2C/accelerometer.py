@@ -68,34 +68,40 @@ class ADXL345:
     #    False (default): result is returned in m/s^2
     #    True           : result is returned in gs
     def read(self, gforce = False):
-        bytes = self.bus.read_i2c_block_data(self.address, AXES_DATA, 6)
-        
-        x = bytes[0] | (bytes[1] << 8)
-        if(x & (1 << 16 - 1)):
-            x = x - (1<<16)
+        result = 0
+        try:
+            for i in range(10):
+                bytes = self.bus.read_i2c_block_data(self.address, AXES_DATA, 6)
 
-        y = bytes[2] | (bytes[3] << 8)
-        if(y & (1 << 16 - 1)):
-            y = y - (1<<16)
+                x = bytes[0] | (bytes[1] << 8)
+                if(x & (1 << 16 - 1)):
+                    x = x - (1<<16)
 
-        z = bytes[4] | (bytes[5] << 8)
-        if(z & (1 << 16 - 1)):
-            z = z - (1<<16)
+                y = bytes[2] | (bytes[3] << 8)
+                if(y & (1 << 16 - 1)):
+                    y = y - (1<<16)
 
-        x = x * SCALE_MULTIPLIER 
-        y = y * SCALE_MULTIPLIER
-        z = z * SCALE_MULTIPLIER
+                z = bytes[4] | (bytes[5] << 8)
+                if(z & (1 << 16 - 1)):
+                    z = z - (1<<16)
 
-        if gforce == False:
-            x = x * EARTH_GRAVITY_MS2
-            y = y * EARTH_GRAVITY_MS2
-            z = z * EARTH_GRAVITY_MS2
+                x = x * SCALE_MULTIPLIER
+                y = y * SCALE_MULTIPLIER
+                z = z * SCALE_MULTIPLIER
 
-        x = round(x, 4)
-        y = round(y, 4)
-        z = round(z, 4)
+                if gforce == False:
+                    x = x * EARTH_GRAVITY_MS2
+                    y = y * EARTH_GRAVITY_MS2
+                    z = z * EARTH_GRAVITY_MS2
 
-        return {"x": x, "y": y, "z": z}
+                x = round(x, 4)
+                y = round(y, 4)
+                z = round(z, 4)
+                result = {"x": x, "y": y, "z": z}
+                break
+        except:
+            pass
+        return result
 
     def __str__(self):
         return 'accelerometer'

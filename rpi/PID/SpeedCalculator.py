@@ -2,6 +2,8 @@ import atexit
 import threading
 import time
 from PIDControl import PID_Controller
+from Position import Position
+from JoystickUpdater import JoystickUpdater as Joystick
 
 
 class SpeedCalculator(object):
@@ -10,12 +12,14 @@ class SpeedCalculator(object):
 
     # max angles
     def __init__(self, position, joystick_updater, motor_handler, max_incline=45, max_roll=90, joystick_incline=True,
-                 joystick_roll=False, kp=1, ki=0, kd=0.3, mode=0, max_speed=20, min_speed=10, floating_speed=30):
+                 joystick_roll=False, kp=1, ki=0, kd=0, mode=0, max_speed=20, min_speed=10, floating_speed=30,
+                 interval=0.2):
+        self.interval = interval
         self.floating_speed = floating_speed
         self.max_speed = max_speed
         self.abs_max_speed = self.max_speed + self.floating_speed
         self.min_speed = min_speed
-        self.max_speed_change = min([self.abs_max_speed-self.floating_speed, self.floating_speed-self.min_speed])
+        self.max_speed_change = min([self.abs_max_speed - self.floating_speed, self.floating_speed - self.min_speed])
         self.mode = mode
         self.joystick_incline = joystick_incline
         self.joystick_roll = joystick_roll
@@ -81,9 +85,15 @@ class SpeedCalculator(object):
         }
         speed_diff = self.max_speed - self.min_speed
         while 1:
-            time.sleep(0.2)
+            time.sleep(self.interval)
+
             incline_correction = -self.calculate_incline() * self.max_speed
             roll_correction = self.calculate_roll() * self.max_speed
+            if self.mode == 0:
+                roll_correction = roll_correction + self.min_speed if roll_correction > 0 else roll_correction
+                roll_correction = roll_correction - self.min_speed if roll_correction < 0 else roll_correction
+                incline_correction = incline_correction + self.min_speed if incline_correction > 0 else incline_correction
+                incline_correction = incline_correction - self.min_speed if incline_correction < 0 else incline_correction
 
             fl = incline_correction + roll_correction
             fr = incline_correction + roll_correction
@@ -98,30 +108,28 @@ class SpeedCalculator(object):
                 bl *= k
                 br *= k
 
+            if self.mode == 1:
+                floating_speed = self.floating_speed + self.max_speed_change * self.joystick.elevation
+                fl += floating_speed
+                fr += floating_speed
+                bl += floating_speed
+                br += floating_speed
 
-            floating_speed = self.floating_speed + self.max_speed_change * self.joystick.elevation
+                min_val = min([fl, fr, br, bl])
+                add = self.min_speed - min_val
+                if min_val < self.min_speed:
+                    fl += add
+                    fr += add
+                    bl += add
+                    br += add
 
-            fl += floating_speed
-            fr += floating_speed
-            bl += floating_speed
-            br += floating_speed
-
-            min_val = min([fl, fr, br, bl])
-            add = self.min_speed - min_val
-            if min_val < self.min_speed:
-                fl += add
-                fr += add
-                bl += add
-                br += add
-
-
-            max_val = max([abs(fl), abs(fr), abs(br), abs(bl)])
-            if max_val > self.abs_max_speed:
-                k = float(self.abs_max_speed) / max_val
-                fl *= k
-                fr *= k
-                bl *= k
-                br *= k
+                max_val = max([abs(fl), abs(fr), abs(br), abs(bl)])
+                if max_val > self.abs_max_speed:
+                    k = float(self.abs_max_speed) / max_val
+                    fl *= k
+                    fr *= k
+                    bl *= k
+                    br *= k
 
             speeds['fl'] = fl
             speeds['fr'] = fr
@@ -152,7 +160,13 @@ class SpeedCalculator(object):
                         speeds[i] += self.min_speed
                     if speeds[i] < 0:
                         speeds[i] -= self.min_speed
+
             speeds['ml'] = -speeds['ml']
-            # for motor in speeds:
-            # self.motor_handler.motor[motor].set_speed(speeds[motor])
+
+            for motor in speeds:
+                self.motor_handler.motor[motor].set_speed(speeds[motor])
             print speeds
+
+if __name__ == '__main__':
+    sc = SpeedCalculator(Position(), Joystick(), None)
+

@@ -2,6 +2,7 @@ import atexit
 import json
 import socket
 import threading
+import urllib
 
 __author__ = 'prog'
 
@@ -40,7 +41,7 @@ class Server:
         """
         while 1:
             try:
-                result = self.exec_command(clientsocket.recv(8192))
+                result = self.exec_command(urllib.unquote(clientsocket.recv(8192)))
                 clientsocket.sendall(result)
             except:
                 clientsocket.close()

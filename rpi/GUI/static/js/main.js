@@ -1,8 +1,21 @@
 $(document).ready(function() {
     $.get( "api/pid.Kp("+speed+")", function( data ) {
+		$( "#Kp" ).text(data);
+	});
+    $.get( "api/pid.Ki("+speed+")", function( data ) {
+		$( "#Ki" ).text(data);
+	});
+    $.get( "api/pid.Kd("+speed+")", function( data ) {
+		$( "#Kd" ).text(data);
+	});
+
+});
+
+function api(action) {
+    $.get( "api/"+action+"\"", function( data ) {
 		$( "#last_response" ).text(data);
 	});
-});
+}
 
 function change_speed(speed, motor) {
 	$.get( "api/"+motor+".set_speed("+speed+")", function( data ) {

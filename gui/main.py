@@ -1,7 +1,7 @@
 import time
 import modules
 
-ip = '10.42.0.13'
+ip = '10.42.1.13'
 
 joystick = modules.ReadJoystick()
 joystick.initialize()

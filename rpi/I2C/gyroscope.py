@@ -74,10 +74,17 @@ class SensorITG3200(object):
         """Read and return data tuple for x, y and z axis
         as signed 16-bit integers.
         """
-        gx = int_sw_swap(self.bus.read_word_data(self.addr, 0x1d))
-        gy = int_sw_swap(self.bus.read_word_data(self.addr, 0x1f))
-        gz = int_sw_swap(self.bus.read_word_data(self.addr, 0x21))
-        return {'x': gx, 'y': gy, 'z': gz}
+        result = 0
+        try:
+            for i in range(10):
+                gx = int_sw_swap(self.bus.read_word_data(self.addr, 0x1d))
+                gy = int_sw_swap(self.bus.read_word_data(self.addr, 0x1f))
+                gz = int_sw_swap(self.bus.read_word_data(self.addr, 0x21))
+                result = {'x': gx, 'y': gy, 'z': gz}
+                break
+        except:
+            pass
+        return result
 
     def __str__(self):
         return 'gyroscope'

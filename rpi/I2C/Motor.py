@@ -37,7 +37,7 @@ class Motor:
     normal_kp_lo = 0xB4
     normal_ki_hi = 0x09
     normal_ki_lo = 0x41
-    minimal_speed = 10
+    minimal_speed = 2
     enable_timeout = 8
     lock_all_operations = False
     speed = 0
@@ -138,7 +138,7 @@ class Motor:
 
         if abs(speed) < self.minimal_speed:
             speed = 0
-        current_speed = self.get_speed()
+        current_speed = self.get_speed(percent=True)
         if current_speed < self.minimal_speed and speed and self.jump_start_enabled:
             threading.Thread(target=self.jump_start, args=[speed]).start()
         else:

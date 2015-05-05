@@ -23,6 +23,7 @@ class PID_Controller(object):
     '''
     General PID control class. 
     '''
+    is_enabled = True
 
     def __init__(self, Kp, Ki, Kd):
         '''
@@ -38,6 +39,13 @@ class PID_Controller(object):
         self.Eprev = 0
         self.Stdt = 0
         self.t = 0
+
+    def disable(self):
+        self.is_enabled = False
+
+    def enable(self):
+        self.is_enabled = True
+
 
     def update(self, Kp, Ki, Kd):
         self.Kd = Kd
@@ -66,7 +74,10 @@ class PID_Controller(object):
         self.t += 1
         self.Eprev = E
         
-        return correction
+        if self.is_enabled:
+            return correction
+        else:
+            return 0
         
 class Demand_PID_Controller(PID_Controller):
     '''

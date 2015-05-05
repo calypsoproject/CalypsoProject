@@ -2,6 +2,8 @@ import json
 import os
 from flask import send_file
 from GUI import app
+import urllib
+
 
 @app.route('/', defaults={'path': 'main.html'})
 @app.route('/<path:path>')
@@ -11,6 +13,8 @@ def serve_file(path):
 @app.route('/api/<path:req>')
 def api(req):
     result = None
+    req = urllib.unquote(req)
+    print req
     try:
         exec 'result = app.config["calypso"].' + req
         result = json.dumps(result)
@@ -20,6 +24,7 @@ def api(req):
 
 @app.route('/api/raw/<path:req>')
 def raw_api(req):
+    req = urllib.unquote(req)
     self = app.config["calypso"]
     result = None
     try:
