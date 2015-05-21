@@ -5,7 +5,7 @@ from GUI import app
 import urllib
 
 
-@app.route('/', defaults={'path': 'main.html'})
+@app.route('/', defaults={'path': 'base.html'})
 @app.route('/<path:path>')
 def serve_file(path):
     return send_file(os.path.join(os.getcwd(), 'GUI/static', path))
