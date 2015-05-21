@@ -1,0 +1,23 @@
+body {
+    text-align: center;
+}
+
+#heading-circle {
+    position: fixed;
+    bottom: -85vw;
+    left: 0;
+    border-radius: 50%;
+    width: 100vw;
+    height: 100vw;
+    background-color: #666;
+}
+
+.rotated-heading {
+    position: fixed;
+    height: 100vw;
+    width: 0;
+    color: white;
+    font-size: 2.5vw;
+    text-align: center;
+}
+

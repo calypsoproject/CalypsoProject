@@ -5,7 +5,7 @@
 
 html {
     font-family: 'terminal-font', serif;
-    background-color: black;
+    background-color: #030A13;
     color: white;
     overflow: hidden;
 }
@@ -16,8 +16,8 @@ html {
     left: 0;
     width: 100%;
     height: 50px;
-    background-color: #666;
-    border-bottom: 1px solid white;
+    background-color: #141E2D;
+    border-bottom: 1px solid #9CCAEA;
 }
 
 .toggle {
@@ -27,7 +27,7 @@ html {
     float: right;
     height: 50px;
     width: 100px;
-    background-color: #333;
+    background-color: #030A13;
     outline: none;
     border: hidden;
     margin: 0 auto;
@@ -47,8 +47,10 @@ html {
 
 #warning {
     color: #FFC108;
+    background-color: #141E2D;
 }
 
 #error {
     color: #FF3308;
+    background-color: #141E2D;
 }

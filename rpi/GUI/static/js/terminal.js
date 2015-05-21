@@ -37,32 +37,32 @@ function log(level, message) {
 var infoToggled = true;
 function infoOnClick() {
     if (infoToggled) {
-        $('#info').css("background-color", "#666");
+        $('#info').css("background-color", "#141E2D");
         infoToggled = false;
     } else {
-        $('#info').css("background-color", "#333");
+        $('#info').css("background-color", "#030A13");
         infoToggled = true;
     }
 
 }
-var warningToggled = true;
+var warningToggled = false;
 function warningOnClick() {
     if (warningToggled) {
-        $('#warning').css("background-color", "#666");
+        $('#warning').css("background-color", "#141E2D");
         warningToggled = false;
     } else {
-        $('#warning').css("background-color", "#333");
+        $('#warning').css("background-color", "#030A13");
         warningToggled = true;
     }
 
 }
-var errorToggled = true;
+var errorToggled = false;
 function errorOnClick() {
     if (errorToggled) {
-        $('#error').css("background-color", "#666");
+        $('#error').css("background-color", "#141E2D");
         errorToggled = false;
     } else {
-        $('#error').css("background-color", "#333");
+        $('#error').css("background-color", "#030A13");
         errorToggled = true;
     }
 
