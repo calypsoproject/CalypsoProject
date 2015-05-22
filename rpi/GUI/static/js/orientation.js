@@ -61,11 +61,11 @@ function setRoll(angle) {
 
 function setPitch(angle){
     var $elem = $('#lines-container');
-    $({deg: current_pitch}).animate({deg: -angle}, {
+    $({deg: current_pitch}).animate({deg: angle*2}, {
         duration: 1000,
         step: function(now) {
             $elem.css({
-                transform: 'rotate(' + now + 'deg)'
+                top: now+'%'
             });
         }
     });
@@ -78,7 +78,7 @@ function setHeading(angle) {
         duration: 1000,
         step: function(now) {
             $elem.css({
-                transform: 'rotate(' + now + 'deg)'
+                transform: 'rotate(' +  + ')'
             });
         }
     });

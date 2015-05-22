@@ -3,6 +3,13 @@ body {
     background-color: #141E2D;
 }
 
+#lines-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+}
+
 #heading-circle {
     position: fixed;
     border: 2px solid white;
