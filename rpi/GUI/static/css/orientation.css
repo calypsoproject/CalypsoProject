@@ -37,7 +37,7 @@ body {
 
 #position-monitor-div {
     position: fixed;
-    /*overflow: hidden;*/
+    overflow: hidden;
     top: 0;
     left: 0;
     border: 2px solid white;
@@ -46,4 +46,29 @@ body {
     height: calc(100vmin - 15vw);
     width: calc(100vmin - 15vw);
     margin-left: calc((100vw - (100vmin - 15vw)) / 2);
+}
+
+#monitor-bg {
+    margin-left: calc((100vw - (100vmin - 15vw)) / (0 - 2));;
+    width: 100vw;
+    margin-top: -50vh;
+    height: calc(100vmin - 15vw + 100vh);
+}
+
+#top {
+    background-color: deepskyblue;
+    margin-top: 0;
+    height: 50%;
+}
+
+#horizon {
+    position: absolute;
+    height: 3px;
+    width: 100vw;
+    background-color: white;
+}
+
+#bottom {
+    background-color: #B83500;
+    height: 50%;
 }

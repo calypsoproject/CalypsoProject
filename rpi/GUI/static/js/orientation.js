@@ -1,7 +1,13 @@
+var current_rotation = 0;
+var current_roll = 0;
+var current_pitch = 0;
+
 $(document).ready(function() {
     createHeadingText();
-    rotate(360);
     generateHLines();
+    setHeading(20);
+    setRoll(20);
+    setPitch(20);
 });
 
 function createHeadingText() {
@@ -38,12 +44,11 @@ function generateHLines() {
             '<div style="width: 3%; background-color: white; top: 50%; height: 1px; margin-top: '+ i*2 +'%; margin-left: 48.5%; position: absolute;"></div>' +
         '</div>');
     }
-
 }
 
-function rotate(angle) {
-    var $elem = $('#heading-circle');
-    $({deg: 0}).animate({deg: angle}, {
+function setRoll(angle) {
+    var $elem = $('#monitor-bg');
+    $({deg: current_roll}).animate({deg: -angle}, {
         duration: 1000,
         step: function(now) {
             $elem.css({
@@ -51,5 +56,32 @@ function rotate(angle) {
             });
         }
     });
+    current_roll = -angle;
+}
+
+function setPitch(angle){
+    var $elem = $('#lines-container');
+    $({deg: current_pitch}).animate({deg: -angle}, {
+        duration: 1000,
+        step: function(now) {
+            $elem.css({
+                transform: 'rotate(' + now + 'deg)'
+            });
+        }
+    });
+    current_pitch = -angle;
+}
+
+function setHeading(angle) {
+    var $elem = $('#heading-circle');
+    $({deg: current_rotation}).animate({deg: -angle}, {
+        duration: 1000,
+        step: function(now) {
+            $elem.css({
+                transform: 'rotate(' + now + 'deg)'
+            });
+        }
+    });
+    current_rotation = -angle;
 }
 
