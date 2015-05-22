@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-    <head>
+    <meta charset="UTF-8">
 	<title> Calypso Control - orientation </title>
 	<link rel="stylesheet" type="text/css" href="css/orientation.css">
 	<script language="javascript" type="text/javascript" src="js/jquery.js"></script>
@@ -10,6 +10,10 @@
 <body>
 
 <div id="heading-circle"></div>
+<div id="heading-text-container">
+    <span id="heading-text"></span>°
+</div>
+
 <div id="cursor-line">
     <div id="cursor-underline"></div>
 </div>
@@ -18,12 +22,52 @@
 
 <div id="position-monitor-div">
     <div id="monitor-bg">
+        <div id="cursor-roll"></div>
         <div id="top"></div>
         <div id="horizon"></div>
         <div id="bottom"></div>
     </div>
-    <div id="lines-spacer">
-    <div id="lines-container">
+    <div id="roll-scale">
+        <div id="zero-roll"></div>
+        <div class="roll-scale-div above-zero" style="-webkit-transform: rotate(10deg);">
+            <div style="height: 6vmin; background-color: white;"></div>
+        </div>
+        <div class="roll-scale-div above-zero" style="-webkit-transform: rotate(20deg);">
+            <div style="height: 6vmin; background-color: white;"></div>
+        </div>
+        <div class="roll-scale-div above-zero" style="-webkit-transform: rotate(30deg);">
+            <div style="height: 6vmin; background-color: white;"></div>
+        </div>
+        <div class="roll-scale-div above-zero" style="-webkit-transform: rotate(50deg);">
+            <div style="height: 6vmin; background-color: white;"></div>
+        </div>
+        <div class="roll-scale-div above-zero" style="-webkit-transform: rotate(40deg);">
+            <div style="height: 6vmin; background-color: white;"></div>
+        </div>
+        <div class="roll-scale-div above-zero" style="-webkit-transform: rotate(60deg);">
+            <div style="height: 6vmin; background-color: white;"></div>
+        </div>
+        <div class="roll-scale-div bellow-zero" style="-webkit-transform: rotate(-10deg);">
+            <div style="height: 6vmin; background-color: white;"></div>
+        </div>
+        <div class="roll-scale-div bellow-zero" style="-webkit-transform: rotate(-20deg);">
+            <div style="height: 6vmin; background-color: white;"></div>
+        </div>
+        <div class="roll-scale-div bellow-zero" style="-webkit-transform: rotate(-30deg);">
+            <div style="height: 6vmin; background-color: white;"></div>
+        </div>
+        <div class="roll-scale-div bellow-zero" style="-webkit-transform: rotate(-50deg);">
+            <div style="height: 6vmin; background-color: white;"></div>
+        </div>
+        <div class="roll-scale-div bellow-zero" style="-webkit-transform: rotate(-40deg);">
+            <div style="height: 6vmin; background-color: white;"></div>
+        </div>
+        <div class="roll-scale-div bellow-zero" style="-webkit-transform: rotate(-60deg);">
+            <div style="height: 6vmin; background-color: white;"></div>
+        </div>
+    </div>
+    <div id="lines-mask">
+        <div id="lines-container"></div>
     </div>
 </div>
 
