@@ -18,7 +18,23 @@ body {
     border-radius: 50%;
     width: 80vw;
     height: 80vw;
-    background-color: #666;
+    background-color: #555;
+}
+
+#cursor-line {
+    position: fixed;
+    height: 7.3vw;
+    width: 2px;
+    left: 50vw;
+    bottom: 0;
+    background-color: white;
+}
+
+#cursor-underline {
+    width: 2vw;
+    height: 2px;
+    margin-left: -0.9vw;
+    background-color: white;
 }
 
 
@@ -63,7 +79,7 @@ body {
 }
 
 #top {
-    background-color: deepskyblue;
+    background-color: #0080FF;
     margin-top: 0;
     height: 50%;
 }

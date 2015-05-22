@@ -5,9 +5,6 @@ var current_pitch = 0;
 $(document).ready(function() {
     createHeadingText();
     generateHLines();
-    setHeading(20);
-    setRoll(20);
-    setPitch(20);
 });
 
 function createHeadingText() {
@@ -48,8 +45,8 @@ function generateHLines() {
 
 function setRoll(angle) {
     var $elem = $('#monitor-bg');
-    $({deg: current_roll}).animate({deg: -angle}, {
-        duration: 1000,
+    $({deg: current_roll}).stop().animate({deg: -angle}, {
+        duration: 500,
         step: function(now) {
             $elem.css({
                 transform: 'rotate(' + now + 'deg)'
@@ -61,27 +58,20 @@ function setRoll(angle) {
 
 function setPitch(angle){
     var $elem = $('#lines-container');
-    $({deg: current_pitch}).animate({deg: angle*2}, {
-        duration: 1000,
-        step: function(now) {
-            $elem.css({
-                top: now+'%'
-            });
-        }
-    });
-    current_pitch = -angle;
+    $elem.stop().animate({top: angle*2+'%'});
+
 }
 
 function setHeading(angle) {
     var $elem = $('#heading-circle');
-    $({deg: current_rotation}).animate({deg: -angle}, {
-        duration: 1000,
+    $({deg: current_rotation}).stop().animate({deg: -angle}, {
+        duration: 500,
         step: function(now) {
             $elem.css({
-                transform: 'rotate(' +  + ')'
+                transform: 'rotate(' + now + 'deg)'
             });
+            current_rotation = now;
         }
     });
-    current_rotation = -angle;
 }
 
