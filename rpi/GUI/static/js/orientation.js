@@ -1,6 +1,6 @@
 $(document).ready(function() {
     createHeadingText();
-    rotate(45);
+    rotate(360);
 });
 
 function createHeadingText() {
@@ -16,7 +16,6 @@ function createHeadingText() {
 
 function rotate(angle) {
     var $elem = $('#heading-circle');
-
     $({deg: 0}).animate({deg: angle}, {
         duration: 2000,
         step: function(now) {

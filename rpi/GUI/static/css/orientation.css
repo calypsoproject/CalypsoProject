@@ -1,23 +1,74 @@
 body {
     text-align: center;
+    background-color: #141E2D;
 }
 
 #heading-circle {
     position: fixed;
-    bottom: -85vw;
+    bottom: -70vw;
     left: 0;
     border-radius: 50%;
-    width: 100vw;
-    height: 100vw;
+    width: 80vw;
+    height: 80vw;
+    margin-left: 10vw;
     background-color: #666;
 }
 
 .rotated-heading {
     position: fixed;
-    height: 100vw;
+    height: 80vw;
     width: 0;
     color: white;
     font-size: 2.5vw;
     text-align: center;
 }
 
+#heading-down-arrow {
+    position: fixed;
+    margin-left: 49.22vw;
+    top: calc(100vmin - 12vw);
+	border-color: white transparent;
+	border-style: solid;
+	border-width: 4vmin 2vmin 0 2vmin;
+    border-radius: 3vmin;
+	height: 0;
+	width: 0;
+}
+
+.horizonts {
+    position: relative;
+    height: calc(50% - 1.5px);
+    width: 100%;
+}
+
+#top {
+    -webkit-border-top-left-radius: 6vmin;
+    -webkit-border-top-right-radius: 6vmin;
+    -moz-border-radius-topleft: 6vmin;
+    -moz-border-radius-topright: 6vmin;
+    border-top-left-radius: 6vmin;
+    border-top-right-radius: 6vmin;
+    background-color: #00C0F9;
+}
+
+#bottom {
+    -webkit-border-bottom-left-radius: 6vmin;
+    -webkit-border-bottom-right-radius: 6vmin;
+    -moz-border-radius-bottomleft: 6vmin;
+    -moz-border-radius-bottomright: 6vmin;
+    border-bottom-left-radius: 6vmin;
+    border-bottom-right-radius: 6vmin;
+    background-color: #D18438;
+}
+
+#position-monitor-div {
+    position: fixed;
+    top: 0;
+    left: 0;
+    border: 2px solid white;
+    margin-top: 2vmin;
+    border-radius: 6vmin;
+    height: calc(100vmin - 15vw);
+    width: calc(100vmin - 15vw);
+    margin-left: calc((100vw - (100vmin - 15vw)) / 2);
+}
