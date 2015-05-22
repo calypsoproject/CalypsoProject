@@ -2,63 +2,44 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Calypso</title>
-    <script src="js/jquery.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/motors.css">
-    <link rel="import" href="css/polymer/components/polymer/polymer.html">
-    <link rel="import" href="css/polymer/components/paper-progress/paper-progress.html">
-
+	<title> Calypso Control - orientation </title>
+	<link rel="stylesheet" type="text/css" href="css/motors.css">
+	<script language="javascript" type="text/javascript" src="js/jquery.js"></script>
+	<script src="js/motors.js"></script>
 </head>
-
-<body onresize="onResize()">
-    <img id="podmornica" src="img/calypso_outline.png">
-
-    <div id="content">
-        <div class="edge-margin"></div>
-        <div class="progress-parent">
-            <div style="flex: 40;"></div>
-            <div class="progress-container left">
-                <paper-progress class="progress rel1" id="motor-1" value="0"></paper-progress>
-                <p class="progress-item" id="motor-1-p">0</p>
-            </div>
-            <div style="flex: 17;"></div>
-            <div class="progress-container left" >
-                <paper-progress class="progress" id="motor-2" value="0"></paper-progress>
-                <p class="progress-item" id="motor-2-p" >0</p>
-            </div>
-            <div style="flex: 17;"></div>
-            <div class="progress-container left">
-                <paper-progress class="progress"  id="motor-3" value="0" ></paper-progress>
-                <p class="progress-item" id="motor-3-p">0</p>
-            </div>
-            <div style="height: 0px;"></div>
-        </div>
-        <div class="center-margin"></div>
+<body>
+<div id="main-container">
+    <div id="left-bars">
         <div class="progress-container">
-
+            <div id="fl" class="progress-fill"></div>
+            <div id="fl-text" class="progress-text">0</div>
         </div>
-        <div class="edge-margin">
-            <div class="progress-parent">
-                <div style="flex: 40;"></div>
-                <div class="progress-container">
-                    <paper-progress class="progress right" id="motor-4" value="0"></paper-progress>
-                    <p class="progress-item progress-text-right" id="motor-4-p">0</p>
-                </div>
-                <div style="flex: 17;"></div>
-                <div class="progress-container">
-                    <paper-progress class="progress right" id="motor-5" value="0"></paper-progress>
-                    <p class="progress-item progress-text-right" id="motor-5-p">0</p>
-                </div>
-                <div style="flex: 17;"></div>
-                <div class="progress-container">
-                    <paper-progress class="progress right" id="motor-6" value="0"></paper-progress>
-                    <p class="progress-item progress-text-right" id="motor-6-p">0</p>
-                </div>
-                <div style="height: 0px;"></div>
+        <div class="progress-container">
+            <div id="ml" class="progress-fill"></div>
+            <div id="ml-text" class="progress-text">0</div>
         </div>
-
+        <div class="progress-container">
+            <div id="bl" class="progress-fill"></div>
+            <div id="bl-text" class="progress-text">0</div>
+        </div>
     </div>
+    <div id="image-container">
+        <img src="img/calypso_outline.png" id="calypso-image">
+    </div>
+    <div id="right-bars">
+        <div class="progress-container">
+            <div id="fr" class="progress-fill"></div>
+            <div id="fr-text" class="progress-text">0</div>
         </div>
+        <div class="progress-container">
+            <div id="mr" class="progress-fill"></div>
+            <div id="mr-text" class="progress-text">0</div>
+        </div>
+        <div class="progress-container">
+            <div id="br" class="progress-fill"></div>
+            <div id="br-text" class="progress-text">0</div>
+        </div>
+    </div>
+</div>
 </body>
-<script type="text/javascript" src="js/motors.js"></script>
 </html>

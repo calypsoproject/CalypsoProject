@@ -92,7 +92,7 @@ function setHeading(angle) {
         duration: duration,
         step: function(now) {
             $elem.css({
-                transform: 'rotate(' + now + 'deg)'
+                transform: 'rotate(' + (now)+ 'deg)'
             });
             if(-now < 0) {
                 $('#heading-text').text(Math.round(360-now));
