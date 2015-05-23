@@ -1,3 +1,4 @@
+var animation_duration = 200;
 var current_rotation = 0;
 var current_roll = 0;
 
@@ -60,7 +61,7 @@ function generateHLines() {
 function setRoll(angle) {
     var $elem = $('#monitor-bg');
     $({deg: current_roll}).stop().animate({deg: angle}, {
-        duration: 500,
+        duration: animation_duration,
         step: function(now) {
             $elem.css({
                 transform: 'rotate(' + now + 'deg)'
@@ -72,7 +73,7 @@ function setRoll(angle) {
 
 function setPitch(angle){
     var $elem = $('#lines-container');
-    $elem.stop().animate({top: angle*2+'vh'});
+    $elem.stop().animate({top: angle*2+'vh'}, animation_duration);
 
 }
 
@@ -84,12 +85,12 @@ function setHeading(angle) {
     } else {
         target = angle;
     }
-    var duration = 1000;
+
     if((-current_rotation - angle) == 360) {
-        duration = 0
+        animation_duration = 0
     }
     $({deg: current_rotation}).stop().animate({deg: -target}, {
-        duration: duration,
+        duration: animation_duration,
         step: function(now) {
             $elem.css({
                 transform: 'rotate(' + (now)+ 'deg)'
