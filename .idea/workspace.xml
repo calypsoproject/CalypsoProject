@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6c670a93-8bc4-486c-962f-99a2ca58b6df" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/rpi/GUI/static/base.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/rpi/GUI/static/css/main.css" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="CalypsoProject.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -55,20 +54,30 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="motors.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="motors.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rpi/GUI/static/css/motors.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.083981335">
+            <state vertical-scroll-proportion="0.0">
               <caret line="3" column="25" selection-start-line="3" selection-start-column="25" selection-end-line="3" selection-end-column="29" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="terminal.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rpi/GUI/static/css/terminal.css">
+      <file leaf-file-name="model.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rpi/GUI/static/css/model.css">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="terminal.css" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/rpi/GUI/static/css/terminal.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.44790047">
               <caret line="16" column="16" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
               <folding />
             </state>
@@ -159,6 +168,16 @@
               <option name="myItemId" value="CalypsoProject" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CalypsoProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CalypsoProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="rpi" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
@@ -227,16 +246,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CalypsoProject" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CalypsoProject" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -514,12 +523,12 @@
       <option name="number" value="Default" />
       <updated>1432369193542</updated>
       <workItem from="1432369194900" duration="5930000" />
-      <workItem from="1432386350225" duration="2512000" />
+      <workItem from="1432386350225" duration="2981000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8442000" />
+    <option name="totallyTimeSpent" value="8911000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-772" width="1301" height="772" extended-state="6" />
@@ -663,18 +672,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rpi/GUI/static/css/terminal.css">
+    <entry file="file://$PROJECT_DIR$/rpi/GUI/static/css/motors.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="16" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
+          <caret line="3" column="25" selection-start-line="3" selection-start-column="25" selection-end-line="3" selection-end-column="29" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rpi/GUI/static/css/motors.css">
+    <entry file="file://$PROJECT_DIR$/rpi/GUI/static/css/model.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.083981335">
-          <caret line="3" column="25" selection-start-line="3" selection-start-column="25" selection-end-line="3" selection-end-column="29" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rpi/GUI/static/css/terminal.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.44790047">
+          <caret line="16" column="16" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
           <folding />
         </state>
       </provider>
