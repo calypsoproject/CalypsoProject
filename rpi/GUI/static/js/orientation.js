@@ -39,8 +39,8 @@ function generateHLines() {
         monitor.append(
         '<div id="a">'+
             '<div style="width: 30%; background-color: white; top: 50%; height: 0.2vw; margin-top: '+ i*2 +'vh; margin-left: 35%; position: absolute;">'+
-                '<span style="position: absolute; right: 103%; font-size: 1.5vw; font-weight: bold; top: -0.75vw;color: #fff;">'+-i+'</span>' +
-                '<span style="position: absolute; margin-left: 53%; font-size: 1.5vw; font-weight: bold; top: -0.75vw;color: #fff;">'+-i+'</span>' +
+                '<span style="position: absolute; right: 103%; font-size: 4vmin; font-weight: bold; top: -2vmin;color: #fff;">'+-i+'</span>' +
+                '<span style="position: absolute; margin-left: 53%; font-size: 4vmin; font-weight: bold; top: -2vmin;color: #fff;">'+-i+'</span>' +
             '</div>' +
         '</div>');
     }
