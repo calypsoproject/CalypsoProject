@@ -1,0 +1,59 @@
+html, body{
+    height: 100vh;
+    width: 100vw;
+    margin: 0px;
+    background-color: #030A13;
+}
+#content {
+    height: 100%;
+    resize: both;
+}
+#left {
+    resize: both;
+    overflow: auto;
+    min-width: 15%;
+}
+#right {
+    width: 85%;
+}
+#terminal {
+    position: fixed;
+    bottom: 0px;
+    height: 30vh;
+    width: 30vw;
+}
+#compass {
+    position: fixed;
+    width: 30vw;
+    height: 70vh;
+}
+#controls {
+    position: fixed;
+    height: 20vh;
+    width: 70vw;
+    left: 30vw;
+}
+#model-container {
+    position: fixed;
+    top: 20vh;
+    left: 30vw;
+    height: 80vh;
+    width: 100%;
+}
+#motors {
+    position: fixed;
+    top: 20vh;
+    left: 30vw;
+    height: 80vh;
+    width: 35.1vw;
+}
+#model {
+    position: fixed;
+    top: 20vh;
+    left: 65vw;
+    height: 80vh;
+    width: 35vw;
+}
+iframe {
+    border: none;
+}
