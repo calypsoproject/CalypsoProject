@@ -17,9 +17,10 @@ $(document).ready(function() {
     viewer.setParameter('BackgroundColor2', '#141E2D');
     viewer.setParameter('RenderMode',       'wireframe');
     viewer.setParameter('Definition', 'high');
-    viewer.setParameter('InitRotationX', 	0);
-    viewer.setParameter('InitRotationY', 	-90);
-    viewer.setParameter('InitRotationZ', 	0);
+    viewer.setParameter('InitRotationX', 	120);
+    viewer.setParameter('InitRotationY', 	-15);
+    viewer.setParameter('InitRotationZ', 	90);
+    viewer.enableDefaultInputHandler(false);
     viewer.init();
     viewer.update();
     onResize()
