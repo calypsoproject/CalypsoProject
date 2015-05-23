@@ -19,33 +19,33 @@ body, html {
 }
 
 #calypso-image {
-    width: 100vmin;
+    width: 54vmin;
 }
 
 .progress-container {
     position: relative;
     overflow: hidden;
-    margin-bottom: 12vmin;
-    width: 5vh;
-    height: 10vmin;
+    margin-bottom: 10vmin;
+    width: 4.2vh;
+    height: 12vmin;
     border: 1px solid white;
     border-radius: 1vh;
 }
 
 #left-bars {
     position: fixed;
-    margin-top: calc(50vh + 8vmin - ((2 * 12vmin) + (3 * 10vmin)) / 2);
+    margin-top: calc(47vh + 8vmin - ((2 * 12vmin) + (3 * 10vmin)) / 2);
     height: 100%;
-    width: 5vh;
-    left: calc((50vw - 35vmin) - 2.5vh);
+    width: 4.2vh;
+    left: calc((50vw - 30vmin) - 2.1vh);
 }
 
 #right-bars {
     position: fixed;
-    margin-top: calc(50vh + 8vmin - ((2 * 12vmin) + (3 * 10vmin)) / 2);
+    margin-top: calc(47vh + 8vmin - ((2 * 12vmin) + (3 * 10vmin)) / 2);
     height: 100%;
     width: 5vh;
-    left: calc(50vw + 35vmin);
+    left: calc(50vw + 30vmin);
 }
 .progress-fill {
     position: absolute;
