@@ -63,22 +63,8 @@ body {
     position: absolute;
     top: 0;
     width: 2px;
-    height: 90vmin;
-}
-
-.above-zero {
-    left: calc(50% - 4px);
-}
-
-.bellow-zero {
-    left: calc(50% + 4px);
-}
-
-#cursor-underline {
-    width: 2vw;
-    height: 2px;
-    margin-left: -0.9vw;
-    background-color: white;
+    left: calc(50% - 1px);
+    height: calc(100vmin - 15vw);
 }
 
 #cursor-roll {
@@ -88,8 +74,8 @@ body {
 	border-left: 1vmin solid transparent;
 	border-right: 1vmin solid transparent;
 	border-bottom: 2.5vmin solid white;
-    bottom: calc(50% + 0.25vw + (100vmin - 15vw) / 2.3);
-    left: calc(50% - 1vw);
+    bottom: calc(50% + 0.25vw + ((100vmin - 15vw) / 2) - 6.3vmin);
+    left: calc(50% - 1vmin);
     z-index: 1;
 }
 
@@ -137,8 +123,8 @@ body {
 }
 
 #monitor-bg {
-    margin-left: calc((100vw - (100vmin - 15vw)) / (0 - 2));;
-    width: 100vw;
+    margin-left: calc((200vw - (100vmin - 15vw)) / (0 - 2));;
+    width: 200vw;
     margin-top: -50vh;
     height: calc(100vmin - 15vw + 100vh);
 }
@@ -152,7 +138,7 @@ body {
 #horizon {
     position: absolute;
     height: 0.25vw;
-    width: 100vw;
+    width: 200vw;
     background-color: white;
 }
 
