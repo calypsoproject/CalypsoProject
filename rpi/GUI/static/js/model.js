@@ -23,6 +23,10 @@ $(document).ready(function() {
     viewer.enableDefaultInputHandler(false);
     viewer.init();
     viewer.update();
+    setTimeout(function () {
+        viewer.zoomFactor = 1000;
+        viewer.update();
+    }, 500);
     onResize()
 });
 
