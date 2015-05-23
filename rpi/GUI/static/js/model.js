@@ -13,8 +13,8 @@ $(document).ready(function() {
     viewer = new JSC3D.Viewer(document.getElementById('cv'));
     viewer.setParameter('SceneUrl', 'js/calypso.obj');
     viewer.setParameter('ModelColor',       '#cbcbcb');
-    viewer.setParameter('BackgroundColor1', '#141E2D');
-    viewer.setParameter('BackgroundColor2', '#141E2D');
+    viewer.setParameter('BackgroundColor1', '#030A13');
+    viewer.setParameter('BackgroundColor2', '#030A13');
     viewer.setParameter('RenderMode',       'wireframe');
     viewer.setParameter('Definition', 'high');
     viewer.setParameter('InitRotationX', 	120);
