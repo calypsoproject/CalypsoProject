@@ -64,7 +64,7 @@ body {
     top: 0;
     width: 2px;
     left: calc(50% - 1px);
-    height: calc(100vmin - 15vw);
+    height: calc(100vmin - 25vw);
 }
 
 #cursor-roll {
@@ -74,7 +74,7 @@ body {
 	border-left: 1vmin solid transparent;
 	border-right: 1vmin solid transparent;
 	border-bottom: 2.5vmin solid white;
-    bottom: calc(50% + 0.25vw + ((100vmin - 15vw) / 2) - 6.3vmin);
+    bottom: calc(50% + 0.25vw + ((100vmin - 25vw) / 2) - 6.3vmin);
     left: calc(50% - 1vmin);
     z-index: 1;
 }
@@ -115,18 +115,18 @@ body {
     top: 0;
     left: 0;
     border: 2px solid white;
-    margin-top: 2vmin;
+    margin-top: calc(50vh - ((100vmin - 25vw) / 2) - 5vmin);
     border-radius: 6vmin;
-    height: calc(100vmin - 15vw);
-    width: calc(100vmin - 15vw);
-    margin-left: calc((100vw - (100vmin - 15vw)) / 2);
+    height: calc(100vmin - 25vw);
+    width: calc(100vmin - 25vw);
+    margin-left: calc((100vw - (100vmin - 25vw)) / 2);
 }
 
 #monitor-bg {
-    margin-left: calc((200vw - (100vmin - 15vw)) / (0 - 2));;
+    margin-left: calc((200vw - (100vmin - 25vw)) / (0 - 2));;
     width: 200vw;
     margin-top: -50vh;
-    height: calc(100vmin - 15vw + 100vh);
+    height: calc(100vmin - 25vw + 100vh);
 }
 
 #top {

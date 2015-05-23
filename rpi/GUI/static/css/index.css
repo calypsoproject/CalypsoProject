@@ -1,41 +1,33 @@
 html, body{
+    display: flex;
+    flex-direction: row;
     height: 100vh;
     width: 100vw;
     margin: 0;
     background-color: #030A13;
 }
-#terminal {
-    position: fixed;
-    bottom: 0;
-    height: 15vh;
-    width: 100vw;
-}
-#compass {
-    position: fixed;
-    left: 23vw;
-    width: 54vw;
-    height: 85vh;
-}
-#controls {
-    position: fixed;
-    height: 20vh;
-    width: 70vw;
-    left: 30vw;
-}
-#motors {
-    position: fixed;
+
+#left-container {
+    position: relative;
     top: 0;
-    left: 0;
-    height: 85vh;
-    width: 23vw;
+    bottom: 0;
+    width: 50vw;
+    border: 2px solid white;
 }
-#model {
-    position: fixed;
-    top: 0vh;
-    right: 0;
-    height: 85vh;
-    width: 23vw;
+
+#compass {
+    position: absolute;
+    top: 0;
+    height: 70%;
+    width: 100%;
 }
-iframe {
-    border: none;
+
+#terminal {
+
+}
+
+#right-container {
+    flex: 1;
+    position: relative;
+    border: 2px solid red;
 }
