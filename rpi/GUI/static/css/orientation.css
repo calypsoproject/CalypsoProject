@@ -63,7 +63,7 @@ body {
     position: absolute;
     top: 0;
     width: 2px;
-    height: 80vh;
+    height: 90vmin;
 }
 
 .above-zero {
@@ -82,14 +82,15 @@ body {
 }
 
 #cursor-roll {
-    position: absolute;
+    position: relative;
     width: 0;
 	height: 0;
-	border-left: 1vw solid transparent;
-	border-right: 1vw solid transparent;
-	border-bottom: 2.5vw solid white;
-    top: 56vmin;
+	border-left: 1vmin solid transparent;
+	border-right: 1vmin solid transparent;
+	border-bottom: 2.5vmin solid white;
+    bottom: calc(50% + 0.25vw + (100vmin - 15vw) / 2.3);
     left: calc(50% - 1vw);
+    z-index: 1;
 }
 
 #zero-roll {

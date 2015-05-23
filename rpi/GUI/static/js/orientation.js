@@ -38,7 +38,7 @@ function generateHLines() {
     for(i=-90;i<91;i+=10) {
         monitor.append(
         '<div id="a">'+
-            '<div style="width: 30%; background-color: white; top: 50%; height: 0.2vw; margin-top: '+ i*2 +'vh; margin-left: 35%; position: absolute;">'+
+            '<div style="width: 30%; background-color: white; top: 50%; height: 0.2vw; margin-top: '+ i*2 +'vmin; margin-left: 35%; position: absolute;">'+
                 '<span style="position: absolute; right: 103%; font-size: 4vmin; font-weight: bold; top: -2vmin;color: #fff;">'+-i+'</span>' +
                 '<span style="position: absolute; margin-left: 53%; font-size: 4vmin; font-weight: bold; top: -2vmin;color: #fff;">'+-i+'</span>' +
             '</div>' +
@@ -47,19 +47,20 @@ function generateHLines() {
     for(i=-90;i<91;i+=5) {
         monitor.append(
         '<div id="a">'+
-            '<div style="width: 15%; background-color: white; top: 50%; height: 0.15vw; margin-top: '+ i*2 +'vh; margin-left: 42.5%; position: absolute;"></div>' +
+            '<div style="width: 15%; background-color: white; top: 50%; height: 0.15vw; margin-top: '+ i*2 +'vmin; margin-left: 42.5%; position: absolute;"></div>' +
         '</div>');
     }
     for(i=-90;i<91;i+=1) {
         monitor.append(
         '<div id="a">'+
-            '<div style="width: 3%; background-color: white; top: 50%; height: 1px; margin-top: '+ i*2 +'vh; margin-left: 48.5%; position: absolute;"></div>' +
+            '<div style="width: 3%; background-color: white; top: 50%; height: 1px; margin-top: '+ i*2 +'vmin; margin-left: 48.5%; position: absolute;"></div>' +
         '</div>');
     }
 }
 
 function setRoll(angle) {
     var $elem = $('#monitor-bg');
+    var $elem1 = $('#roll-scale');
     $({deg: current_roll}).stop().animate({deg: angle}, {
         duration: animation_duration,
         step: function(now) {
@@ -73,7 +74,7 @@ function setRoll(angle) {
 
 function setPitch(angle){
     var $elem = $('#lines-container');
-    $elem.stop().animate({top: angle*2+'vh'}, animation_duration);
+    $elem.stop().animate({top: angle*2+'vmin'}, animation_duration);
 
 }
 

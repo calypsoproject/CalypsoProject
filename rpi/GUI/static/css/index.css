@@ -6,7 +6,7 @@ html, body{
 }
 #terminal {
     position: fixed;
-    bottom: 0px;
+    bottom: 0;
     height: 15vh;
     width: 100vw;
 }
