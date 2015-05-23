@@ -20,6 +20,7 @@ body, html {
 
 #calypso-image {
     width: 54vmin;
+    margin-left: -1.1vw;
 }
 
 .progress-container {
@@ -37,7 +38,7 @@ body, html {
     margin-top: calc(47vh + 8vmin - ((2 * 12vmin) + (3 * 10vmin)) / 2);
     height: 100%;
     width: 4.2vh;
-    left: calc((50vw - 30vmin) - 2.1vh);
+    left: calc((50vw - 30vmin) - 2.5vh);
 }
 
 #right-bars {
@@ -45,7 +46,7 @@ body, html {
     margin-top: calc(47vh + 8vmin - ((2 * 12vmin) + (3 * 10vmin)) / 2);
     height: 100%;
     width: 5vh;
-    left: calc(50vw + 30vmin);
+    left: calc(50vw + 30vmin - 2.5vh);
 }
 .progress-fill {
     position: absolute;
