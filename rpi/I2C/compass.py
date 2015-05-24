@@ -61,13 +61,13 @@ class hmc5883l:
         return (x,y,z)
 
     def read(self):
-        try:
-            for i in range(10):
+        result = 0
+        for i in range(10):
+            try:
                 result = self.degrees(self.heading())
                 break
-        except:
-            result = 0
-            pass
+            except:
+                pass
         return result
 
     def heading(self):

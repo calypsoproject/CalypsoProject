@@ -37,6 +37,14 @@ class Calypso:
         self.speed_calculator = SpeedCalculator(self.position, self.joystick, self.motor_handler)
         self.pid = self.speed_calculator.pid
 
+    def get_gui(self):
+        motor_speeds = self.motor_handler.get_speeds()
+        position = {'yaw': self.position.yaw,
+                    'roll': -self.position.pitch,
+                    'pitch': self.position.roll}
+        return {'motors': motor_speeds,
+                'position': position}
+
     def a(self):
         while 1:
             print self.forward_left_motor.get_motor_state()

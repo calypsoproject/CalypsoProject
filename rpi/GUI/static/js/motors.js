@@ -10,7 +10,7 @@ function setProgress(motor, val) {
     var element = $('#'+motor);
     var text = $('#'+motor+'-text');
     $({deg: speeds[motor]}).stop().animate({deg: val}, {
-        duration: 500,
+        duration: 250,
         step: function(now) {
             element.css({
                 height: now+'%'

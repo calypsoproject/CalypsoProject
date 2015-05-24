@@ -1,4 +1,4 @@
-var animation_duration = 200;
+var animation_duration = 250;
 var current_rotation = 0;
 var current_roll = 0;
 

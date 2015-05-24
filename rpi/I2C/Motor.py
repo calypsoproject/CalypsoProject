@@ -37,10 +37,11 @@ class Motor:
     normal_kp_lo = 0xB4
     normal_ki_hi = 0x09
     normal_ki_lo = 0x41
-    minimal_speed = 2
+    minimal_speed = 4
     enable_timeout = 8
     lock_all_operations = False
     speed = 0
+    last_speed = 0
     current_direction = 0
 
     def __init__(self, motor_address, i2c_common, motor_name, acceleration, kp_hi=None, kp_lo=None, jump_start_enabled=True):
@@ -143,6 +144,7 @@ class Motor:
             threading.Thread(target=self.jump_start, args=[speed]).start()
         else:
             self.i2c.write_byte_data(self.motor_address, self.speed_reg, speed)
+            self.last_speed = speed
             print self.motor_name, 'reached', speed
 
     def jump_start(self, final_speed, repeat=0):

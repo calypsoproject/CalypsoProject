@@ -68,9 +68,9 @@ class ADXL345:
     #    False (default): result is returned in m/s^2
     #    True           : result is returned in gs
     def read(self, gforce = False):
-        result = 0
-        try:
-            for i in range(10):
+        result = {"x": 0, "y": 0, "z": 0}
+        for i in range(10):
+            try:
                 bytes = self.bus.read_i2c_block_data(self.address, AXES_DATA, 6)
 
                 x = bytes[0] | (bytes[1] << 8)
@@ -99,8 +99,8 @@ class ADXL345:
                 z = round(z, 4)
                 result = {"x": x, "y": y, "z": z}
                 break
-        except:
-            pass
+            except:
+                pass
         return result
 
     def __str__(self):

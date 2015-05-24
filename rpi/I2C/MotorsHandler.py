@@ -59,3 +59,6 @@ class MotorsHandler():
         for motor in self.initialized_motors:
             result[str(motor)] = motor.get_values()
         return result
+
+    def get_speeds(self):
+        return {i: self.motor[i].last_speed for i in self.motor}

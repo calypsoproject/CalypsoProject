@@ -74,16 +74,16 @@ class SensorITG3200(object):
         """Read and return data tuple for x, y and z axis
         as signed 16-bit integers.
         """
-        result = 0
-        try:
-            for i in range(10):
+        result = {'x': 0, 'y': 0, 'z': 0}
+        for i in range(10):
+            try:
                 gx = int_sw_swap(self.bus.read_word_data(self.addr, 0x1d))
                 gy = int_sw_swap(self.bus.read_word_data(self.addr, 0x1f))
                 gz = int_sw_swap(self.bus.read_word_data(self.addr, 0x21))
                 result = {'x': gx, 'y': gy, 'z': gz}
                 break
-        except:
-            pass
+            except:
+                pass
         return result
 
     def __str__(self):

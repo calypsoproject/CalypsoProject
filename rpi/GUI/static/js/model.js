@@ -2,7 +2,7 @@ var current_roll = 0;
 var current_pitch = 0;
 var roll_animation = null;
 var pitch_animation = null;
-var animation_duration = 200;
+var animation_duration = 250;
 var framerate = 30;
 var y_translate = -15;
 var x_translate = 30;
@@ -64,6 +64,7 @@ function setRoll(angle) {
 }
 
 function setPitch(angle) {
+    angle *= -1;
     var rotation = angle - current_pitch;
     var step = (rotation / (animation_duration*framerate/1000)) ;
     clearInterval(pitch_animation);
