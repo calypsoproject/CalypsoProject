@@ -14,7 +14,7 @@ def serve_file(path):
 def api(req):
     result = None
     req = urllib.unquote(req)
-    print req
+    app.config["calypso"].logger.verbose('views.py/api', req)
     try:
         exec 'result = app.config["calypso"].' + req
         result = json.dumps(result)
@@ -25,6 +25,7 @@ def api(req):
 @app.route('/api/raw/<path:req>')
 def raw_api(req):
     req = urllib.unquote(req)
+    app.config["calypso"].logger.verbose('views.py/raw_api', req)
     self = app.config["calypso"]
     result = None
     try:

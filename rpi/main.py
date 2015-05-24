@@ -6,16 +6,19 @@ from I2C.MotorsHandler import MotorsHandler
 from PID.Position import Position
 from PID.SpeedCalculator import SpeedCalculator
 from PID.JoystickUpdater import JoystickUpdater
+from logger import Logger
 
 class Calypso:
     def __init__(self):
+        self.logger = Logger()
         self.server = Server(calypso_instance=self,
-                             listen_port=8888)
+                             listen_port=8888,
+                             logger=self.logger)
 
-        i2c_common = I2CCommon(rpi_revision=1)
+        i2c_common = I2CCommon(rpi_revision=1, logger=self.logger)
 
         ## motors initialization
-        self.motor_handler = MotorsHandler(i2c_common)
+        self.motor_handler = MotorsHandler(i2c_common, self.logger)
         self.forward_left_motor = self.motor_handler.new_motor(motor_address=0x05,
                                                                motor_name='bl')
         self.forward_right_motor = self.motor_handler.new_motor(motor_address=0x06,
@@ -34,7 +37,7 @@ class Calypso:
         self.sensors = Sensors(i2c_common)
         self.sensors.init_sensors()
         self.sensors.update_position(self.position)
-        self.speed_calculator = SpeedCalculator(self.position, self.joystick, self.motor_handler)
+        self.speed_calculator = SpeedCalculator(self.position, self.joystick, self.motor_handler, self.logger)
         self.pid = self.speed_calculator.pid
 
     def get_gui(self):
@@ -43,11 +46,8 @@ class Calypso:
                     'roll': -self.position.pitch,
                     'pitch': self.position.roll}
         return {'motors': motor_speeds,
-                'position': position}
-
-    def a(self):
-        while 1:
-            print self.forward_left_motor.get_motor_state()
+                'position': position,
+                'log': self.logger.get_log()}
 
 if __name__ == '__main__':
     calypso = Calypso()

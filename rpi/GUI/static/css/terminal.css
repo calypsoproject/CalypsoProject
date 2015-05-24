@@ -7,7 +7,6 @@ html {
     font-family: 'terminal-font', serif;
     background-color: black;
     color: white;
-    overflow: hidden;
 }
 
 #controls {
@@ -52,5 +51,10 @@ html {
 
 #error {
     color: #FF3308;
+    background-color: #141E2D;
+}
+
+#verbose {
+    color: #a4ff95;
     background-color: #141E2D;
 }

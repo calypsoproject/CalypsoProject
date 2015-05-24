@@ -9,11 +9,13 @@ from JoystickUpdater import JoystickUpdater as Joystick
 class SpeedCalculator(object):
     # affects speed calculation
     responsiveness = 10
+    origin = 'Calypso/SpeedCalculator'
 
     # max angles
-    def __init__(self, position, joystick_updater, motor_handler, max_incline=45, max_roll=90, joystick_incline=True,
+    def __init__(self, position, joystick_updater, motor_handler, logger, max_incline=45, max_roll=90, joystick_incline=True,
                  joystick_roll=False, kp=1, ki=0, kd=0, mode=1, max_speed=20, min_speed=4, floating_speed=10,
                  interval=0.2):
+        self.logger = logger
         self.interval = interval
         self.floating_speed = floating_speed
         self.max_speed = max_speed
@@ -165,7 +167,7 @@ class SpeedCalculator(object):
 
             for motor in speeds:
                 self.motor_handler.motor[motor].set_speed(speeds[motor])
-            print speeds
+            self.logger.verbose(self.origin+'/calculate_corrections', speeds)
 
 if __name__ == '__main__':
-    sc = SpeedCalculator(Position(), Joystick(), None)
+    sc = SpeedCalculator(Position(), Joystick(), None, None)

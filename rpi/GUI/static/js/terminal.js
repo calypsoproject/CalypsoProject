@@ -1,21 +1,10 @@
 var n = 0;
-$(document).ready(function () {
-    setInterval(function(){
-        update();
-    }, 100);
-});
-
-function update() {
-    log(0, Date.now());
-    log(1, Date.now());
-    log(2, Date.now());
-}
 
 function scroll() {
     $(document).scrollTop($(document).height());
 }
 
-function log(level, message) {
+function log(level, origin, message) {
     var color;
     if(level==0 && infoToggled) {
         level = "info";
@@ -23,15 +12,31 @@ function log(level, message) {
     } else if(level==1 && warningToggled) {
         level = "warning";
         color = "#FFC108";
-    } else if(errorToggled) {
+    } else if(level==2 && errorToggled) {
         level = "error";
         color = "#FF3308";
+    } else if(level==3 && verboseToggled) {
+        level = "verbose";
+        color = "#a4ff95";
     }
+
     if (typeof level == typeof 1) {return;}
-    $('#logger').append("<terminal-line id=\""+n+"\">CalypsoProject <log-level style=\"color: "+color+";\">("+level+")</log-level>:~$ <log-message>"+message+"</log-message><br></terminal-line>");
+    $('#logger').append("<terminal-line id=\""+n+"\">"+origin+"<log-level style=\"color: "+color+";\">("+level+")</log-level>:~$ <log-message>"+message+"</log-message><br></terminal-line>");
     $('#'+(n-100)).remove();
     scroll();
     n++;
+}
+
+var verboseToggled = false;
+function verboseOnClick() {
+    if (verboseToggled) {
+        $('#verbose').css("background-color", "#141E2D");
+        verboseToggled = false;
+    } else {
+        $('#verbose').css("background-color", "#030A13");
+        verboseToggled = true;
+    }
+
 }
 
 var infoToggled = true;
