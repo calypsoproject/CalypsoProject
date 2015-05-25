@@ -23,7 +23,7 @@ class PID_Controller(object):
     '''
     General PID control class. 
     '''
-    is_enabled = False
+    is_enabled = True
 
     def __init__(self, Kp, Ki, Kd):
         '''

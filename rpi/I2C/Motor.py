@@ -11,7 +11,7 @@ class Motor:
     jump_speed = 20
     jump_accel = 10
     jump_start_duration = 0.2
-    start_kp_hi = 0x0A
+    start_kp_hi = 0x0B
     start_kp_lo = 0xD7
 
     ## I2C write registers
@@ -79,7 +79,7 @@ class Motor:
             print self.motor_name, 'init_motor', e
 
     def get_motor_state(self):
-        if self.lock_all_operations:
+        if self.lock_all_operations or self.i2c.resetting:
             return None
         try:
             return self.i2c.read_byte_data(self.motor_address, self.enable_system_reg)
@@ -163,7 +163,7 @@ class Motor:
                 self.i2c.write_byte_data(self.motor_address, self.speed_reg, speed)
             except Exception, e:
                 print self.motor_name, 'set_speed', e
-            self.last_speed = speed
+            self.last_speed = speed if self.current_direction == 1 else speed * -1
             self.logger.info(self.origin+'/set_speed', 'reached '+str(speed))
 
     def jump_start(self, final_speed, repeat=0):

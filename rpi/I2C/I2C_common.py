@@ -6,6 +6,7 @@ import time
 
 class I2CCommon(object):
     origin = 'Calypso/I2CCommon'
+    resetting = False
 
     def __init__(self, port, logger):
         self.port = port
@@ -52,12 +53,18 @@ class I2CCommon(object):
             return val
 
     def reset(self):
-        with self.lock:
-            self.i2c.close()
-            GPIO.setup(self.pin, GPIO.OUT)
-            for i in range(20):
-                GPIO.output(self.pin, GPIO.LOW)
-                time.sleep(1/20000.0)
-                GPIO.output(self.pin, GPIO.HIGH)
-                time.sleep(1/1000.0)
-            self.i2c = smbus.SMBus(self.port)
+        self.resetting = True
+        try:
+            with self.lock:
+                self.i2c.close()
+                GPIO.setup(self.pin, GPIO.OUT)
+                for i in range(20):
+                    GPIO.output(self.pin, GPIO.LOW)
+                    time.sleep(1/20000.0)
+                    GPIO.output(self.pin, GPIO.HIGH)
+                    time.sleep(1/1000.0)
+                self.i2c = smbus.SMBus(self.port)
+        except:
+            pass
+        self.resetting = False
+#

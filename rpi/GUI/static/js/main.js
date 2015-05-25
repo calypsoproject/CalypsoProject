@@ -3,6 +3,13 @@ var motors = null;
 var model = null;
 var terminal = null;
 $(document).ready(function () {
+    $.get('api/motor_handler.motor["fr"].get_motor_state()', function (data) {
+        if (data == 1) {
+            system_state = true;
+            enable_system_btn.css('background-color', '#93332C');
+            enable_system_btn.text('disable system');
+        }
+    });
     $('#compass').load(function () {
         orientation = document.getElementById('compass').contentWindow;
     });
@@ -58,6 +65,11 @@ function update() {
 var system_state = false;
 var enabling = false;
 function systemBtnClick() {
+    $.get('api/motor_handler.motor["fr"].get_motor_state()', function (data) {
+        if(data == 1) {
+            system_state=true;
+        }
+    });
     var enable_system_btn = $('#enable-system');
     if(!system_state && !enabling) {
         $.get('api/motor_handler.enable()', function( data ) {});

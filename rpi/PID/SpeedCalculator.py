@@ -10,10 +10,11 @@ class SpeedCalculator(object):
     # affects speed calculation
     responsiveness = 10
     origin = 'Calypso/SpeedCalculator'
+    enabled = False
 
     # max angles
-    def __init__(self, position, joystick_updater, motor_handler, logger, max_incline=60, max_roll=90, joystick_incline=True,
-                 joystick_roll=False, kp=1, ki=0, kd=0, mode=1, max_speed=30, min_speed=4, floating_speed=35,
+    def __init__(self, position, joystick_updater, motor_handler, logger, max_incline=45, max_roll=90, joystick_incline=True,
+                 joystick_roll=False, kp=2, ki=0, kd=0, mode=1, max_speed=10, min_speed=4, floating_speed=14,
                  interval=0.2):
         self.logger = logger
         self.interval = interval
@@ -51,7 +52,7 @@ class SpeedCalculator(object):
         self.exit = True
 
     def calculate_incline(self):
-        if self.mode == 0:
+        if self.joystick_incline:
             target = self.joystick.in_out * self.max_incline
         else:
             target = 0
@@ -64,7 +65,7 @@ class SpeedCalculator(object):
         return scaled_correction
 
     def calculate_roll(self):
-        if self.mode == 1:
+        if self.joystick_roll:
             target = self.joystick.in_out * self.max_roll
         else:
             target = 0
@@ -107,10 +108,10 @@ class SpeedCalculator(object):
                 incline_correction = incline_correction + self.min_speed if incline_correction > 0 else incline_correction
                 incline_correction = incline_correction - self.min_speed if incline_correction < 0 else incline_correction
 
-            fl = incline_correction - roll_correction
-            fr = incline_correction + roll_correction
-            br = -incline_correction + roll_correction
-            bl = -incline_correction - roll_correction
+            fl = incline_correction + roll_correction
+            fr = incline_correction - roll_correction
+            br = -incline_correction - roll_correction
+            bl = -incline_correction + roll_correction
 
             max_val = max([abs(fl), abs(fr), abs(br), abs(bl)])
             if max_val > self.max_speed:
@@ -156,10 +157,11 @@ class SpeedCalculator(object):
                 kf_forward = 1
 
             if self.joystick.throttle != 0:
-                speeds['mr'] = (self.joystick.throttle + speeds['mr'] / kf_forward if speeds['mr'] < speeds[
+                mr = (self.joystick.throttle + speeds['mr'] / kf_forward if speeds['mr'] < speeds[
                     'ml'] else self.joystick.throttle) * speed_diff
                 speeds['ml'] = (self.joystick.throttle + speeds['ml'] / kf_forward if speeds['mr'] > speeds[
                     'ml'] else self.joystick.throttle) * speed_diff
+                speeds['mr'] = mr
             else:
                 speeds['mr'] *= self.max_speed
                 speeds['ml'] *= self.max_speed
