@@ -3,6 +3,7 @@ import json
 
 class Logger(object):
     log_buffer = []
+    verbose_enabled = False
 
     def info(self, origin, msg):
         self.log_buffer.append([0, origin, self.to_string(msg)])
@@ -14,7 +15,8 @@ class Logger(object):
         self.log_buffer.append([2, origin, self.to_string(msg)])
 
     def verbose(self, origin, msg):
-        self.log_buffer.append([3, origin, self.to_string(msg)])
+        if self.verbose_enabled:
+            self.log_buffer.append([3, origin, self.to_string(msg)])
 
     def to_string(self, msg):
         try: s = str(msg)

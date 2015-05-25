@@ -12,8 +12,8 @@ class SpeedCalculator(object):
     origin = 'Calypso/SpeedCalculator'
 
     # max angles
-    def __init__(self, position, joystick_updater, motor_handler, logger, max_incline=45, max_roll=90, joystick_incline=True,
-                 joystick_roll=False, kp=1, ki=0, kd=0, mode=1, max_speed=10, min_speed=2, floating_speed=10,
+    def __init__(self, position, joystick_updater, motor_handler, logger, max_incline=60, max_roll=90, joystick_incline=True,
+                 joystick_roll=False, kp=1, ki=0, kd=0, mode=1, max_speed=30, min_speed=4, floating_speed=35,
                  interval=0.2):
         self.logger = logger
         self.interval = interval
@@ -76,6 +76,16 @@ class SpeedCalculator(object):
         self.roll_time = time.time()
         return scaled_correction
 
+    def set(self, floating_speed=None, max_speed=None, min_speed=None, max_incline=None, max_roll=None):
+        if floating_speed:
+            self.floating_speed = floating_speed
+        if max_speed:
+            self.max_speed = max_speed
+        if min_speed:
+            self.min_speed = min_speed
+
+        return 'ok'
+
     def calculate_corrections(self):
         speeds = {
             'fl': 0,
@@ -133,8 +143,8 @@ class SpeedCalculator(object):
                     bl *= k
                     br *= k
 
-            speeds['fl'] = fl
-            speeds['fr'] = fr
+            speeds['fl'] = -fl
+            speeds['fr'] = -fr
             speeds['br'] = -br
             speeds['bl'] = -bl
             speeds['ml'] = self.joystick.right_left

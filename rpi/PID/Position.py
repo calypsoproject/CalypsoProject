@@ -10,8 +10,8 @@ class Position(object):
     rx_offset = 0
     ry_offset = 0
     rz_offset = 0
-    rx_static_offset = -3
-    ry_static_offset = 1
+    rx_static_offset = 2 #pitch
+    ry_static_offset = 32 # roll
     rz_static_offset = 0
 
     zoom = -2

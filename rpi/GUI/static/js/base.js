@@ -1,18 +1,38 @@
 $(document).ready(function() {
-    $.get( "api/pid.Kp("+speed+")", function( data ) {
+    $.get( "api/pid.Kp", function( data ) {
 		$( "#Kp" ).text(data);
 	});
-    $.get( "api/pid.Ki("+speed+")", function( data ) {
+    $.get( "api/pid.Ki", function( data ) {
 		$( "#Ki" ).text(data);
 	});
-    $.get( "api/pid.Kd("+speed+")", function( data ) {
+    $.get( "api/pid.Kd", function( data ) {
 		$( "#Kd" ).text(data);
 	});
 
+	$.get( "api/speed_calculator.floating_speed", function( data ) {
+		$('#fs').val(data);
+	});
+
+	$.get( "api/speed_calculator.max_speed", function( data ) {
+		$('#maxs').val(data);
+	});
+
+
+	$.get( "api/speed_calculator.min_speed", function( data ) {
+		$('#mins').val(data);
+	});
+
+	$.get( "api/speed_calculator.max_roll", function( data ) {
+		$('#ra').val(data);
+	});
+
+	$.get( "api/speed_calculator.max_incline", function( data ) {
+		$('#pa').val(data);
+	});
 });
 
 function api(action) {
-    $.get( "api/"+action+"\"", function( data ) {
+    $.get( "api/"+action, function( data ) {
 		$( "#last_response" ).text(data);
 	});
 }
