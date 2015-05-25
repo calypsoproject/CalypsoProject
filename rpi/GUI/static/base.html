@@ -55,7 +55,19 @@
         Kp: <input id="Kp" type="text"><br>
         Ki: <input id="Ki" type="text"><br>
         Kd: <input id="Kd" type="text"><br>
-        <button onclick="updatePid($('#Kp').val(), $('#Ki').val(), $('#Kd').val());">update</button><br>
+
+		Kp pitch: <input id="Kp pitch" type="text"><br>
+        Ki pitch: <input id="Ki pitch" type="text"><br>
+        Kd pitch: <input id="Kd pitch" type="text"><br>
+
+		Kp roll: <input id="Kpr" type="text"><br>
+        Ki roll: <input id="Kir" type="text"><br>
+        Kd roll: <input id="Kdr" type="text"><br>
+
+
+		<button onclick="updatePid($('#Kp').val(), $('#Ki').val(), $('#Kd').val());">update</button><br>
+		<button onclick="updatePidRoll($('#Kpr').val(), $('#Kir').val(), $('#Kdr').val());">update roll</button><br>
+		<button onclick="updatePidPitch($('#Kpp').val(), $('#Kip').val(), $('#Kdp').val());">update pitch</button><br>
 
 		<button onclick="api('pid.disable()')">disable pid</button>
 		<button onclick="api('pid.enable()')">enable pid</button>

@@ -39,7 +39,8 @@ class Calypso:
         self.sensors.init_sensors()
         self.sensors.update_position(self.position)
         self.speed_calculator = SpeedCalculator(self.position, self.joystick, self.motor_handler, self.logger)
-        self.pid = self.speed_calculator.pid
+        self.pid_roll = self.speed_calculator.pid_roll
+        self.pid_incline = self.speed_calculator.pid_incline
 
     def get_gui(self):
         motor_speeds = self.motor_handler.get_speeds()

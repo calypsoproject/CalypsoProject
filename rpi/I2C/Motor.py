@@ -115,6 +115,7 @@ class Motor:
         self.init_motor()
 
     def disable_system(self):
+        self.last_speed = 0
         if not self.get_motor_state():
             return False
         try:

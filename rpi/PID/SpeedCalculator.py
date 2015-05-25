@@ -14,7 +14,7 @@ class SpeedCalculator(object):
 
     # max angles
     def __init__(self, position, joystick_updater, motor_handler, logger, max_incline=45, max_roll=90, joystick_incline=True,
-                 joystick_roll=False, kp=2, ki=0, kd=0, mode=1, max_speed=10, min_speed=4, floating_speed=14,
+                 joystick_roll=False, kp=2, ki=0, kd=0, kpp=None, kip=None, kdp=None, mode=1, max_speed=50, min_speed=4, floating_speed=50,
                  interval=0.2):
         self.logger = logger
         self.interval = interval
@@ -26,9 +26,13 @@ class SpeedCalculator(object):
         self.mode = mode
         self.joystick_incline = joystick_incline
         self.joystick_roll = joystick_roll
-        self.kd = kd
-        self.ki = ki
-        self.kp = kp
+
+        self.kdr = kd
+        self.kir = ki
+        self.kpr = kp
+        self.kdp = kdp if kdp else kd
+        self.kip = kip if kip else ki
+        self.kpp = kpp if kpp else kp
         self.max_incline = max_incline
         self.max_roll = max_roll
         self.motor_handler = motor_handler
@@ -37,7 +41,9 @@ class SpeedCalculator(object):
 
         self.position = position
 
-        self.pid = PID_Controller(self.kp, self.ki, self.kd)
+        self.pid_roll = PID_Controller(self.kpr, self.kir, self.kdr)
+        self.pid_incline = PID_Controller(self.kpp, self.kip, self.kdp)
+
         self.incline_time = time.time()
         self.roll_time = time.time()
 
@@ -57,7 +63,7 @@ class SpeedCalculator(object):
         else:
             target = 0
         current = self.position.pitch_smooth
-        correction = self.pid.getCorrection(target, current, time.time() - self.incline_time)
+        correction = self.pid_incline.getCorrection(target, current, time.time() - self.incline_time)
         scaled_correction = self.incline_factor * correction
         scaled_correction = scaled_correction if 0 >= scaled_correction or scaled_correction <= 1 else 1
         scaled_correction = scaled_correction if 0 <= scaled_correction or scaled_correction >= -1 else -1
@@ -70,7 +76,7 @@ class SpeedCalculator(object):
         else:
             target = 0
         current = self.position.roll_smooth
-        correction = self.pid.getCorrection(target, current, time.time() - self.roll_time)
+        correction = self.pid_roll.getCorrection(target, current, time.time() - self.roll_time)
         scaled_correction = self.roll_factor * correction
         scaled_correction = scaled_correction if 0 >= scaled_correction or scaled_correction <= 1 else 1
         scaled_correction = scaled_correction if 0 <= scaled_correction or scaled_correction >= -1 else -1
@@ -96,7 +102,7 @@ class SpeedCalculator(object):
             'ml': 0,
             'mr': 0
         }
-        speed_diff = self.max_speed - self.min_speed
+        speed_diff = 100 - self.min_speed
         while 1:
             time.sleep(self.interval)
 
@@ -163,8 +169,8 @@ class SpeedCalculator(object):
                     'ml'] else self.joystick.throttle) * speed_diff
                 speeds['mr'] = mr
             else:
-                speeds['mr'] *= self.max_speed
-                speeds['ml'] *= self.max_speed
+                speeds['mr'] *= 100
+                speeds['ml'] *= 100
 
             for k in speeds.keys():
                 speeds[k] = round(speeds[k])

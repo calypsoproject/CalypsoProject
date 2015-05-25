@@ -1,13 +1,35 @@
 $(document).ready(function() {
-    $.get( "api/pid.Kp", function( data ) {
+    $.get( "api/pid_roll.Kp", function( data ) {
+		$( "#Kpr" ).val(data);
+	});
+    $.get( "api/pid_roll.Ki", function( data ) {
+		$( "#Kir" ).val(data);
+	});
+    $.get( "api/pid_roll.Kd", function( data ) {
+		$( "#Kdr" ).val(data);
+	});
+
+    $.get( "api/pid_pitch.Kp", function( data ) {
+		$( "#Kpp" ).val(data);
+	});
+    $.get( "api/pid_pitch.Ki", function( data ) {
+		$( "#Kip" ).val(data);
+	});
+    $.get( "api/pid_pitch.Kd", function( data ) {
+		$( "#Kdp" ).val(data);
+	});
+
+    $.get( "api/pid_pitch.Kp", function( data ) {
 		$( "#Kp" ).val(data);
 	});
-    $.get( "api/pid.Ki", function( data ) {
+    $.get( "api/pid_pitch.Ki", function( data ) {
 		$( "#Ki" ).val(data);
 	});
-    $.get( "api/pid.Kd", function( data ) {
+    $.get( "api/pid_pitch.Kd", function( data ) {
 		$( "#Kd" ).val(data);
 	});
+
+
 
 	$.get( "api/speed_calculator.floating_speed", function( data ) {
 		$('#fs').val(data);
@@ -57,7 +79,22 @@ function disable_system() {
 }
 
 function updatePid(Kp, Ki, Kd){
-    $.get( "api/pid.update("+Kp+", "+Ki+", "+Kd+")", function( data ) {
+    $.get( "api/pid_roll.update("+Kp+", "+Ki+", "+Kd+")", function( data ) {
+		$('#last_response').text(data);
+    });
+	$.get( "api/pid_pitch.update("+Kp+", "+Ki+", "+Kd+")", function( data ) {
+		$('#last_response').text(data);
+    });
+}
+
+function updatePidRoll(Kp, Ki, Kd){
+    $.get( "api/pid_roll.update("+Kp+", "+Ki+", "+Kd+")", function( data ) {
+		$('#last_response').text(data);
+    });
+}
+
+function updatePidPitch(Kp, Ki, Kd){
+	$.get( "api/pid_pitch.update("+Kp+", "+Ki+", "+Kd+")", function( data ) {
 		$('#last_response').text(data);
     });
 }
