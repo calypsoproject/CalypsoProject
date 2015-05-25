@@ -69,8 +69,8 @@
 		<button onclick="updatePidRoll($('#Kpr').val(), $('#Kir').val(), $('#Kdr').val());">update roll</button><br>
 		<button onclick="updatePidPitch($('#Kpp').val(), $('#Kip').val(), $('#Kdp').val());">update pitch</button><br>
 
-		<button onclick="api('pid.disable()')">disable pid</button>
-		<button onclick="api('pid.enable()')">enable pid</button>
+		<button onclick="api('pid_roll.disable()'); api('pid_pitch.disable()')">disable pid</button>
+		<button onclick="api('pid_roll.enable()'); api('pid_pitch.enable()');">enable pid</button>
         <br>
 		<br>
 		<br>
