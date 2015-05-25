@@ -59,6 +59,7 @@ function generateHLines() {
 }
 
 function setRoll(angle) {
+    angle *= -1;
     var $elem = $('#monitor-bg');
     var $elem1 = $('#roll-scale');
     $({deg: current_roll}).stop().animate({deg: angle}, {

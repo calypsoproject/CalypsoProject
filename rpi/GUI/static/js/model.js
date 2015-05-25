@@ -45,6 +45,7 @@ function onResize() {
 }
 
 function setRoll(angle) {
+    angle *= -1;
     var rotation = angle - current_roll;
     var step = (rotation / (animation_duration*framerate/1000)) ;
     clearInterval(roll_animation);

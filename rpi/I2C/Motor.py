@@ -60,8 +60,8 @@ class Motor:
         self.motor_name = motor_name
 
     def at_exit(self):
-        self.logger.info('views.py/api', self.origin+'/at_exit', 'exiting')
         self.disable_system()
+        self.logger.info(self.origin+'/at_exit', 'exiting')
         sys.stdout.flush()
 
     def init_motor(self):
@@ -164,7 +164,7 @@ class Motor:
             except Exception, e:
                 print self.motor_name, 'set_speed', e
             self.last_speed = speed
-            self.logger.verbose(self.origin+'/set_speed', 'reached '+str(speed))
+            self.logger.info(self.origin+'/set_speed', 'reached '+str(speed))
 
     def jump_start(self, final_speed, repeat=0):
         self.set_accel(self.jump_accel, from_jump_start=True)
@@ -216,7 +216,7 @@ class Motor:
         elif speed == 0:
             self.logger.info(self.origin+'/jump_start', 'failed to start')
         else:
-            self.logger.verbose(self.origin+'/set_speed', 'reached '+str(speed))
+            self.logger.verbose(self.origin+'/jump_start', 'reached '+str(speed))
 
     def set_direction(self, direction, end_speed=None):
         """ direction ... 1 / 0 (int)

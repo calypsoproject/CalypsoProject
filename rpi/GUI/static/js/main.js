@@ -18,7 +18,7 @@ $(document).ready(function () {
 
     setInterval(function () {
         update();
-    }, 240);
+    }, 250);
 });
 
 function update() {
@@ -53,4 +53,28 @@ function update() {
             terminal.log(log[i][0], log[i][1], log[i][2]);
         }
     });
+}
+
+var system_state = false;
+var enabling = false;
+function systemBtnClick() {
+    var enable_system_btn = $('#enable-system');
+    if(!system_state && !enabling) {
+        $.get('api/motor_handler.enable()', function( data ) {});
+        enable_system_btn.css('background-color', '#CA6B11');
+        enable_system_btn.text('enabling...');
+        enabling = true;
+        setTimeout(function () {
+            enabling = false;
+            system_state = true;
+            enable_system_btn.css('background-color', '#93332C');
+            enable_system_btn.text('disable system');
+        }, 8000)
+    } else if(!enabling) {
+        $.get('api/motor_handler.disable()', function( data ) {});
+        enable_system_btn.css('background-color', '#429042');
+        enable_system_btn.text('enable system');
+        enabling = false;
+        system_state = false;
+    }
 }

@@ -15,7 +15,8 @@ class Calypso:
                              listen_port=8888,
                              logger=self.logger)
 
-        i2c_common = I2CCommon(rpi_revision=1, logger=self.logger)
+        i2c_common = I2CCommon(1, self.logger)
+        self.i2c = i2c_common
 
         ## motors initialization
         self.motor_handler = MotorsHandler(i2c_common, self.logger)
@@ -23,18 +24,18 @@ class Calypso:
                                                                motor_name='bl')
         self.forward_right_motor = self.motor_handler.new_motor(motor_address=0x06,
                                                                 motor_name='br')
-        self.side_right_motor = self.motor_handler.new_motor(motor_address=0x07,
+        self.side_right_motor = self.motor_handler.new_motor(motor_address=0x10,
                                                              motor_name='ml')
         self.side_left_motor = self.motor_handler.new_motor(motor_address=0x08,
                                                             motor_name='mr')
-        self.middle_right_motor = self.motor_handler.new_motor(motor_address=0x09,
+        self.middle_right_motor = self.motor_handler.new_motor(motor_address=0x07,
                                                                motor_name='fl')
-        self.middle_left_motor = self.motor_handler.new_motor(motor_address=0x10,
+        self.middle_left_motor = self.motor_handler.new_motor(motor_address=0x09,
                                                               motor_name='fr')
 
         self.position = Position()
         self.joystick = JoystickUpdater()
-        self.sensors = Sensors(i2c_common)
+        self.sensors = Sensors(I2CCommon(2, self.logger))
         self.sensors.init_sensors()
         self.sensors.update_position(self.position)
         self.speed_calculator = SpeedCalculator(self.position, self.joystick, self.motor_handler, self.logger)
@@ -42,9 +43,9 @@ class Calypso:
 
     def get_gui(self):
         motor_speeds = self.motor_handler.get_speeds()
-        position = {'yaw': self.position.yaw,
-                    'roll': -self.position.pitch,
-                    'pitch': self.position.roll}
+        position = {'yaw': self.position.yaw_smooth,
+                    'roll': -self.position.roll_smooth,
+                    'pitch': self.position.pitch_smooth}
         return {'motors': motor_speeds,
                 'position': position,
                 'log': self.logger.get_log()}

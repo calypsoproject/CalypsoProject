@@ -2,6 +2,7 @@ import pygame
 import threading
 import time
 
+
 class ReadJoystick:
     selected_joystick = 0
     joystick_count = None
@@ -13,6 +14,7 @@ class ReadJoystick:
     in_out = 1
     throttle = 1
     elevation = 1
+
     def __init__(self, button_pressed_callback=None):
         self.button_pressed_callback = button_pressed_callback
         pygame.init()
@@ -22,7 +24,8 @@ class ReadJoystick:
 
     def initialize(self):
         while min(map(abs, self.axes[2:])) == 0: time.sleep(0.1)
-        while round(max([abs(self.throttle), abs(self.elevation), abs(self.right_left), abs(self.in_out)]), 2) != 0: time.sleep(0.1)
+        while round(max([abs(self.throttle), abs(self.elevation), abs(self.right_left), abs(self.in_out)]),
+                    2) != 0: time.sleep(0.1)
         print 'joystick is initialized'
 
     def main_loop(self):
@@ -34,7 +37,6 @@ class ReadJoystick:
                 if event.type == pygame.JOYBUTTONDOWN:
                     if self.button_pressed_callback:
                         self.button_pressed_callback(event)
-
 
             self.joystick_count = pygame.joystick.get_count()
 

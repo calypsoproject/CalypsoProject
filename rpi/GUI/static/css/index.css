@@ -26,6 +26,34 @@ html, body{
     height: 100%;
 }
 
+button {
+    background-color: #30435c;
+    color: white;
+    font-family: 'Lato', sans-serif;
+    font-size: 12pt;
+    font-weight: lighter;
+}
+
+button:hover {
+    background-color: #345879;
+}
+
+button:focus {
+    outline: none;
+}
+
+#enable-system {
+    position: fixed;
+    border-radius: 5px;
+    border: 0;
+    background-color: #429042;
+    width: 150px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    top: calc(70vh + 6px);
+    left: 5px;
+}
+
 #motors {
     position: relative;
     width: 33%;
@@ -45,16 +73,7 @@ html, body{
     bottom: 0;
     width: 100%;
     height: 100%;
-}
 
-#buttons {
-    text-align: center;
-    vertical-align: middle;
-    width: 100%;
-    height: 35px;
-    color: #ffffff;
-    font-size: 25px;
-    z-index: 1;
 }
 
 iframe {

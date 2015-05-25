@@ -7,7 +7,6 @@ class MotorsHandler():
     motor = {}
     initialized_motors = []
     reset_delay = 1  # sec
-    resetting = False
 
     def __init__(self, i2c_common, logger):
         self.logger = logger
@@ -19,7 +18,7 @@ class MotorsHandler():
         """
         GPIO.setup("P8_8", GPIO.OUT)
         GPIO.output("P8_8", GPIO.HIGH)
-        time.sleep(0.5)
+        time.sleep(1)
         GPIO.output("P8_8", GPIO.LOW)
 
     def add_motor(self, motor_instance):

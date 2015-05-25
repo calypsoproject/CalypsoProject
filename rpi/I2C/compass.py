@@ -61,7 +61,7 @@ class hmc5883l:
         return (x,y,z)
 
     def read(self):
-        result = 0
+        result = [0, 0]
         for i in range(10):
             try:
                 result = self.degrees(self.heading())

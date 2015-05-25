@@ -39,7 +39,7 @@ class Server:
         while 1:
             try:
                 clientsocket, address = self.socket.accept()
-                self.logger.verbose(self.origin+'/communication_thread', 'connected to ' + address)
+                self.logger.verbose(self.origin+'/communication_thread', 'connected to ' + repr(address))
                 threading.Thread(target=self.clientsocket_thread, args=[clientsocket]).start()
             except Exception, e:
                 self.logger.error(self.origin+'/communication_thread', e)

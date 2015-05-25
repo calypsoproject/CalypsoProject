@@ -10,8 +10,8 @@ class Position(object):
     rx_offset = 0
     ry_offset = 0
     rz_offset = 0
-    rx_static_offset = 0
-    ry_static_offset = -5
+    rx_static_offset = -3
+    ry_static_offset = 1
     rz_static_offset = 0
 
     zoom = -2
@@ -30,8 +30,8 @@ class Position(object):
 
     def update_data(self, accel, gyro, compass):
         ax, ay, az = accel['x'], accel['y'], accel['z']
-        self.pitch = math.atan(ax/math.sqrt(ay**2 + az**2)) * 180/math.pi
-        self.roll = math.atan(ay/math.sqrt(ax**2 + az**2)) * 180/math.pi
+        self.pitch = math.atan(ax/(math.sqrt(ay**2 + az**2)+0.00001)) * 180/math.pi
+        self.roll = math.atan(ay/(math.sqrt(ax**2 + az**2)+0.00001)) * 180/math.pi
         self.roll_history.pop(0)
         self.roll_history.append(self.roll)
         self.pitch_history.pop(0)

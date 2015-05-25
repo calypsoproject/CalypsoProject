@@ -1,6 +1,7 @@
 import atexit
 import threading
 import time
+import smbus
 from accelerometer import ADXL345
 from gyroscope import SensorITG3200
 from compass import hmc5883l
@@ -36,4 +37,5 @@ class Sensors:
         while 1:
             time.sleep(interval)
             readings = self.get_values()
-            position.update_data(readings['accelerometer'], readings['gyroscope'], readings['compass'])
+            try: position.update_data(readings['accelerometer'], readings['gyroscope'], readings['compass'])
+            except: pass
